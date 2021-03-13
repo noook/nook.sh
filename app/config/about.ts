@@ -38,8 +38,8 @@ export const experiences: HistoryEntry[] = [
     company: 'Golem.ai',
     start: new Date(2020, 1 - 1),
     end: null,
-    title: 'Front-end Engineer',
-    description: 'Redesign of the AI configuration interface, implementation of design systems, development of products used by projects carried out by Golem.ai',
+    title: 'Lead Developer Front-End',
+    description: 'Head of front-end development and architecture. Redesign of the AI configuration interface, implementation of design systems, development of products used by projects carried out by Golem.ai.',
   },
 ];
 
@@ -52,11 +52,11 @@ export const education: HistoryEntry[] = [
     description: 'Bachelor\'s degree of Science and Technology in Industry and Sustainable Development, mention Very Good',
   },
   {
-    company: 'SUP\'Internet',
+    company: 'Epitech Digital',
     start: new Date(2017, 9 - 1),
     end: new Date(2020, 8 - 1),
     title: 'Web Project Management Bachelor',
-    description: 'Web project Management Bachelor, specialized in Web Development',
+    description: 'Web project Management Bachelor, specialized in Web Development. Graduated as valedictorian',
   },
 ];
 

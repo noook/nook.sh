@@ -3,7 +3,7 @@ import getAge from './hooks/age';
 
 const description = `Hello !
 
-My name is Neil Richter and I'm a ${getAge()} years old Full-stack Developer based in Paris. I describe myself as a curious person who loves coding, and the web platform. Currently, I am working at a company called Golem.ai as a Front-End Engineer.
+My name is Neil Richter and I'm a ${getAge()} years old Full-stack Developer based in Paris. I describe myself as a curious person who loves coding, and the web platform. Currently, I am working at a company called Golem.ai as Front-End Lead Developer.
 `;
 
 const config: Configuration = {

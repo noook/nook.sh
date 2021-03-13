@@ -5,7 +5,7 @@
         Hi! I'm <span class="text-accent">Neil&nbsp;Richter</span>
       </h1>
       <h2 class="text-xl">
-        Front-End Engineer @<a href="https://golem.ai" class="underline">Golem.ai</a>
+        Front-End Lead Developer @<a href="https://golem.ai" class="underline">Golem.ai</a>
       </h2>
     </header>
     <main class="my-5">
@@ -23,8 +23,13 @@
           I'm a {{ age }} years old Front-End engineer based in Paris, working at
           <a class="font-bold hover:underline" href="https://golem.ai">Golem.ai</a>.
           I love working on side projects to improve my skills.
-          I love swimming, music and spicy food.
+          I love swimming, motorcycling, music and spicy food.
         </p>
+        <nuxt-link
+          class="bg-accent text-white py-2 px-4 my-4 rounded hover:opacity-75 duration-75"
+          :to="{ name: 'about' }">
+          Read more
+        </nuxt-link>
         <Socials class="text-3xl" />
       </div>
       <section id="pinned-repositories" class="my-3 p-4 text-content">

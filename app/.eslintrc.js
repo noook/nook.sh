@@ -15,6 +15,7 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     'nuxt/no-cjs-in-config': 'off',
     'max-len': 'off',
+    'vue/html-closing-bracket-newline': 'off',
   },
   settings: {
     'import/resolver': {

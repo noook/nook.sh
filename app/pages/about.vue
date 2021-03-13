@@ -47,8 +47,8 @@
               My name is <span class="text-accent">Neil Richter</span> and I'm a {{ age }} years old
               <span class="text-accent">Full-stack Developer</span> based in Paris. I describe myself as
               a curious person who loves coding, and the web platform. Currently, I am working at a
-              company called <a class="text-accent underline" href="https://golem.ai">Golem.ai</a> as a
-              <span class="text-accent">Front-End Engineer</span>.
+              company called <a class="text-accent underline" href="https://golem.ai">Golem.ai</a> as
+              <span class="text-accent">Front-End Lead Developer</span>.
             </p>
             <p class="mb-4">
               In my spare time I do a lot of sports, and I also like to work on side projects.
@@ -56,8 +56,15 @@
               a lot of open source projects.
             </p>
             <p class="mb-4">
-              I play some video games aswell such as League of Legends or Teamfight Tactics.
+              I play some video games aswell such as League of Legends, Spellbreak and Counter-Strike: Global Offensive.
             </p>
+            <div class="flex justify-center">
+              <nuxt-link
+                class="bg-accent text-white py-2 px-4 my-4 rounded hover:opacity-75 duration-75"
+                :to="{ name: 'index' }">
+                Back to home
+              </nuxt-link>
+            </div>
           </div>
         </div>
       </section>
