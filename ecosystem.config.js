@@ -4,7 +4,7 @@ module.exports = {
       name: 'Portfolio',
       exec_mode: 'cluster',
       instances: 2,
-      script: '.app/node_modules/nuxt/bin/nuxt.js',
+      script: './app/node_modules/nuxt/bin/nuxt.js',
       args: 'start'
     }
   ]
