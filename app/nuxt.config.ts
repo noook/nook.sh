@@ -10,6 +10,7 @@ const config: Configuration = {
   mode: 'universal',
   server: {
     host: '0.0.0.0',
+    port: 5678,
   },
   /*
   ** Headers of the page
