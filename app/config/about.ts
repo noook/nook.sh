@@ -37,9 +37,23 @@ export const experiences: HistoryEntry[] = [
   {
     company: 'Golem.ai',
     start: new Date(2020, 1 - 1),
-    end: null,
+    end: new Date(2022, 1 - 1),
     title: 'Lead Developer Front-End',
     description: 'Head of front-end development and architecture. Redesign of the AI configuration interface, implementation of design systems, development of products used by projects carried out by Golem.ai.',
+  },
+  {
+    company: 'Epitech Digital',
+    start: new Date(2021, 9 - 1),
+    end: null,
+    title: 'Teacher',
+    description: 'Teaching at Epitech Digital, the school of the web\'s high potentials. Algorithmy initiation, Portfolios, Vue.js',
+  },
+  {
+    company: 'Beamy.io',
+    start: new Date(2022, 1 - 1),
+    end: null,
+    title: 'Fullstack Developer Typescript (Nuxt.js + Nest.js)',
+    description: 'Development of the SaaS platform, improvement of performances and migration of tools like AgGrid or development tooling.',
   },
 ];
 
@@ -77,6 +91,14 @@ export const skills: Skill[] = [
   {
     class: 'typescript',
     name: 'Typescript',
+  },
+  {
+    class: 'nest',
+    name: 'Nest.js',
+  },
+  {
+    class: 'nuxt',
+    name: 'Nuxt.js',
   },
   {
     class: 'symfony',

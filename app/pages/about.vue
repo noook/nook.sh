@@ -91,7 +91,7 @@
           >
             <img
               class="lg:w-24"
-              :src="require(`@/assets/img/icons/${skill.class}/${skill.class}-original.svg`)"
+              :src="`/icons/${skill.class}/${skill.class}-original.svg`"
               :alt="skill.name"
             >
           </li>
