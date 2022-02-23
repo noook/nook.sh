@@ -1,4 +1,4 @@
-// import { Ref } from '@vue/composition-api';
+// import { Ref } from '@nuxtjs/composition-api';
 
 export default function getMonthDiff(start: Date, end: Date): number {
   return Math.ceil(

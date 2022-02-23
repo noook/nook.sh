@@ -112,7 +112,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from '@vue/composition-api';
+import { defineComponent, computed, ref } from '@nuxtjs/composition-api';
 import Socials from '@/components/Socials.vue';
 import HistoryEntry from '@/components/HistoryEntry.vue';
 import {

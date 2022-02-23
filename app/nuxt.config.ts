@@ -7,7 +7,6 @@ My name is Neil Richter and I'm a ${getAge()} years old Full-stack Developer bas
 `;
 
 const config: Configuration = {
-  mode: 'universal',
   server: {
     host: '0.0.0.0',
     port: 5678,
@@ -50,12 +49,12 @@ const config: Configuration = {
   */
   css: [
     '~/assets/css/global.css',
+    '~/assets/css/tailwind.css',
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/composition-api',
     '~/plugins/fontawesome',
   ],
   /*
@@ -64,6 +63,8 @@ const config: Configuration = {
   buildModules: [
     '@nuxt/typescript-build',
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/composition-api/module',
+    '@nuxt/postcss8',
     '@nuxtjs/fontawesome',
     'nuxt-typed-vuex',
     ['@nuxtjs/google-analytics', {
@@ -76,14 +77,10 @@ const config: Configuration = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
-    'nuxt-purgecss',
   ],
   typescript: {
     typeCheck: true,
     ignoreNotFoundWarnings: true,
-  },
-  purgeCSS: {
-    whitelistPatterns: [/svg.*/, /fa.*/],
   },
   /*
   ** Axios module configuration
@@ -96,6 +93,12 @@ const config: Configuration = {
       /typed-vuex/,
     ],
     extractCSS: true,
+    postcss: {
+      plugins: {
+        tailwindcss: {},
+        autoprefixer: {},
+      },
+    },
   },
 
   fontawesome: {

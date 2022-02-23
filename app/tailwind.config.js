@@ -2,9 +2,16 @@
 ** TailwindCSS Configuration File
 **
 ** Docs: https://tailwindcss.com/docs/configuration
-** Default: https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js
+** DEFAULT: https://github.com/tailwindcss/tailwindcss/blob/master/stubs/DEFAULTConfig.stub.js
 */
 module.exports = {
+  content: [
+    "./components/**/*.{js,vue,ts}",
+    "./layouts/**/*.vue",
+    "./pages/**/*.vue",
+    "./plugins/**/*.{js,ts}",
+    "./nuxt.config.{js,ts}",
+  ],
   theme: {
     extend: {
       width: {
@@ -18,14 +25,14 @@ module.exports = {
         white: '#ffffff',
         yellow: '#FFD600',
         link: {
-          default: '#00B0FF',
+          DEFAULT: '#00B0FF',
           contrast: '#005780',
         },
         black: '#000000',
         lightgray: '#F1F6F8',
         content: {
           lighter: '#78909C',
-          default: '#37474F',
+          DEFAULT: '#37474F',
         },
       },
     },

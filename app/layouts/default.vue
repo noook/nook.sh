@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api';
+import { defineComponent } from '@nuxtjs/composition-api';
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 

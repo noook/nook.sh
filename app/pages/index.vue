@@ -54,7 +54,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api';
+import { defineComponent, ref } from '@nuxtjs/composition-api';
 import GithubProject from '@/components/GithubProject.vue';
 import Socials from '@/components/Socials.vue';
 import getAge from '@/hooks/age';
