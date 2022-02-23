@@ -30,7 +30,7 @@
               </li>
               <li class="my-1">
                 <label class="mr-1">Company:</label>
-                <span><a class="text-accent hover:underline" href="https://golem.ai">Golem.ai</a></span>
+                <span><a class="text-accent hover:underline" href="https://beamy.io">Beamy</a></span>
               </li>
             </ul>
             <Socials
@@ -47,8 +47,8 @@
               My name is <span class="text-accent">Neil Richter</span> and I'm a {{ age }} years old
               <span class="text-accent">Full-stack Developer</span> based in Paris. I describe myself as
               a curious person who loves coding, and the web platform. Currently, I am working at a
-              company called <a class="text-accent underline" href="https://golem.ai">Golem.ai</a> as
-              <span class="text-accent">Front-End Lead Developer</span>.
+              company called <a class="text-accent underline" href="https://beamy.io">Beamy</a> as
+              <span class="text-accent">Fullstack Typescript Developer (Nuxt.js + Nest.js)</span>.
             </p>
             <p class="mb-4">
               In my spare time I do a lot of sports, and I also like to work on side projects.
