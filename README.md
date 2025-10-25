@@ -1,75 +1,87 @@
-# Nuxt Minimal Starter
+# Portfolio - Neil Richter
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A modern portfolio built with **Nuxt 4**, **Nuxt UI**, and **Nuxt Content**.
 
-## Setup
+## Features
 
-Make sure to install dependencies:
+- 📄 **Content Management**: Powered by Nuxt Content with support for blog posts and projects
+- 🎨 **Beautiful UI**: Built with Nuxt UI components for a clean, professional look
+- 🔄 **Mixed Content**: Projects can be code-based or IRL projects (like motorcycle road trips, keyboard collections)
+- 📝 **Blog Ready**: Blog posts can also function as project documentation
+- 🌙 **Dark Mode**: Automatic dark mode support
+
+## Structure
+
+### Pages
+
+- `/` - Home/About page
+- `/about` - Detailed about page with expandable experience sections and tech stack
+- `/projects` - List of all projects (code and IRL)
+- `/blog` - Blog posts
+
+### Content Collections
+
+- `content/*.md` - Static pages
+- `content/posts/*.md` - Blog posts
+- `content/projects/*.md` - Project descriptions
+
+## Adding Content
+
+### Add a Blog Post
+
+Create a new file in `content/posts/`:
+
+```md
+---
+title: Your Post Title
+description: A brief description
+date: 2025-01-20
+tags: [Tag1, Tag2]
+---
+
+# Your Post
+
+Your content here...
+```
+
+### Add a Project
+
+Create a new file in `content/projects/`:
+
+```md
+---
+title: Project Name
+description: Brief description
+date: 2024-01-15
+type: code  # or 'irl'
+tags: [Tag1, Tag2]
+---
+
+# Project Name
+
+Project details...
+```
+
+## Development
 
 ```bash
-# npm
-npm install
-
-# pnpm
+# Install dependencies
 pnpm install
 
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
+# Start development server
 pnpm dev
 
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
+# Build for production
 pnpm build
 
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
+# Preview production build
 pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Tech Stack
+
+- Nuxt 4
+- Nuxt UI 4
+- Nuxt Content 3
+- TypeScript
+- Tailwind CSS
