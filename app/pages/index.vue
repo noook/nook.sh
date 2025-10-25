@@ -5,31 +5,22 @@ const { data: page } = await useAsyncData('page-index', () => {
 </script>
 
 <template>
-  <div class="max-w-3xl">
-    <!-- Hero Section -->
+  <div>
     <div class="prose prose-lg dark:prose-invert max-w-none">
       <ContentRenderer
         v-if="page"
         :value="page"
       />
     </div>
-
-    <!-- CTA Buttons -->
-    <div class="flex gap-4 mt-8">
+    <div class="flex justify-center">
       <UButton
         to="/about"
-        size="lg"
-        variant="solid"
-      >
-        About
-      </UButton>
-      <UButton
-        to="/projects"
-        size="lg"
-        variant="outline"
-      >
-        View Projects
-      </UButton>
+        size="xl"
+        variant="ghost"
+        trailing-icon="lucide:arrow-right"
+        color="primary"
+        label="About"
+      />
     </div>
   </div>
 </template>
