@@ -3,8 +3,14 @@
     <UHeader
       title="Neil Richter"
       to="/"
-      :links="headerLinks"
-    />
+    >
+      <UNavigationMenu :items="headerLinks" />
+
+      <template #right>
+        <ThemePicker />
+        <UColorModeButton />
+      </template>
+    </UHeader>
 
     <UMain class="flex-1">
       <UContainer class="py-8">
@@ -23,10 +29,30 @@
 </template>
 
 <script setup lang="ts">
-const headerLinks = [
-  { label: 'Home', to: '/' },
-  { label: 'About', to: '/about' },
-  { label: 'Projects', to: '/projects' },
-  { label: 'Blog', to: '/blog' },
-]
+import type { NavigationMenuItem } from '@nuxt/ui'
+
+const route = useRoute()
+
+const headerLinks = computed<NavigationMenuItem[]>(() => [
+  {
+    label: 'Home',
+    to: '/',
+    active: route.path === '/',
+  },
+  {
+    label: 'About',
+    to: '/about',
+    active: route.path === '/about',
+  },
+  {
+    label: 'Projects',
+    to: '/projects',
+    active: route.path.startsWith('/projects'),
+  },
+  {
+    label: 'Blog',
+    to: '/blog',
+    active: route.path === '/blog',
+  },
+])
 </script>
