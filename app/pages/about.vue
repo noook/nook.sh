@@ -42,83 +42,99 @@ const experiences = [
   },
 ]
 
-const expandedExperience = ref<number | null>(null)
-
 const techStack = [
-  'Vue.js', 'Nuxt.js', 'TypeScript', 'JavaScript',
-  'PHP', 'Symfony', 'Rust', 'HTML/CSS',
-  'Tailwind CSS', 'Git', 'SQL', 'REST APIs',
+  { name: 'Vue.js', icon: 'simple-icons:vuedotjs' },
+  { name: 'Nuxt.js', icon: 'simple-icons:nuxtdotjs' },
+  { name: 'TypeScript', icon: 'simple-icons:typescript' },
+  { name: 'PHP', icon: 'simple-icons:php' },
+  { name: 'Symfony', icon: 'simple-icons:symfony' },
+  { name: 'Rust', icon: 'simple-icons:rust' },
+  { name: 'Tailwind CSS', icon: 'simple-icons:tailwindcss' },
+  { name: 'PostgreSQL', icon: 'simple-icons:postgresql' },
+  { name: 'Drizzle ORM', icon: 'simple-icons:drizzle' },
+  { name: 'Docker', icon: 'simple-icons:docker' },
+  { name: 'Cursor', icon: 'material-icon-theme:cursor' },
+  { name: 'Firefox Developer Edition', icon: 'simple-icons:firefoxbrowser' },
+  { name: 'Raycast', icon: 'simple-icons:raycast' },
+  { name: 'Anytype', icon: 'simple-icons:anytype' },
+  { name: 'Signal', icon: 'simple-icons:signal' },
+  { name: 'Supabase', icon: 'simple-icons:supabase' },
 ]
 </script>
 
 <template>
-  <div class="max-w-3xl">
-    <div class="prose prose-lg dark:prose-invert max-w-none mb-12">
-      <ContentRenderer
-        v-if="page"
-        :value="page"
-      />
-    </div>
+  <div class="max-w-4xl mx-auto space-y-16">
+    <section>
+      <h1 class="text-4xl font-bold text-center text-gray-900 dark:text-white mb-10">
+        About
+      </h1>
+      <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
+        <div class="shrink-0">
+          <NuxtImg
+            src="https://github.com/noook.png"
+            alt=""
+            class="w-32 h-32 lg:w-40 lg:h-40 rounded-full object-cover ring-4 ring-gray-200 dark:ring-gray-700"
+          />
+        </div>
 
-    <!-- Experiences Section -->
-    <div class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">
-        Experiences
-      </h2>
-      <div class="space-y-4">
-        <UCard
-          v-for="(exp, index) in experiences"
-          :key="index"
-          class="cursor-pointer hover:shadow-md transition-shadow"
-          @click="expandedExperience = expandedExperience === index ? null : index"
-        >
-          <template #header>
-            <div class="flex justify-between items-start">
-              <div>
-                <h3 class="font-semibold text-lg">
-                  {{ exp.title }}
-                </h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                  {{ exp.period }} · {{ exp.company }}
-                </p>
-              </div>
-              <UIcon
-                :name="expandedExperience === index ? 'i-heroicons-chevron-up' : 'i-heroicons-chevron-down'"
-                class="text-gray-400"
-              />
-            </div>
-          </template>
-          <div
-            v-if="expandedExperience === index"
-            class="pt-4 border-t"
-          >
-            <p class="text-gray-700 dark:text-gray-300">
-              {{ exp.description }}
-            </p>
+        <div class="flex-1">
+          <div class="prose prose-lg dark:prose-invert max-w-none [&_p]:mb-4">
+            <ContentRenderer
+              v-if="page"
+              :value="page"
+            />
           </div>
-        </UCard>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Tech Stack Section -->
-    <div>
-      <h2 class="text-2xl font-bold mb-6">
+    <section>
+      <h2 class="text-3xl font-bold mb-8 text-gray-900 dark:text-white">
+        Experience
+      </h2>
+      <ol class="space-y-4">
+        <li
+          v-for="experience in experiences"
+          :key="experience.title"
+        >
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+            {{ experience.title }}
+          </h3>
+          <p class="text-gray-600 dark:text-gray-400">
+            {{ experience.period }} / {{ experience.company }}
+          </p>
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h2 class="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
         Stack
       </h2>
-      <p class="text-gray-600 dark:text-gray-400 mb-4">
-        Some of the software and technologies I use on a daily basis
+      <p class="text-gray-600 dark:text-gray-400 mb-6">
+        Tools and technologies I use on a daily basis.
       </p>
-      <div class="flex flex-wrap gap-2">
-        <UBadge
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <UPageCard
           v-for="tech in techStack"
-          :key="tech"
-          color="primary"
-          variant="subtle"
-          size="lg"
+          :key="tech.name"
+          spotlight
+          class="aspect-square"
+          :ui="{ container: 'p-0' }"
         >
-          {{ tech }}
-        </UBadge>
+          <div class="grid size-full place-items-center text-center gap-2">
+            <div class="grid place-items-center">
+              <UIcon
+                :name="tech.icon"
+                class="size-8 text-gray-600 dark:text-gray-400 group-hover:text-primary-500 transition-colors"
+              />
+            </div>
+            <span class="text-sm font-medium text-gray-900 dark:text-white">
+              {{ tech.name }}
+            </span>
+          </div>
+        </UPageCard>
       </div>
-    </div>
+    </section>
   </div>
 </template>
