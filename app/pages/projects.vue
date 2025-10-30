@@ -10,7 +10,7 @@ const { data: projects } = await useAsyncData('projects', () => {
 </script>
 
 <template>
-  <div class="max-w-5xl">
+  <div class="max-w-4xl mx-auto">
     <!-- Page Header -->
     <div class="prose prose-lg dark:prose-invert max-w-none mb-12">
       <ContentRenderer
@@ -66,9 +66,27 @@ const { data: projects } = await useAsyncData('projects', () => {
 
     <div
       v-if="!projects || projects.length === 0"
-      class="text-center py-12 text-gray-500"
+      class="py-16"
     >
-      <p>No projects yet. Check back soon!</p>
+      <UCard class="max-w-2xl mx-auto text-center">
+        <template #header>
+          <h3 class="text-xl font-semibold">
+            Nothing to show here yet
+          </h3>
+        </template>
+        <p class="text-gray-600 dark:text-gray-400">
+          I'm planning to share both development projects and IRL projects soon.
+        </p>
+        <ul class="mt-4 text-gray-600 dark:text-gray-400 space-y-1">
+          <li>• Web apps, libraries, experiments</li>
+          <li>• Motorcycling roadtrips</li>
+          <li>• Mechanical keyboards collection</li>
+          <li>• Sport updates and more</li>
+        </ul>
+        <template #footer>
+          <span class="text-sm text-gray-500">Check back later — work in progress.</span>
+        </template>
+      </UCard>
     </div>
   </div>
 </template>

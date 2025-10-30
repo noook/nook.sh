@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { data: page } = await useAsyncData('page-blog', () => {
-  return queryCollection('content').where({ path: '/blog' }).first()
+  return queryCollection('content').path('/blog').first()
 })
 
 // Fetch posts from content collection
@@ -10,10 +10,13 @@ const { data: posts } = await useAsyncData('posts', () => {
 </script>
 
 <template>
-  <div class="max-w-3xl">
+  <div class="max-w-4xl mx-auto">
     <!-- Page Header -->
     <div class="prose prose-lg dark:prose-invert max-w-none mb-12">
-      <ContentRenderer v-if="page" :value="page" />
+      <ContentRenderer
+        v-if="page"
+        :value="page"
+      />
     </div>
 
     <!-- Blog Posts List -->
@@ -54,8 +57,28 @@ const { data: posts } = await useAsyncData('posts', () => {
         </div>
       </UCard>
 
-      <div v-if="!posts || posts.length === 0" class="text-center py-12 text-gray-500">
-        <p>No blog posts yet. Check back soon!</p>
+      <div
+        v-if="!posts || posts.length === 0"
+        class="py-16"
+      >
+        <UCard class="max-w-2xl mx-auto text-center">
+          <template #header>
+            <h3 class="text-xl font-semibold">
+              Nothing published yet
+            </h3>
+          </template>
+          <p class="text-gray-600 dark:text-gray-400">
+            I’m gathering thoughts I want to develop into longer posts.
+          </p>
+          <ul class="mt-4 text-gray-600 dark:text-gray-400 space-y-1">
+            <li>• Ideas and notes</li>
+            <li>• Returns on experience from projects</li>
+            <li>• Short write-ups that may become articles</li>
+          </ul>
+          <template #footer>
+            <span class="text-sm text-gray-500">Stay tuned — drafts in progress.</span>
+          </template>
+        </UCard>
       </div>
     </div>
   </div>

@@ -2,7 +2,7 @@
 const route = useRoute()
 
 const { data: post } = await useAsyncData(`post-${route.path}`, () => {
-  return queryCollection('posts').where({ path: route.path }).first()
+  return queryCollection('posts').path(route.path).first()
 })
 
 if (!post.value) {
@@ -20,7 +20,10 @@ useHead({
 <template>
   <article class="max-w-3xl">
     <!-- Back button -->
-    <NuxtLink to="/blog" class="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 mb-8">
+    <NuxtLink
+      to="/blog"
+      class="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 mb-8"
+    >
       <UIcon name="i-heroicons-arrow-left" />
       Back to Blog
     </NuxtLink>
@@ -32,7 +35,9 @@ useHead({
           {{ new Date(post.date).toLocaleDateString() }}
         </span>
       </div>
-      <h1 class="text-4xl font-bold mb-4">{{ post.title }}</h1>
+      <h1 class="text-4xl font-bold mb-4">
+        {{ post.title }}
+      </h1>
       <p class="text-xl text-gray-600 dark:text-gray-400">
         {{ post.description }}
       </p>
