@@ -82,24 +82,50 @@ pnpm preview
 
 This site targets Cloudflare Pages via Nitro's `cloudflare-pages` preset
 (see `nuxt.config.ts`). `@nuxt/content` auto-detects this preset at build
-time and switches its content database to Cloudflare D1 (binding name `DB`,
-configured in `wrangler.jsonc`) — no manual database wiring needed.
+time and switches its content database to Cloudflare D1 (binding name `DB`).
+
+### Config setup (one-time)
+
+`wrangler.jsonc` is **not committed** — it's generated at build/dev time
+from `wrangler.jsonc.example` by `scripts/generate-wrangler-config.mjs`
+(runs automatically as a `prebuild`/`predev` step), substituting the real D1
+`database_id` from the `CF_D1_DATABASE_ID` environment variable. This isn't
+because the database id is a secret (it isn't — you still need a real
+Cloudflare API token to do anything with it) but to keep infra resource ids
+out of the public repo.
 
 ```bash
-# Build the Cloudflare Worker output
+# Local dev/build: set once in your shell, or add to .env / .dev.vars
+export CF_D1_DATABASE_ID=<your-d1-database-id>
+```
+
+On Cloudflare Pages' git integration, set `CF_D1_DATABASE_ID` as a project
+environment variable (Dashboard → Workers & Pages → your project → Settings
+→ Environment variables) — it doesn't need to be marked "secret", just set.
+
+If `CF_D1_DATABASE_ID` isn't set and no `wrangler.jsonc` exists yet, the
+generator script warns and exits without failing the build — useful for
+CI steps that don't need the Cloudflare preset (e.g. pure lint/typecheck).
+
+### Commands
+
+```bash
+# Build the Cloudflare Worker output (runs the config generator first)
 pnpm build
 
 # Preview locally against a local D1 emulation (no remote resources touched)
 npx wrangler pages dev dist
 
-# Deploy (requires a real D1 database — see wrangler.jsonc — and a
-# Cloudflare API token with Pages:Edit + D1:Edit scopes)
+# Deploy (requires a Cloudflare API token with Pages:Edit + D1:Edit scopes)
 npx wrangler pages deploy dist
 ```
 
-`wrangler.jsonc` currently has a placeholder `database_id` — replace it with
-the real D1 database's id once created (`npx wrangler d1 create <name>`)
-before the first production deploy.
+### One-time D1 setup
+
+```bash
+npx wrangler d1 create nook-sh-content
+# copy the printed database_id into CF_D1_DATABASE_ID
+```
 
 Recommended production setup: connect this repo to Cloudflare Pages' git
 integration (Dashboard → Workers & Pages → Create → Connect to Git) so every

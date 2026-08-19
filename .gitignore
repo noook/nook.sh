@@ -10,6 +10,10 @@ dist
 .wrangler
 .dev.vars
 .dev.vars.*
+# Real config is generated from wrangler.jsonc.example at build/dev time
+# (see scripts/generate-wrangler-config.mjs) - keeps the D1 database_id
+# out of the public repo. The .example template IS committed.
+wrangler.jsonc
 
 # Node dependencies
 node_modules
