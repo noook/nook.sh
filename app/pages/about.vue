@@ -9,7 +9,12 @@ const { data: experiences } = await useAsyncData('experience', () => {
 
 // Engineering stack: languages, frameworks, infra actually used to build things.
 // Backend/systems-leaning entries first, per positioning decision (see plan doc).
+// Sourced against ~/work/resume-gen/content.json to keep this in sync with
+// what's actually claimed elsewhere - NestJS/Node.js were missing here
+// despite being the real stack behind the Madami build.
 const engineeringStack = [
+  { name: 'NestJS', icon: 'simple-icons:nestjs' },
+  { name: 'Node.js', icon: 'simple-icons:nodedotjs' },
   { name: 'PostgreSQL', icon: 'simple-icons:postgresql' },
   { name: 'Symfony', icon: 'simple-icons:symfony' },
   { name: 'PHP', icon: 'simple-icons:php' },
