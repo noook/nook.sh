@@ -2,7 +2,14 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "nook-sh",
   "compatibility_date": "2025-07-15",
-  "pages_build_output_dir": "dist",
+  // No "pages_build_output_dir" here on purpose: this project is a
+  // Cloudflare Workers project (unified Workers+static-assets), not classic
+  // Pages - Nitro's cloudflare-module preset generates its own wrangler.json
+  // at build time with the correct `main`/`assets` fields. Wrangler treats
+  // the mere PRESENCE of pages_build_output_dir as "this is a Pages config"
+  // and then rejects the `ASSETS` binding name Nitro assigns (reserved for
+  // Pages projects) - do not add this key back.
+  //
   // @nuxt/content requires a D1 database on Cloudflare (binding name must
   // be "DB" - it's hardcoded by @nuxt/content's cloudflare preset).
   // database_id is templated in from CF_D1_DATABASE_ID at build time by
@@ -16,3 +23,4 @@
     },
   ],
 }
+
