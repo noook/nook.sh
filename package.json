@@ -28,5 +28,15 @@
   "devDependencies": {
     "@iconify-json/lucide": "^1.2.71",
     "tailwindcss": "^4.3.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "better-sqlite3",
+      "esbuild",
+      "sharp",
+      "unrs-resolver",
+      "vue-demi"
+    ]
   }
 }
