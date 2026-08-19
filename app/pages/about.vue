@@ -3,62 +3,38 @@ const { data: page } = await useAsyncData('page-about', () => {
   return queryCollection('content').path('/about').first()
 })
 
-const experiences = [
-  {
-    title: 'Freelance Full-Stack Developer',
-    period: 'Jan 2024 – Now',
-    company: 'Madami · Kayro',
-    description: 'Building Madami, a platform supporting French non-profits with Vue/Nuxt and modern web technologies.',
-  },
-  {
-    title: 'Full-Stack Software Engineer',
-    period: 'Oct 2023 – Mar 2025',
-    company: 'Bouygues Telecom',
-    description: 'Developed and maintained web applications using Vue/Nuxt and TypeScript for telecommunications services.',
-  },
-  {
-    title: 'Full-Stack Software Engineer',
-    period: 'Jan 2022 – Oct 2023',
-    company: 'Beamy.io',
-    description: 'Built SaaS platform features with Vue/Nuxt and TypeScript, focusing on clean architecture and maintainability.',
-  },
-  {
-    title: 'Full-Stack Developer',
-    period: 'Feb 2019 – Dec 2021',
-    company: 'Golem.ai',
-    description: 'Developed AI-powered applications using Vue.js and PHP/Symfony, working on natural language processing interfaces.',
-  },
-  {
-    title: 'Lecturer (Vue/Nuxt, Symfony)',
-    period: '2021 – Now',
-    company: 'HEC · Epitech · IIM · Webschool Factory · ESD',
-    description: 'Teaching web development with Vue/Nuxt and Symfony at various institutions in Paris.',
-  },
-  {
-    title: 'Full-stack Software Engineer intern',
-    period: 'Jun 2018 — Sept 2018',
-    company: 'Zest',
-    description: 'Internship focusing on full-stack development with modern web technologies.',
-  },
+const { data: experiences } = await useAsyncData('experience', () => {
+  return queryCollection('experience').first()
+})
+
+// Engineering stack: languages, frameworks, infra actually used to build things.
+// Backend/systems-leaning entries first, per positioning decision (see plan doc).
+// Sourced against ~/work/resume-gen/content.json to keep this in sync with
+// what's actually claimed elsewhere - NestJS/Node.js were missing here
+// despite being the real stack behind the Madami build.
+const engineeringStack = [
+  { name: 'NestJS', icon: 'simple-icons:nestjs' },
+  { name: 'Node.js', icon: 'simple-icons:nodedotjs' },
+  { name: 'PostgreSQL', icon: 'simple-icons:postgresql' },
+  { name: 'Symfony', icon: 'simple-icons:symfony' },
+  { name: 'PHP', icon: 'simple-icons:php' },
+  { name: 'Rust', icon: 'simple-icons:rust' },
+  { name: 'Docker', icon: 'simple-icons:docker' },
+  { name: 'Drizzle ORM', icon: 'simple-icons:drizzle' },
+  { name: 'TypeScript', icon: 'simple-icons:typescript' },
+  { name: 'Nuxt.js', icon: 'simple-icons:nuxtdotjs' },
+  { name: 'Vue.js', icon: 'simple-icons:vuedotjs' },
+  { name: 'Tailwind CSS', icon: 'simple-icons:tailwindcss' },
+  { name: 'Supabase', icon: 'simple-icons:supabase' },
 ]
 
-const techStack = [
-  { name: 'Vue.js', icon: 'simple-icons:vuedotjs' },
-  { name: 'Nuxt.js', icon: 'simple-icons:nuxtdotjs' },
-  { name: 'TypeScript', icon: 'simple-icons:typescript' },
-  { name: 'PHP', icon: 'simple-icons:php' },
-  { name: 'Symfony', icon: 'simple-icons:symfony' },
-  { name: 'Rust', icon: 'simple-icons:rust' },
-  { name: 'Tailwind CSS', icon: 'simple-icons:tailwindcss' },
-  { name: 'PostgreSQL', icon: 'simple-icons:postgresql' },
-  { name: 'Drizzle ORM', icon: 'simple-icons:drizzle' },
-  { name: 'Docker', icon: 'simple-icons:docker' },
+// Personal tools: day-to-day setup, not a skills claim.
+const personalTools = [
   { name: 'Cursor', icon: 'material-icon-theme:cursor' },
   { name: 'Firefox Developer Edition', icon: 'simple-icons:firefoxbrowser' },
   { name: 'Raycast', icon: 'simple-icons:raycast' },
   { name: 'Anytype', icon: 'simple-icons:anytype' },
   { name: 'Signal', icon: 'simple-icons:signal' },
-  { name: 'Supabase', icon: 'simple-icons:supabase' },
 ]
 </script>
 
@@ -112,11 +88,11 @@ const techStack = [
         Stack
       </h2>
       <p class="text-gray-600 dark:text-gray-400 mb-6">
-        Tools and technologies I use on a daily basis.
+        Tools and technologies I use to build things.
       </p>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         <UPageCard
-          v-for="tech in techStack"
+          v-for="tech in engineeringStack"
           :key="tech.name"
           spotlight
           class="aspect-square"
@@ -131,6 +107,36 @@ const techStack = [
             </div>
             <span class="text-sm font-medium text-gray-900 dark:text-white">
               {{ tech.name }}
+            </span>
+          </div>
+        </UPageCard>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+        Daily setup
+      </h2>
+      <p class="text-gray-600 dark:text-gray-400 mb-6">
+        Apps and tools I run day to day — not a skills list, just what's on my machine.
+      </p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <UPageCard
+          v-for="tool in personalTools"
+          :key="tool.name"
+          spotlight
+          class="aspect-square"
+          :ui="{ container: 'p-0' }"
+        >
+          <div class="grid size-full place-items-center text-center gap-2">
+            <div class="grid place-items-center">
+              <UIcon
+                :name="tool.icon"
+                class="size-8 text-gray-600 dark:text-gray-400 group-hover:text-primary-500 transition-colors"
+              />
+            </div>
+            <span class="text-sm font-medium text-gray-900 dark:text-white">
+              {{ tool.name }}
             </span>
           </div>
         </UPageCard>

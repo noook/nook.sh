@@ -1,6 +1,6 @@
 ---
 title: "Hi — I'm Neil Richter"
-description: "Full-stack engineer using Vue/Nuxt, TypeScript, and PHP/Symfony. Currently building Madami for French non-profits and learning Rust to strengthen my fundamentals in algorithms and performance."
+description: "Full-stack engineer working with Node.js/NestJS, PHP/Symfony, PostgreSQL, and Vue/Nuxt/TypeScript. Learning Rust to strengthen my fundamentals in algorithms and performance."
 layout: default
 ---
 
@@ -17,8 +17,8 @@ ui: {
 
 #description
 
-Full-stack engineer using **Vue/Nuxt**, **TypeScript**, and **PHP/Symfony**.
-Currently building **Madami** for French non-profits and learning **Rust** to strengthen my fundamentals in algorithms and performance.
+Full-stack engineer working with **Node.js/NestJS**, **PHP/Symfony**, and **PostgreSQL** on the backend, **Vue/Nuxt/TypeScript** on the frontend.
+Currently learning **Rust** to strengthen my fundamentals in algorithms and performance.
 
 #headline
   ::nuxt-img
