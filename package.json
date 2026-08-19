@@ -3,6 +3,8 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "prebuild": "node scripts/generate-wrangler-config.mjs",
+    "predev": "node scripts/generate-wrangler-config.mjs",
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
