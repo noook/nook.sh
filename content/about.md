@@ -8,7 +8,7 @@ I'm a **full-stack software engineer** focused on building clean, maintainable w
 
 I work mainly with **Node.js/NestJS**, **PHP/Symfony**, and **PostgreSQL** on the backend, with **Vue/Nuxt/TypeScript** on the frontend. Lately, I've been learning Rust, using it as an opportunity to deepen my understanding of algorithms, data structures, and efficient programming overall.
 
-Over the past six years, I've worked in startups and larger teams, contributing to projects at **Bouygues Telecom**, **Beamy.io**, and **Golem.ai**, and most recently leading the build of **Madami** — a NestJS/PostgreSQL platform supporting French non-profits — as sole engineer end to end.
+Over the past six years, I've worked in startups and larger teams, contributing to projects at **Bouygues Telecom**, **Beamy.io**, and **Golem.ai**, and most recently leading **Madami**, a donation and membership platform for French non-profits, as sole engineer from architecture through production.
 
 Outside of work, I teach web development in Paris and occasionally contribute to open-source projects in the **Nuxt** ecosystem.
 
