@@ -21,13 +21,14 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   compatibilityDate: '2025-07-15',
 
-  // Deploy target: Cloudflare Pages.
-  // @nuxt/content auto-detects this preset and switches its database
-  // to Cloudflare D1 (binding name `DB`) - no manual database config needed,
-  // see node_modules/@nuxt/content/dist/module.mjs setupNitro() for the
-  // Cloudflare preset it applies automatically.
+  // Deploy target: Cloudflare Workers (unified Workers+static-assets, the
+  // current default Cloudflare recommends for new projects - not classic
+  // "Pages"). @nuxt/content auto-detects any `cloudflare*` preset and
+  // switches its database to Cloudflare D1 (binding name `DB`) regardless
+  // of which cloudflare preset is used - no manual database config needed,
+  // see node_modules/@nuxt/content/dist/module.mjs setupNitro().
   nitro: {
-    preset: 'cloudflare-pages',
+    preset: 'cloudflare-module',
   },
 
   vite: {
