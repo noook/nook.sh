@@ -3,9 +3,10 @@ const { data: page } = await useAsyncData('page-about', () => {
   return queryCollection('content').path('/about').first()
 })
 
-const { data: experiences } = await useAsyncData('experience', () => {
+const { data: experienceData } = await useAsyncData('experience', () => {
   return queryCollection('experience').first()
 })
+const experiences = computed(() => experienceData.value?.items ?? [])
 
 // Engineering stack: languages, frameworks, infra actually used to build things.
 // Backend/systems-leaning entries first, per positioning decision (see plan doc).
