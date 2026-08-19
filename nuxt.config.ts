@@ -21,6 +21,15 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   compatibilityDate: '2025-07-15',
 
+  // Deploy target: Cloudflare Pages.
+  // @nuxt/content auto-detects this preset and switches its database
+  // to Cloudflare D1 (binding name `DB`) - no manual database config needed,
+  // see node_modules/@nuxt/content/dist/module.mjs setupNitro() for the
+  // Cloudflare preset it applies automatically.
+  nitro: {
+    preset: 'cloudflare-pages',
+  },
+
   vite: {
     optimizeDeps: {
       include: ['tailwindcss/colors'],

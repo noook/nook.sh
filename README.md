@@ -78,6 +78,34 @@ pnpm build
 pnpm preview
 ```
 
+## Deployment (Cloudflare Pages)
+
+This site targets Cloudflare Pages via Nitro's `cloudflare-pages` preset
+(see `nuxt.config.ts`). `@nuxt/content` auto-detects this preset at build
+time and switches its content database to Cloudflare D1 (binding name `DB`,
+configured in `wrangler.jsonc`) — no manual database wiring needed.
+
+```bash
+# Build the Cloudflare Worker output
+pnpm build
+
+# Preview locally against a local D1 emulation (no remote resources touched)
+npx wrangler pages dev dist
+
+# Deploy (requires a real D1 database — see wrangler.jsonc — and a
+# Cloudflare API token with Pages:Edit + D1:Edit scopes)
+npx wrangler pages deploy dist
+```
+
+`wrangler.jsonc` currently has a placeholder `database_id` — replace it with
+the real D1 database's id once created (`npx wrangler d1 create <name>`)
+before the first production deploy.
+
+Recommended production setup: connect this repo to Cloudflare Pages' git
+integration (Dashboard → Workers & Pages → Create → Connect to Git) so every
+push to `main` builds and deploys automatically, rather than deploying via
+CLI by hand.
+
 ## Tech Stack
 
 - Nuxt 4

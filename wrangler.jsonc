@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nook-sh",
+  "compatibility_date": "2025-07-15",
+  "pages_build_output_dir": "dist",
+  // @nuxt/content requires a D1 database on Cloudflare (binding name must
+  // be "DB" - it's hardcoded by @nuxt/content's cloudflare preset).
+  // database_id below is a placeholder - replace once the real production
+  // D1 database is created (Topic 1 execution, not done in this prep pass).
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "nook-sh-content",
+      "database_id": "REPLACE_WITH_REAL_D1_DATABASE_ID",
+    },
+  ],
+}
