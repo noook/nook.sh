@@ -20,7 +20,7 @@ useHead({
     { rel: 'canonical', href: `https://nook.sh${route.path}` },
   ],
 })
-defineOgImageComponent('Default', { title: project.value.title })
+defineOgImage('Default', { title: project.value.title })
 </script>
 
 <template>

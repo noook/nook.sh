@@ -44,7 +44,7 @@ useHead({
     { rel: 'canonical', href: 'https://nook.sh/about' },
   ],
 })
-defineOgImageComponent('Default', { title: 'About — Neil Richter' })
+defineOgImage('Default', { title: 'About — Neil Richter' })
 </script>
 
 <template>
