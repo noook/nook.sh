@@ -38,39 +38,64 @@ defineOgImage('Default', { title: 'Projects — Neil Richter' })
         :to="project.path"
         class="block"
       >
-        <UCard class="hover:shadow-lg transition-shadow cursor-pointer">
+        <UCard
+          class="h-full hover:shadow-lg transition-shadow cursor-pointer overflow-hidden"
+          :ui="{ body: 'p-4 sm:p-4', header: 'p-0 sm:p-0' }"
+        >
           <template #header>
-            <div class="flex items-start justify-between">
-              <h3 class="text-xl font-semibold hover:text-primary-500">
-                {{ project.title }}
-              </h3>
+            <div class="relative">
+              <div
+                v-if="project.image"
+                class="aspect-video overflow-hidden"
+              >
+                <NuxtImg
+                  :src="project.image"
+                  :alt="project.title"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div
+                v-else
+                class="aspect-video flex items-center justify-center bg-gray-100 dark:bg-gray-800"
+              >
+                <UIcon
+                  :name="project.type === 'code' ? 'lucide:code-2' : 'lucide:map-pin'"
+                  class="size-10 text-gray-400 dark:text-gray-600"
+                />
+              </div>
               <UBadge
                 :color="project.type === 'code' ? 'blue' : 'green'"
                 variant="subtle"
+                class="absolute top-3 right-3"
               >
                 {{ project.type === 'code' ? 'Code' : 'IRL' }}
               </UBadge>
             </div>
           </template>
 
-          <p class="text-gray-600 dark:text-gray-400 mb-4">
-            {{ project.description }}
-          </p>
+          <div>
+            <h3 class="text-xl font-semibold mb-2 hover:text-primary-500">
+              {{ project.title }}
+            </h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-4">
+              {{ project.description }}
+            </p>
 
-          <div class="flex items-center justify-between">
-            <div class="flex gap-2 flex-wrap">
-              <UBadge
-                v-for="tag in project.tags"
-                :key="tag"
-                variant="outline"
-                size="sm"
-              >
-                {{ tag }}
-              </UBadge>
+            <div class="flex items-center justify-between">
+              <div class="flex gap-2 flex-wrap">
+                <UBadge
+                  v-for="tag in project.tags"
+                  :key="tag"
+                  variant="outline"
+                  size="sm"
+                >
+                  {{ tag }}
+                </UBadge>
+              </div>
+              <span class="text-sm text-gray-500">
+                {{ new Date(project.date).getFullYear() }}
+              </span>
             </div>
-            <span class="text-sm text-gray-500">
-              {{ new Date(project.date).getFullYear() }}
-            </span>
           </div>
         </UCard>
       </NuxtLink>

@@ -16,6 +16,10 @@ export default defineContentConfig({
       schema: z.object({
         date: z.string(),
         tags: z.array(z.string()).default([]),
+        // Cover image shown on the /blog listing card - optional, cards
+        // fall back to a themed placeholder (see blog.vue) when unset so
+        // the grid still looks intentional before real photos exist.
+        image: z.string().optional(),
         // Draft posts are excluded from listings, sitemap (filter below),
         // and direct URLs in production - see app/pages/blog.vue and
         // app/pages/posts/[...slug].vue, which gate on `import.meta.dev`
@@ -42,6 +46,7 @@ export default defineContentConfig({
         date: z.string(),
         tags: z.array(z.string()).default([]),
         type: z.enum(['code', 'irl']).default('code'),
+        image: z.string().optional(),
         draft: z.boolean().default(false),
         sitemap: defineSitemapSchema({
           name: 'projects',
