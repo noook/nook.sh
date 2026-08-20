@@ -7,9 +7,10 @@ const { data: project } = await useAsyncData(`project-${route.path}`, () => {
 
 // Drafts 404 in production even via direct URL, but stay reachable on
 // Cloudflare preview deploys - see nuxt.config.ts runtimeConfig.showDrafts
-// and posts/[...slug].vue for the same pattern.
+// and posts/[...slug].vue for the same pattern, including the stricter
+// mock-content 404 rule.
 const { public: { showDrafts } } = useRuntimeConfig()
-if (!project.value || (project.value.draft && !showDrafts)) {
+if (!project.value || (project.value.mock && !import.meta.dev) || (project.value.draft && !showDrafts)) {
   throw createError({ statusCode: 404, statusMessage: 'Project not found' })
 }
 
@@ -23,6 +24,16 @@ useHead({
   ],
 })
 defineOgImage('Default', { title: project.value.title })
+
+// Shared-element view transitions: see app/pages/blog.vue for the full
+// explanation. Keyed by route.path, matching project.path on the listing.
+const supportsViewTransitions = import.meta.client && 'startViewTransition' in document
+const imageTransitionStyle = supportsViewTransitions
+  ? { viewTransitionName: `project-image-${route.path.replace(/\//g, '-')}` }
+  : undefined
+const titleTransitionStyle = supportsViewTransitions
+  ? { viewTransitionName: `project-title-${route.path.replace(/\//g, '-')}` }
+  : undefined
 </script>
 
 <template>
@@ -35,6 +46,19 @@ defineOgImage('Default', { title: project.value.title })
       <UIcon name="i-heroicons-arrow-left" />
       Back to Projects
     </NuxtLink>
+
+    <!-- Hero image -->
+    <div
+      v-if="project.image"
+      class="aspect-video rounded-lg overflow-hidden mb-8"
+    >
+      <NuxtImg
+        :src="project.image"
+        :alt="project.title"
+        class="w-full h-full object-cover"
+        :style="imageTransitionStyle"
+      />
+    </div>
 
     <!-- Project Header -->
     <div class="mb-8">
@@ -52,7 +76,10 @@ defineOgImage('Default', { title: project.value.title })
           {{ new Date(project.date).toLocaleDateString() }}
         </span>
       </div>
-      <h1 class="text-4xl font-bold mb-4">
+      <h1
+        class="text-4xl font-bold mb-4"
+        :style="titleTransitionStyle"
+      >
         {{ project.title }}
       </h1>
       <p class="text-xl text-muted">

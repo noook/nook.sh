@@ -7,10 +7,17 @@ const { data: page } = await useAsyncData('page-blog', () => {
 // show in local `nuxt dev` and on any Cloudflare preview deploy, hidden only
 // on the real production build - see nuxt.config.ts runtimeConfig.showDrafts
 // for how that's determined (WORKERS_CI_DEFAULT_BRANCH, baked at build time).
+// Mock posts (mock: true) are stricter: local-dev-only in every environment,
+// including preview deploys, via the build-time import.meta.dev constant -
+// they're filled-in example content for testing layout/features locally,
+// not something that should ever be reachable on a public URL.
 const { public: { showDrafts } } = useRuntimeConfig()
 const { data: posts } = await useAsyncData('posts', () => {
   const query = queryCollection('posts')
-  return showDrafts ? query.all() : query.where('draft', '=', false).all()
+  if (import.meta.dev) return query.all()
+  return showDrafts
+    ? query.where('mock', '=', false).all()
+    : query.where('draft', '=', false).where('mock', '=', false).all()
 })
 
 useHead({
@@ -20,6 +27,23 @@ useHead({
   ],
 })
 defineOgImage('Default', { title: 'Blog — Neil Richter' })
+
+// Shared-element view transitions: the same view-transition-name on the
+// card's image/title here and on the detail page's hero image/title (see
+// posts/[...slug].vue) makes the browser morph between them on navigation
+// instead of cross-fading the whole page. Names must be unique per
+// currently-visible element, so they're keyed by post.path - a static
+// name would collide across every card in the grid. Only applied when
+// view transitions are actually supported (progressive enhancement, see
+// nuxt.config.ts) - the ternary falls back to `undefined` so `style`
+// simply isn't set otherwise, no dead attribute.
+const supportsViewTransitions = import.meta.client && 'startViewTransition' in document
+function imageTransitionName(path: string) {
+  return supportsViewTransitions ? { viewTransitionName: `post-image-${path.replace(/\//g, '-')}` } : undefined
+}
+function titleTransitionName(path: string) {
+  return supportsViewTransitions ? { viewTransitionName: `post-title-${path.replace(/\//g, '-')}` } : undefined
+}
 </script>
 
 <template>
@@ -53,6 +77,7 @@ defineOgImage('Default', { title: 'Blog — Neil Richter' })
                 :src="post.image"
                 :alt="post.title"
                 class="w-full h-full object-cover"
+                :style="imageTransitionName(post.path)"
               />
             </div>
             <div
@@ -67,7 +92,10 @@ defineOgImage('Default', { title: 'Blog — Neil Richter' })
           </template>
 
           <div class="flex-1">
-            <h3 class="text-xl font-semibold mb-2 hover:text-primary-500">
+            <h3
+              class="text-xl font-semibold mb-2 hover:text-primary-500"
+              :style="titleTransitionName(post.path)"
+            >
               {{ post.title }}
             </h3>
             <p

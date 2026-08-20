@@ -4,11 +4,16 @@ const { data: page } = await useAsyncData('page-projects', () => {
 })
 
 // Fetch projects from content collection. Same preview-visible draft filter
-// as blog.vue - see nuxt.config.ts runtimeConfig.showDrafts.
+// as blog.vue - see nuxt.config.ts runtimeConfig.showDrafts. Mock projects
+// (mock: true) are local-dev-only in every environment, including preview
+// deploys - see blog.vue for the full reasoning.
 const { public: { showDrafts } } = useRuntimeConfig()
 const { data: projects } = await useAsyncData('projects', () => {
   const query = queryCollection('projects')
-  return showDrafts ? query.all() : query.where('draft', '=', false).all()
+  if (import.meta.dev) return query.all()
+  return showDrafts
+    ? query.where('mock', '=', false).all()
+    : query.where('draft', '=', false).where('mock', '=', false).all()
 })
 
 useHead({
@@ -18,6 +23,16 @@ useHead({
   ],
 })
 defineOgImage('Default', { title: 'Projects — Neil Richter' })
+
+// Shared-element view transitions: see app/pages/blog.vue for the full
+// explanation. Keyed by project.path so each card gets a unique name.
+const supportsViewTransitions = import.meta.client && 'startViewTransition' in document
+function imageTransitionName(path: string) {
+  return supportsViewTransitions ? { viewTransitionName: `project-image-${path.replace(/\//g, '-')}` } : undefined
+}
+function titleTransitionName(path: string) {
+  return supportsViewTransitions ? { viewTransitionName: `project-title-${path.replace(/\//g, '-')}` } : undefined
+}
 </script>
 
 <template>
@@ -52,6 +67,7 @@ defineOgImage('Default', { title: 'Projects — Neil Richter' })
                   :src="project.image"
                   :alt="project.title"
                   class="w-full h-full object-cover"
+                  :style="imageTransitionName(project.path)"
                 />
               </div>
               <div
@@ -74,7 +90,10 @@ defineOgImage('Default', { title: 'Projects — Neil Richter' })
           </template>
 
           <div>
-            <h3 class="text-xl font-semibold mb-2 hover:text-primary-500">
+            <h3
+              class="text-xl font-semibold mb-2 hover:text-primary-500"
+              :style="titleTransitionName(project.path)"
+            >
               {{ project.title }}
             </h3>
             <p class="text-muted mb-4">
