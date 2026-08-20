@@ -57,11 +57,11 @@ defineOgImage('Default', { title: 'Blog — Neil Richter' })
             </div>
             <div
               v-else
-              class="aspect-video flex items-center justify-center bg-gray-100 dark:bg-gray-800"
+              class="aspect-video flex items-center justify-center bg-elevated"
             >
               <UIcon
                 name="lucide:file-text"
-                class="size-10 text-gray-400 dark:text-gray-600"
+                class="size-10 text-dimmed"
               />
             </div>
           </template>
@@ -72,11 +72,11 @@ defineOgImage('Default', { title: 'Blog — Neil Richter' })
             </h3>
             <p
               v-if="!Number.isNaN(new Date(post.date).getTime())"
-              class="text-sm text-gray-500 mb-3"
+              class="text-sm text-dimmed mb-3"
             >
               {{ new Date(post.date).toLocaleDateString() }}
             </p>
-            <p class="text-gray-600 dark:text-gray-400 mb-4">
+            <p class="text-muted mb-4">
               {{ post.description }}
             </p>
 
@@ -104,16 +104,16 @@ defineOgImage('Default', { title: 'Blog — Neil Richter' })
               Nothing published yet
             </h3>
           </template>
-          <p class="text-gray-600 dark:text-gray-400">
+          <p class="text-muted">
             I’m gathering thoughts I want to develop into longer posts.
           </p>
-          <ul class="mt-4 text-gray-600 dark:text-gray-400 space-y-1">
+          <ul class="mt-4 text-muted space-y-1">
             <li>• Ideas and notes</li>
             <li>• Returns on experience from projects</li>
             <li>• Short write-ups that may become articles</li>
           </ul>
           <template #footer>
-            <span class="text-sm text-gray-500">Stay tuned — drafts in progress.</span>
+            <span class="text-sm text-dimmed">Stay tuned — drafts in progress.</span>
           </template>
         </UCard>
       </div>

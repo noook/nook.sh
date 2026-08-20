@@ -12,7 +12,7 @@ const socials = useAppConfig().socials
       :aria-label="`Visit ${social.label}`"
       external
       target="_blank"
-      class="text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors duration-200"
+      class="text-muted hover:text-primary-500 dark:hover:text-primary-400 transition-colors duration-200"
     >
       <UIcon
         :name="social.icon"

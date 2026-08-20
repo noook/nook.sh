@@ -30,7 +30,7 @@ defineOgImage('Default', { title: project.value.title })
     <!-- Back button -->
     <NuxtLink
       to="/projects"
-      class="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 mb-8"
+      class="inline-flex items-center gap-2 text-sm text-muted hover:text-primary-500 mb-8"
     >
       <UIcon name="i-heroicons-arrow-left" />
       Back to Projects
@@ -47,7 +47,7 @@ defineOgImage('Default', { title: project.value.title })
         </UBadge>
         <span
           v-if="!Number.isNaN(new Date(project.date).getTime())"
-          class="text-sm text-gray-500"
+          class="text-sm text-dimmed"
         >
           {{ new Date(project.date).toLocaleDateString() }}
         </span>
@@ -55,7 +55,7 @@ defineOgImage('Default', { title: project.value.title })
       <h1 class="text-4xl font-bold mb-4">
         {{ project.title }}
       </h1>
-      <p class="text-xl text-gray-600 dark:text-gray-400">
+      <p class="text-xl text-muted">
         {{ project.description }}
       </p>
     </div>
