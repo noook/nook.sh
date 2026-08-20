@@ -3,9 +3,13 @@ const { data: page } = await useAsyncData('page-blog', () => {
   return queryCollection('content').path('/blog').first()
 })
 
-// Fetch posts from content collection
+// Fetch posts from content collection. Drafts (draft: true in frontmatter)
+// only show in dev - import.meta.dev is a Nuxt build-time constant baked
+// to `false` in production, so this filter can never expose a draft once
+// deployed, regardless of anyone knowing the URL.
 const { data: posts } = await useAsyncData('posts', () => {
-  return queryCollection('posts').all()
+  const query = queryCollection('posts')
+  return import.meta.dev ? query.all() : query.where('draft', '=', false).all()
 })
 </script>
 

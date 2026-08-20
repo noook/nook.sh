@@ -2,10 +2,12 @@
 const route = useRoute()
 
 const { data: project } = await useAsyncData(`project-${route.path}`, () => {
-  return queryCollection('projects').where({ path: route.path }).first()
+  return queryCollection('projects').path(route.path).first()
 })
 
-if (!project.value) {
+// Drafts 404 in production even via direct URL - see posts/[...slug].vue
+// for why import.meta.dev makes this dev-only, not just listing-hidden.
+if (!project.value || (project.value.draft && !import.meta.dev)) {
   throw createError({ statusCode: 404, statusMessage: 'Project not found' })
 }
 
@@ -20,7 +22,10 @@ useHead({
 <template>
   <article class="max-w-3xl">
     <!-- Back button -->
-    <NuxtLink to="/projects" class="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 mb-8">
+    <NuxtLink
+      to="/projects"
+      class="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 mb-8"
+    >
       <UIcon name="i-heroicons-arrow-left" />
       Back to Projects
     </NuxtLink>
@@ -38,7 +43,9 @@ useHead({
           {{ new Date(project.date).toLocaleDateString() }}
         </span>
       </div>
-      <h1 class="text-4xl font-bold mb-4">{{ project.title }}</h1>
+      <h1 class="text-4xl font-bold mb-4">
+        {{ project.title }}
+      </h1>
       <p class="text-xl text-gray-600 dark:text-gray-400">
         {{ project.description }}
       </p>

@@ -1,0 +1,18 @@
+---
+title: "[TODO: title]"
+description: "[TODO: one-sentence summary for the projects listing card]"
+date: "[TODO: YYYY-MM-DD]"
+tags: []
+type: "code" # or "irl"
+draft: true
+---
+
+[TODO: what is this / why does it exist]
+
+## [TODO: section heading, e.g. "How it works" / "The build" / "What I learned"]
+
+[TODO: body]
+
+## Links
+
+[TODO: repo / demo / photos, if any]
