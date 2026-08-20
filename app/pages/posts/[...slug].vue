@@ -26,6 +26,18 @@ useHead({
   ],
 })
 defineOgImage('Default', { title: post.value.title })
+
+// Shared-element view transitions: see blog.vue for the full explanation.
+// Same name (keyed by route.path, matching post.path there) on the hero
+// image/title here as on the listing card makes the browser morph
+// between them on navigation instead of cross-fading the whole page.
+const supportsViewTransitions = import.meta.client && 'startViewTransition' in document
+const imageTransitionStyle = supportsViewTransitions
+  ? { viewTransitionName: `post-image-${route.path.replace(/\//g, '-')}` }
+  : undefined
+const titleTransitionStyle = supportsViewTransitions
+  ? { viewTransitionName: `post-title-${route.path.replace(/\//g, '-')}` }
+  : undefined
 </script>
 
 <template>
@@ -39,6 +51,19 @@ defineOgImage('Default', { title: post.value.title })
       Back to Blog
     </NuxtLink>
 
+    <!-- Hero image -->
+    <div
+      v-if="post.image"
+      class="aspect-video rounded-lg overflow-hidden mb-8"
+    >
+      <NuxtImg
+        :src="post.image"
+        :alt="post.title"
+        class="w-full h-full object-cover"
+        :style="imageTransitionStyle"
+      />
+    </div>
+
     <!-- Post Header -->
     <div class="mb-8">
       <div
@@ -49,7 +74,10 @@ defineOgImage('Default', { title: post.value.title })
           {{ new Date(post.date).toLocaleDateString() }}
         </span>
       </div>
-      <h1 class="text-4xl font-bold mb-4">
+      <h1
+        class="text-4xl font-bold mb-4"
+        :style="titleTransitionStyle"
+      >
         {{ post.title }}
       </h1>
       <p class="text-xl text-muted">

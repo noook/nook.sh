@@ -20,6 +20,14 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       ],
     },
+    // Native browser View Transitions API (progressive enhancement - a
+    // no-op on browsers without document.startViewTransition, and Nuxt
+    // itself skips it automatically when the user has
+    // prefers-reduced-motion set). Cross-fades page content on route
+    // change; per-element shared transitions (card image -> hero image)
+    // are opt-in via view-transition-name in CSS, see
+    // app/assets/css/main.css.
+    viewTransition: true,
   },
 
   css: ['~/assets/css/main.css'],
@@ -48,6 +56,17 @@ export default defineNuxtConfig({
     public: {
       showDrafts: process.env.WORKERS_CI_DEFAULT_BRANCH !== 'true',
     },
+  },
+
+  // app.viewTransition above only sets the *runtime* enabled flag - the
+  // client plugin that actually calls document.startViewTransition on
+  // navigation is only registered at build time when this experimental
+  // flag is also set (confirmed by reading Nuxt's own module registration
+  // logic, node_modules/nuxt/dist/index.mjs: `if
+  // (nuxt.options.experimental.viewTransition) addPlugin(...)`). Both are
+  // required together, app.viewTransition alone is a silent no-op.
+  experimental: {
+    viewTransition: true,
   },
   compatibilityDate: '2025-07-15',
 
