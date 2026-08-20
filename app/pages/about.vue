@@ -50,7 +50,7 @@ defineOgImage('Default', { title: 'About — Neil Richter' })
 <template>
   <div class="max-w-4xl mx-auto space-y-16">
     <section>
-      <h1 class="text-4xl font-bold text-center text-gray-900 dark:text-white mb-10">
+      <h1 class="text-4xl font-bold text-center text-highlighted mb-10">
         About
       </h1>
       <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
@@ -58,7 +58,7 @@ defineOgImage('Default', { title: 'About — Neil Richter' })
           <NuxtImg
             src="https://github.com/noook.png"
             alt=""
-            class="w-32 h-32 lg:w-40 lg:h-40 rounded-full object-cover ring-4 ring-gray-200 dark:ring-gray-700"
+            class="w-32 h-32 lg:w-40 lg:h-40 rounded-full object-cover ring-4 ring-muted"
           />
         </div>
 
@@ -74,7 +74,7 @@ defineOgImage('Default', { title: 'About — Neil Richter' })
     </section>
 
     <section>
-      <h2 class="text-3xl font-bold mb-8 text-gray-900 dark:text-white">
+      <h2 class="text-3xl font-bold mb-8 text-highlighted">
         Experience
       </h2>
       <ol class="space-y-4">
@@ -82,10 +82,10 @@ defineOgImage('Default', { title: 'About — Neil Richter' })
           v-for="experience in experiences"
           :key="experience.title"
         >
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+          <h3 class="text-lg font-semibold text-highlighted">
             {{ experience.title }}
           </h3>
-          <p class="text-gray-600 dark:text-gray-400">
+          <p class="text-muted">
             {{ experience.period }} / {{ experience.company }}
           </p>
         </li>
@@ -93,10 +93,10 @@ defineOgImage('Default', { title: 'About — Neil Richter' })
     </section>
 
     <section>
-      <h2 class="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+      <h2 class="text-3xl font-bold mb-4 text-highlighted">
         Stack
       </h2>
-      <p class="text-gray-600 dark:text-gray-400 mb-6">
+      <p class="text-muted mb-6">
         Tools and technologies I use to build things.
       </p>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -111,10 +111,10 @@ defineOgImage('Default', { title: 'About — Neil Richter' })
             <div class="grid place-items-center">
               <UIcon
                 :name="tech.icon"
-                class="size-8 text-gray-600 dark:text-gray-400 group-hover:text-primary-500 transition-colors"
+                class="size-8 text-muted group-hover:text-primary-500 transition-colors"
               />
             </div>
-            <span class="text-sm font-medium text-gray-900 dark:text-white">
+            <span class="text-sm font-medium text-highlighted">
               {{ tech.name }}
             </span>
           </div>
@@ -123,10 +123,10 @@ defineOgImage('Default', { title: 'About — Neil Richter' })
     </section>
 
     <section>
-      <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+      <h2 class="text-2xl font-bold mb-4 text-highlighted">
         Daily setup
       </h2>
-      <p class="text-gray-600 dark:text-gray-400 mb-6">
+      <p class="text-muted mb-6">
         Apps and tools I run day to day — not a skills list, just what's on my machine.
       </p>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -141,10 +141,10 @@ defineOgImage('Default', { title: 'About — Neil Richter' })
             <div class="grid place-items-center">
               <UIcon
                 :name="tool.icon"
-                class="size-8 text-gray-600 dark:text-gray-400 group-hover:text-primary-500 transition-colors"
+                class="size-8 text-muted group-hover:text-primary-500 transition-colors"
               />
             </div>
-            <span class="text-sm font-medium text-gray-900 dark:text-white">
+            <span class="text-sm font-medium text-highlighted">
               {{ tool.name }}
             </span>
           </div>

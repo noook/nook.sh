@@ -30,7 +30,7 @@ defineOgImage('Default', { title: post.value.title })
     <!-- Back button -->
     <NuxtLink
       to="/blog"
-      class="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 mb-8"
+      class="inline-flex items-center gap-2 text-sm text-muted hover:text-primary-500 mb-8"
     >
       <UIcon name="i-heroicons-arrow-left" />
       Back to Blog
@@ -42,14 +42,14 @@ defineOgImage('Default', { title: post.value.title })
         v-if="!Number.isNaN(new Date(post.date).getTime())"
         class="mb-4"
       >
-        <span class="text-sm text-gray-500">
+        <span class="text-sm text-dimmed">
           {{ new Date(post.date).toLocaleDateString() }}
         </span>
       </div>
       <h1 class="text-4xl font-bold mb-4">
         {{ post.title }}
       </h1>
-      <p class="text-xl text-gray-600 dark:text-gray-400">
+      <p class="text-xl text-muted">
         {{ post.description }}
       </p>
     </div>

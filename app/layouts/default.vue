@@ -28,7 +28,7 @@
 
     <UFooter>
       <template #default>
-        <p class="text-center text-sm text-gray-600 dark:text-gray-400">
+        <p class="text-center text-sm text-muted">
           © 2025, Neil Richter - All rights reserved.
         </p>
       </template>

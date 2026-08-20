@@ -56,11 +56,11 @@ defineOgImage('Default', { title: 'Projects — Neil Richter' })
               </div>
               <div
                 v-else
-                class="aspect-video flex items-center justify-center bg-gray-100 dark:bg-gray-800"
+                class="aspect-video flex items-center justify-center bg-elevated"
               >
                 <UIcon
                   :name="project.type === 'code' ? 'lucide:code-2' : 'lucide:map-pin'"
-                  class="size-10 text-gray-400 dark:text-gray-600"
+                  class="size-10 text-dimmed"
                 />
               </div>
               <UBadge
@@ -77,7 +77,7 @@ defineOgImage('Default', { title: 'Projects — Neil Richter' })
             <h3 class="text-xl font-semibold mb-2 hover:text-primary-500">
               {{ project.title }}
             </h3>
-            <p class="text-gray-600 dark:text-gray-400 mb-4">
+            <p class="text-muted mb-4">
               {{ project.description }}
             </p>
 
@@ -94,7 +94,7 @@ defineOgImage('Default', { title: 'Projects — Neil Richter' })
               </div>
               <span
                 v-if="!Number.isNaN(new Date(project.date).getTime())"
-                class="text-sm text-gray-500"
+                class="text-sm text-dimmed"
               >
                 {{ new Date(project.date).getFullYear() }}
               </span>
@@ -114,17 +114,17 @@ defineOgImage('Default', { title: 'Projects — Neil Richter' })
             Nothing to show here yet
           </h3>
         </template>
-        <p class="text-gray-600 dark:text-gray-400">
+        <p class="text-muted">
           I'm planning to share both development projects and IRL projects soon.
         </p>
-        <ul class="mt-4 text-gray-600 dark:text-gray-400 space-y-1">
+        <ul class="mt-4 text-muted space-y-1">
           <li>• Web apps, libraries, experiments</li>
           <li>• Motorcycling roadtrips</li>
           <li>• Mechanical keyboards collection</li>
           <li>• Sport updates and more</li>
         </ul>
         <template #footer>
-          <span class="text-sm text-gray-500">Check back later — work in progress.</span>
+          <span class="text-sm text-dimmed">Check back later — work in progress.</span>
         </template>
       </UCard>
     </div>
