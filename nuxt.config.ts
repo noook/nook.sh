@@ -31,6 +31,24 @@ export default defineNuxtConfig({
   site: {
     url: 'https://nook.sh',
   },
+
+  // Baked at build time (not a runtime env read - Cloudflare Workers Builds
+  // only exposes these vars to the build step, not to the deployed Worker's
+  // runtime). WORKERS_CI_DEFAULT_BRANCH is Cloudflare's own signal for
+  // "this build is the production branch" ("true") vs a preview build for
+  // any other branch ("false") - see
+  // https://developers.cloudflare.com/workers/ci-cd/builds/configuration/#environment-variables
+  // Drafts are visible in local `nuxt dev` and on any Cloudflare preview
+  // deploy (WORKERS_CI_DEFAULT_BRANCH unset or "false"), hidden only once
+  // it's explicitly "true" (a real production build) - see
+  // content.config.ts for the always-on sitemap exclusion, and
+  // app/pages/{blog,posts/[...slug],projects/index,projects/[...slug]}.vue
+  // for where this flag is consumed.
+  runtimeConfig: {
+    public: {
+      showDrafts: process.env.WORKERS_CI_DEFAULT_BRANCH !== 'true',
+    },
+  },
   compatibilityDate: '2025-07-15',
 
   // Deploy target: Cloudflare Workers (unified Workers+static-assets, the

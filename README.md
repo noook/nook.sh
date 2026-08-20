@@ -51,10 +51,14 @@ so multiple images for the same post stay grouped) and are referenced by
 their public path starting with `/images/...`. Cards without an `image`
 show a themed placeholder icon instead - not required.
 
-`draft: true` hides a post from listings, the sitemap, and direct URL
-access in production; it's only visible while running `nuxt dev` locally
-(`import.meta.dev` gate, see `app/pages/posts/[...slug].vue`) so you can
-write and preview without publishing prematurely.
+`draft: true` hides a post from listings, the sitemap, and (only in
+production builds) direct URL access. It's visible while running `nuxt dev`
+locally **and on any Cloudflare Workers Builds preview deploy** (any branch
+that isn't the production branch) so you and reviewers can preview unpublished
+content on a PR without exposing it on the live domain. See
+`runtimeConfig.public.showDrafts` in `nuxt.config.ts` (keyed off Cloudflare's
+`WORKERS_CI_DEFAULT_BRANCH` build var) and `app/pages/posts/[...slug].vue`.
+The sitemap always excludes drafts, in every environment.
 
 ### Add a Project
 
