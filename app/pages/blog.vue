@@ -32,47 +32,67 @@ defineOgImage('Default', { title: 'Blog — Neil Richter' })
     </div>
 
     <!-- Blog Posts List -->
-    <div class="space-y-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
       <NuxtLink
         v-for="post in posts"
         :key="post.path"
         :to="post.path"
         class="block"
       >
-        <UCard class="hover:shadow-lg transition-shadow cursor-pointer">
+        <UCard
+          class="h-full hover:shadow-lg transition-shadow cursor-pointer overflow-hidden"
+          :ui="{ body: 'p-4 sm:p-4', header: 'p-0 sm:p-0' }"
+        >
           <template #header>
-            <div class="flex items-start justify-between">
-              <div class="flex-1">
-                <h3 class="text-xl font-semibold mb-2 hover:text-primary-500">
-                  {{ post.title }}
-                </h3>
-                <p class="text-sm text-gray-500">
-                  {{ new Date(post.date).toLocaleDateString() }}
-                </p>
-              </div>
+            <div
+              v-if="post.image"
+              class="aspect-video overflow-hidden"
+            >
+              <NuxtImg
+                :src="post.image"
+                :alt="post.title"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div
+              v-else
+              class="aspect-video flex items-center justify-center bg-gray-100 dark:bg-gray-800"
+            >
+              <UIcon
+                name="lucide:file-text"
+                class="size-10 text-gray-400 dark:text-gray-600"
+              />
             </div>
           </template>
 
-          <p class="text-gray-600 dark:text-gray-400 mb-4">
-            {{ post.description }}
-          </p>
+          <div class="flex-1">
+            <h3 class="text-xl font-semibold mb-2 hover:text-primary-500">
+              {{ post.title }}
+            </h3>
+            <p class="text-sm text-gray-500 mb-3">
+              {{ new Date(post.date).toLocaleDateString() }}
+            </p>
+            <p class="text-gray-600 dark:text-gray-400 mb-4">
+              {{ post.description }}
+            </p>
 
-          <div class="flex gap-2">
-            <UBadge
-              v-for="tag in post.tags"
-              :key="tag"
-              variant="outline"
-              size="sm"
-            >
-              {{ tag }}
-            </UBadge>
+            <div class="flex gap-2">
+              <UBadge
+                v-for="tag in post.tags"
+                :key="tag"
+                variant="outline"
+                size="sm"
+              >
+                {{ tag }}
+              </UBadge>
+            </div>
           </div>
         </UCard>
       </NuxtLink>
 
       <div
         v-if="!posts || posts.length === 0"
-        class="py-16"
+        class="py-16 col-span-full"
       >
         <UCard class="max-w-2xl mx-auto text-center">
           <template #header>
