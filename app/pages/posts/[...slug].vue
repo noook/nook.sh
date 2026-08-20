@@ -7,9 +7,12 @@ const { data: post } = await useAsyncData(`post-${route.path}`, () => {
 
 // Drafts 404 in production even via direct URL, but stay reachable on
 // Cloudflare preview deploys - see nuxt.config.ts runtimeConfig.showDrafts
-// and blog.vue for the listing-side filter.
+// and blog.vue for the listing-side filter. Mock posts 404 everywhere
+// except local `nuxt dev`, including preview deploys - stricter than
+// drafts, since mock content is fake example data, not something in
+// progress toward being real.
 const { public: { showDrafts } } = useRuntimeConfig()
-if (!post.value || (post.value.draft && !showDrafts)) {
+if (!post.value || (post.value.mock && !import.meta.dev) || (post.value.draft && !showDrafts)) {
   throw createError({ statusCode: 404, statusMessage: 'Post not found' })
 }
 

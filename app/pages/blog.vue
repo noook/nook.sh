@@ -7,10 +7,17 @@ const { data: page } = await useAsyncData('page-blog', () => {
 // show in local `nuxt dev` and on any Cloudflare preview deploy, hidden only
 // on the real production build - see nuxt.config.ts runtimeConfig.showDrafts
 // for how that's determined (WORKERS_CI_DEFAULT_BRANCH, baked at build time).
+// Mock posts (mock: true) are stricter: local-dev-only in every environment,
+// including preview deploys, via the build-time import.meta.dev constant -
+// they're filled-in example content for testing layout/features locally,
+// not something that should ever be reachable on a public URL.
 const { public: { showDrafts } } = useRuntimeConfig()
 const { data: posts } = await useAsyncData('posts', () => {
   const query = queryCollection('posts')
-  return showDrafts ? query.all() : query.where('draft', '=', false).all()
+  if (import.meta.dev) return query.all()
+  return showDrafts
+    ? query.where('mock', '=', false).all()
+    : query.where('draft', '=', false).where('mock', '=', false).all()
 })
 
 useHead({

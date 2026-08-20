@@ -27,13 +27,22 @@ export default defineContentConfig({
         // real production build) and app/pages/blog.vue /
         // app/pages/posts/[...slug].vue for where that flag is consumed.
         draft: z.boolean().default(false),
-        // sitemap filter always excludes drafts, in every environment
-        // including preview deploys - drafts should never be *advertised*
-        // to crawlers even when directly reachable for review. This is
-        // deliberately unconditional, independent of runtimeConfig.showDrafts.
+        // Mock/example posts - filled-in fake content for local dev only
+        // (testing layout, cover images, view transitions, etc against
+        // something more realistic than an empty draft template). Unlike
+        // `draft`, mock content is dev-only in every sense: never visible
+        // on a Cloudflare preview deploy, not just hidden on production -
+        // see app/pages/blog.vue / posts/[...slug].vue for the
+        // import.meta.dev gate.
+        mock: z.boolean().default(false),
+        // sitemap filter always excludes drafts and mock content, in every
+        // environment including preview deploys - neither should ever be
+        // *advertised* to crawlers even when directly reachable for review.
+        // This is deliberately unconditional, independent of
+        // runtimeConfig.showDrafts / import.meta.dev.
         sitemap: defineSitemapSchema({
           name: 'posts',
-          filter: entry => !entry.draft,
+          filter: entry => !entry.draft && !entry.mock,
           z,
         }),
       }),
@@ -47,9 +56,10 @@ export default defineContentConfig({
         type: z.enum(['code', 'irl']).default('code'),
         image: z.string().optional(),
         draft: z.boolean().default(false),
+        mock: z.boolean().default(false),
         sitemap: defineSitemapSchema({
           name: 'projects',
-          filter: entry => !entry.draft,
+          filter: entry => !entry.draft && !entry.mock,
           z,
         }),
       }),

@@ -4,11 +4,16 @@ const { data: page } = await useAsyncData('page-projects', () => {
 })
 
 // Fetch projects from content collection. Same preview-visible draft filter
-// as blog.vue - see nuxt.config.ts runtimeConfig.showDrafts.
+// as blog.vue - see nuxt.config.ts runtimeConfig.showDrafts. Mock projects
+// (mock: true) are local-dev-only in every environment, including preview
+// deploys - see blog.vue for the full reasoning.
 const { public: { showDrafts } } = useRuntimeConfig()
 const { data: projects } = await useAsyncData('projects', () => {
   const query = queryCollection('projects')
-  return showDrafts ? query.all() : query.where('draft', '=', false).all()
+  if (import.meta.dev) return query.all()
+  return showDrafts
+    ? query.where('mock', '=', false).all()
+    : query.where('draft', '=', false).where('mock', '=', false).all()
 })
 
 useHead({

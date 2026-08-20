@@ -7,9 +7,10 @@ const { data: project } = await useAsyncData(`project-${route.path}`, () => {
 
 // Drafts 404 in production even via direct URL, but stay reachable on
 // Cloudflare preview deploys - see nuxt.config.ts runtimeConfig.showDrafts
-// and posts/[...slug].vue for the same pattern.
+// and posts/[...slug].vue for the same pattern, including the stricter
+// mock-content 404 rule.
 const { public: { showDrafts } } = useRuntimeConfig()
-if (!project.value || (project.value.draft && !showDrafts)) {
+if (!project.value || (project.value.mock && !import.meta.dev) || (project.value.draft && !showDrafts)) {
   throw createError({ statusCode: 404, statusMessage: 'Project not found' })
 }
 

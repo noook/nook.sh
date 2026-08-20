@@ -82,6 +82,39 @@ Project details...
 
 Same image/draft conventions as blog posts, under `public/images/projects/`.
 
+### Mock/example content (local dev only)
+
+Every `draft-1.md` is an empty template - useful as a starting point, but
+not something you can actually look at while building layout/design work.
+For that, use `mock: true` instead:
+
+```md
+---
+title: A Realistic Example Title
+description: Filled-in fake content, not a [TODO] placeholder
+date: 2026-01-01
+tags: [example]
+mock: true
+draft: false
+---
+
+Real prose, real structure - just fictional.
+```
+
+The existing `content/posts/mock-*.md` and `content/projects/mock-*.md`
+files are exactly this: realistic-looking example posts/projects with
+made-up (clearly fictional) content, kept around specifically so `/blog`
+and `/projects` have something to actually look at locally - testing card
+layouts, cover images, view transitions, whatever - without writing real
+content first.
+
+`mock: true` is **stricter than `draft: true`**: mock content is hidden
+in *every* environment except local `nuxt dev`, including Cloudflare
+preview deploys (drafts are visible there; mocks never are). It's also
+always excluded from the sitemap, same as drafts. The rule of thumb: use
+`draft: true` for real content you're still writing, `mock: true` for
+fake example content that will never be published as-is.
+
 ## Development
 
 ```bash
@@ -98,11 +131,14 @@ pnpm build
 pnpm preview
 ```
 
-## Deployment (Cloudflare Pages)
+## Deployment (Cloudflare Workers)
 
-This site targets Cloudflare Pages via Nitro's `cloudflare-pages` preset
-(see `nuxt.config.ts`). `@nuxt/content` auto-detects this preset at build
-time and switches its content database to Cloudflare D1 (binding name `DB`).
+This site targets Cloudflare Workers (the unified Workers+static-assets
+model, Cloudflare's current default for new projects - not classic Pages)
+via Nitro's `cloudflare-module` preset (see `nuxt.config.ts`). `@nuxt/content`
+auto-detects any `cloudflare*` preset at build time and switches its content
+database to Cloudflare D1 (binding name `DB`), regardless of which specific
+Cloudflare preset is used.
 
 ### Config setup (one-time)
 
@@ -134,24 +170,25 @@ dashboard).
 # Build the Cloudflare Worker output (runs the config generator first)
 pnpm build
 
-# Preview locally against a local D1 emulation (no remote resources touched)
-npx wrangler pages dev dist
+# Preview locally against the real Worker runtime (no remote resources touched)
+npx wrangler --cwd .output dev
 
-# Deploy (requires a Cloudflare API token with Pages:Edit + D1:Edit scopes)
-npx wrangler pages deploy dist
+# Deploy (requires a Cloudflare API token with Workers Scripts:Edit + D1:Edit scopes)
+npx wrangler --cwd .output deploy
 ```
 
 ### One-time D1 setup
 
 ```bash
-npx wrangler d1 create nook-sh-content
-# copy the printed database_id into CF_D1_DATABASE_ID
+npx wrangler d1 create nook-sh-content        # production
+npx wrangler d1 create nook-sh-content-preview  # preview builds
+# both ids are hardcoded in scripts/generate-wrangler-config.mjs, see above
 ```
 
-Recommended production setup: connect this repo to Cloudflare Pages' git
-integration (Dashboard → Workers & Pages → Create → Connect to Git) so every
-push to `main` builds and deploys automatically, rather than deploying via
-CLI by hand.
+Recommended production setup: connect this repo to Cloudflare Workers
+Builds' git integration (Dashboard → Workers & Pages → Create → Connect to
+Git) so every push to `main` builds and deploys automatically, rather than
+deploying via CLI by hand.
 
 ## Tech Stack
 
