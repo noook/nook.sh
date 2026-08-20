@@ -37,12 +37,24 @@ title: Your Post Title
 description: A brief description
 date: 2025-01-20
 tags: [Tag1, Tag2]
+image: /images/posts/your-post-slug/cover.jpg  # optional
+draft: true  # set false when ready to publish
 ---
 
 # Your Post
 
 Your content here...
 ```
+
+Cover images live in `public/images/posts/<slug>/` (one folder per post,
+so multiple images for the same post stay grouped) and are referenced by
+their public path starting with `/images/...`. Cards without an `image`
+show a themed placeholder icon instead - not required.
+
+`draft: true` hides a post from listings, the sitemap, and direct URL
+access in production; it's only visible while running `nuxt dev` locally
+(`import.meta.dev` gate, see `app/pages/posts/[...slug].vue`) so you can
+write and preview without publishing prematurely.
 
 ### Add a Project
 
@@ -55,12 +67,16 @@ description: Brief description
 date: 2024-01-15
 type: code  # or 'irl'
 tags: [Tag1, Tag2]
+image: /images/projects/your-project-slug/cover.jpg  # optional
+draft: true  # set false when ready to publish
 ---
 
 # Project Name
 
 Project details...
 ```
+
+Same image/draft conventions as blog posts, under `public/images/projects/`.
 
 ## Development
 

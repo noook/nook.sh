@@ -3,7 +3,7 @@ title: "[TODO: title]"
 description: "[TODO: one-sentence summary for the blog listing card]"
 date: "[TODO: YYYY-MM-DD]"
 tags: []
-# image: "/images/posts/[TODO-slug]/cover.jpg"  # optional - falls back to a placeholder icon on the listing card when unset
+# image: "/images/posts/[TODO-slug]/cover.jpg"  # optional, one folder per post - falls back to a placeholder icon on the listing card when unset
 draft: true
 ---
 

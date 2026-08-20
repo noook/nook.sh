@@ -4,7 +4,7 @@ description: "[TODO: one-sentence summary for the projects listing card]"
 date: "[TODO: YYYY-MM-DD]"
 tags: []
 type: "code" # or "irl"
-# image: "/images/projects/[TODO-slug]/cover.jpg"  # optional - falls back to a placeholder icon on the listing card when unset
+# image: "/images/projects/[TODO-slug]/cover.jpg"  # optional, one folder per project - falls back to a placeholder icon on the listing card when unset
 draft: true
 ---
 
