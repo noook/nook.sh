@@ -69,7 +69,10 @@ defineOgImage('Default', { title: 'Blog — Neil Richter' })
             <h3 class="text-xl font-semibold mb-2 hover:text-primary-500">
               {{ post.title }}
             </h3>
-            <p class="text-sm text-gray-500 mb-3">
+            <p
+              v-if="!Number.isNaN(new Date(post.date).getTime())"
+              class="text-sm text-gray-500 mb-3"
+            >
               {{ new Date(post.date).toLocaleDateString() }}
             </p>
             <p class="text-gray-600 dark:text-gray-400 mb-4">

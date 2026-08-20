@@ -37,7 +37,10 @@ defineOgImage('Default', { title: post.value.title })
 
     <!-- Post Header -->
     <div class="mb-8">
-      <div class="mb-4">
+      <div
+        v-if="!Number.isNaN(new Date(post.date).getTime())"
+        class="mb-4"
+      >
         <span class="text-sm text-gray-500">
           {{ new Date(post.date).toLocaleDateString() }}
         </span>
