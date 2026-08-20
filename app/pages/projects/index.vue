@@ -10,6 +10,14 @@ const { data: projects } = await useAsyncData('projects', () => {
   const query = queryCollection('projects')
   return import.meta.dev ? query.all() : query.where('draft', '=', false).all()
 })
+
+useHead({
+  title: 'Projects',
+  link: [
+    { rel: 'canonical', href: 'https://nook.sh/projects' },
+  ],
+})
+defineOgImage('Default', { title: 'Projects — Neil Richter' })
 </script>
 
 <template>

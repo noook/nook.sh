@@ -1,4 +1,5 @@
 import { defineContentConfig, defineCollection, z } from '@nuxt/content'
+import { defineSitemapSchema } from '@nuxtjs/sitemap/content'
 
 export default defineContentConfig({
   collections: {
@@ -15,13 +16,23 @@ export default defineContentConfig({
       schema: z.object({
         date: z.string(),
         tags: z.array(z.string()).default([]),
-        // Draft posts are excluded from listings, RSS/sitemap (once added),
+        // Draft posts are excluded from listings, sitemap (filter below),
         // and direct URLs in production - see app/pages/blog.vue and
         // app/pages/posts/[...slug].vue, which gate on `import.meta.dev`
         // (a Nuxt build-time constant: true only under `nuxt dev`, baked
         // to `false` in production builds - so this isn't just "hidden
         // from listings", the draft check can never pass once deployed).
         draft: z.boolean().default(false),
+        // sitemap filter runs at sitemap-generation time, independent of
+        // the import.meta.dev gates in page components - both layers need
+        // the same rule since they serve different purposes (page
+        // components gate what a visitor/crawler can actually reach, this
+        // gates what gets *advertised* in the sitemap for crawlers to find).
+        sitemap: defineSitemapSchema({
+          name: 'posts',
+          filter: entry => !entry.draft,
+          z,
+        }),
       }),
     }),
     projects: defineCollection({
@@ -32,6 +43,11 @@ export default defineContentConfig({
         tags: z.array(z.string()).default([]),
         type: z.enum(['code', 'irl']).default('code'),
         draft: z.boolean().default(false),
+        sitemap: defineSitemapSchema({
+          name: 'projects',
+          filter: entry => !entry.draft,
+          z,
+        }),
       }),
     }),
     experience: defineCollection({

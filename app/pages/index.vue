@@ -2,6 +2,14 @@
 const { data: page } = await useAsyncData('page-index', () => {
   return queryCollection('content').path('/').first()
 })
+
+useHead({
+  title: 'Home',
+  link: [
+    { rel: 'canonical', href: 'https://nook.sh/' },
+  ],
+})
+defineOgImage('Default', { title: 'Neil Richter' })
 </script>
 
 <template>

@@ -37,6 +37,14 @@ const personalTools = [
   { name: 'Anytype', icon: 'simple-icons:anytype' },
   { name: 'Signal', icon: 'simple-icons:signal' },
 ]
+
+useHead({
+  title: 'About',
+  link: [
+    { rel: 'canonical', href: 'https://nook.sh/about' },
+  ],
+})
+defineOgImage('Default', { title: 'About — Neil Richter' })
 </script>
 
 <template>
