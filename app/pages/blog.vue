@@ -25,41 +25,42 @@ const { data: posts } = await useAsyncData('posts', () => {
 
     <!-- Blog Posts List -->
     <div class="space-y-6">
-      <UCard
+      <NuxtLink
         v-for="post in posts"
         :key="post.path"
-        class="hover:shadow-lg transition-shadow cursor-pointer"
+        :to="post.path"
+        class="block"
       >
-        <template #header>
-          <div class="flex items-start justify-between">
-            <div class="flex-1">
-              <NuxtLink :to="post.path">
+        <UCard class="hover:shadow-lg transition-shadow cursor-pointer">
+          <template #header>
+            <div class="flex items-start justify-between">
+              <div class="flex-1">
                 <h3 class="text-xl font-semibold mb-2 hover:text-primary-500">
                   {{ post.title }}
                 </h3>
-              </NuxtLink>
-              <p class="text-sm text-gray-500">
-                {{ new Date(post.date).toLocaleDateString() }}
-              </p>
+                <p class="text-sm text-gray-500">
+                  {{ new Date(post.date).toLocaleDateString() }}
+                </p>
+              </div>
             </div>
+          </template>
+
+          <p class="text-gray-600 dark:text-gray-400 mb-4">
+            {{ post.description }}
+          </p>
+
+          <div class="flex gap-2">
+            <UBadge
+              v-for="tag in post.tags"
+              :key="tag"
+              variant="outline"
+              size="sm"
+            >
+              {{ tag }}
+            </UBadge>
           </div>
-        </template>
-
-        <p class="text-gray-600 dark:text-gray-400 mb-4">
-          {{ post.description }}
-        </p>
-
-        <div class="flex gap-2">
-          <UBadge
-            v-for="tag in post.tags"
-            :key="tag"
-            variant="outline"
-            size="sm"
-          >
-            {{ tag }}
-          </UBadge>
-        </div>
-      </UCard>
+        </UCard>
+      </NuxtLink>
 
       <div
         v-if="!posts || posts.length === 0"
