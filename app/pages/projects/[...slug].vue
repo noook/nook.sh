@@ -16,7 +16,11 @@ useHead({
   meta: [
     { name: 'description', content: project.value.description },
   ],
+  link: [
+    { rel: 'canonical', href: `https://nook.sh${route.path}` },
+  ],
 })
+defineOgImageComponent('Default', { title: project.value.title })
 </script>
 
 <template>

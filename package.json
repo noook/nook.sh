@@ -17,6 +17,7 @@
     "@nuxt/image": "1.11.0",
     "@nuxt/ui": "4.10.0",
     "@takumi-rs/core": "^2.10.0",
+    "@takumi-rs/wasm": "^2.10.0",
     "@vueuse/core": "14.4.0",
     "@vueuse/nuxt": "14.4.0",
     "better-sqlite3": "^12.4.1",
