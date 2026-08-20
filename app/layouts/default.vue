@@ -10,6 +10,14 @@
         <ThemePicker />
         <UColorModeButton />
       </template>
+
+      <template #body>
+        <UNavigationMenu
+          :items="headerLinks"
+          orientation="vertical"
+          class="-mx-2.5"
+        />
+      </template>
     </UHeader>
 
     <UMain class="flex-1">
