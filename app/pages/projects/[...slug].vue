@@ -43,7 +43,10 @@ defineOgImage('Default', { title: project.value.title })
         >
           {{ project.type === 'code' ? 'Code' : 'IRL' }}
         </UBadge>
-        <span class="text-sm text-gray-500">
+        <span
+          v-if="!Number.isNaN(new Date(project.date).getTime())"
+          class="text-sm text-gray-500"
+        >
           {{ new Date(project.date).toLocaleDateString() }}
         </span>
       </div>

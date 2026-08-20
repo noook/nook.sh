@@ -92,7 +92,10 @@ defineOgImage('Default', { title: 'Projects — Neil Richter' })
                   {{ tag }}
                 </UBadge>
               </div>
-              <span class="text-sm text-gray-500">
+              <span
+                v-if="!Number.isNaN(new Date(project.date).getTime())"
+                class="text-sm text-gray-500"
+              >
                 {{ new Date(project.date).getFullYear() }}
               </span>
             </div>
