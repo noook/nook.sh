@@ -3,9 +3,12 @@ const { data: page } = await useAsyncData('page-projects', () => {
   return queryCollection('content').path('/projects').first()
 })
 
-// Fetch projects from content collection
+// Fetch projects from content collection. Same dev-only draft filter as
+// blog.vue - see comment there for why this is dev-safe, not just
+// listing-hidden.
 const { data: projects } = await useAsyncData('projects', () => {
-  return queryCollection('projects').all()
+  const query = queryCollection('projects')
+  return import.meta.dev ? query.all() : query.where('draft', '=', false).all()
 })
 </script>
 
