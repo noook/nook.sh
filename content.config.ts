@@ -20,18 +20,17 @@ export default defineContentConfig({
         // fall back to a themed placeholder (see blog.vue) when unset so
         // the grid still looks intentional before real photos exist.
         image: z.string().optional(),
-        // Draft posts are excluded from listings, sitemap (filter below),
-        // and direct URLs in production - see app/pages/blog.vue and
-        // app/pages/posts/[...slug].vue, which gate on `import.meta.dev`
-        // (a Nuxt build-time constant: true only under `nuxt dev`, baked
-        // to `false` in production builds - so this isn't just "hidden
-        // from listings", the draft check can never pass once deployed).
+        // Draft posts are excluded from listings and the sitemap always;
+        // whether they 404 on direct URL access depends on environment -
+        // see nuxt.config.ts runtimeConfig.showDrafts (visible in local
+        // `nuxt dev` and on Cloudflare preview deploys, hidden only on the
+        // real production build) and app/pages/blog.vue /
+        // app/pages/posts/[...slug].vue for where that flag is consumed.
         draft: z.boolean().default(false),
-        // sitemap filter runs at sitemap-generation time, independent of
-        // the import.meta.dev gates in page components - both layers need
-        // the same rule since they serve different purposes (page
-        // components gate what a visitor/crawler can actually reach, this
-        // gates what gets *advertised* in the sitemap for crawlers to find).
+        // sitemap filter always excludes drafts, in every environment
+        // including preview deploys - drafts should never be *advertised*
+        // to crawlers even when directly reachable for review. This is
+        // deliberately unconditional, independent of runtimeConfig.showDrafts.
         sitemap: defineSitemapSchema({
           name: 'posts',
           filter: entry => !entry.draft,

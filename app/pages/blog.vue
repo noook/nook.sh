@@ -4,12 +4,13 @@ const { data: page } = await useAsyncData('page-blog', () => {
 })
 
 // Fetch posts from content collection. Drafts (draft: true in frontmatter)
-// only show in dev - import.meta.dev is a Nuxt build-time constant baked
-// to `false` in production, so this filter can never expose a draft once
-// deployed, regardless of anyone knowing the URL.
+// show in local `nuxt dev` and on any Cloudflare preview deploy, hidden only
+// on the real production build - see nuxt.config.ts runtimeConfig.showDrafts
+// for how that's determined (WORKERS_CI_DEFAULT_BRANCH, baked at build time).
+const { public: { showDrafts } } = useRuntimeConfig()
 const { data: posts } = await useAsyncData('posts', () => {
   const query = queryCollection('posts')
-  return import.meta.dev ? query.all() : query.where('draft', '=', false).all()
+  return showDrafts ? query.all() : query.where('draft', '=', false).all()
 })
 
 useHead({

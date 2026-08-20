@@ -3,12 +3,12 @@ const { data: page } = await useAsyncData('page-projects', () => {
   return queryCollection('content').path('/projects').first()
 })
 
-// Fetch projects from content collection. Same dev-only draft filter as
-// blog.vue - see comment there for why this is dev-safe, not just
-// listing-hidden.
+// Fetch projects from content collection. Same preview-visible draft filter
+// as blog.vue - see nuxt.config.ts runtimeConfig.showDrafts.
+const { public: { showDrafts } } = useRuntimeConfig()
 const { data: projects } = await useAsyncData('projects', () => {
   const query = queryCollection('projects')
-  return import.meta.dev ? query.all() : query.where('draft', '=', false).all()
+  return showDrafts ? query.all() : query.where('draft', '=', false).all()
 })
 
 useHead({

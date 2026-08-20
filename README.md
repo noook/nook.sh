@@ -51,10 +51,14 @@ so multiple images for the same post stay grouped) and are referenced by
 their public path starting with `/images/...`. Cards without an `image`
 show a themed placeholder icon instead - not required.
 
-`draft: true` hides a post from listings, the sitemap, and direct URL
-access in production; it's only visible while running `nuxt dev` locally
-(`import.meta.dev` gate, see `app/pages/posts/[...slug].vue`) so you can
-write and preview without publishing prematurely.
+`draft: true` hides a post from listings, the sitemap, and (only in
+production builds) direct URL access. It's visible while running `nuxt dev`
+locally **and on any Cloudflare Workers Builds preview deploy** (any branch
+that isn't the production branch) so you and reviewers can preview unpublished
+content on a PR without exposing it on the live domain. See
+`runtimeConfig.public.showDrafts` in `nuxt.config.ts` (keyed off Cloudflare's
+`WORKERS_CI_DEFAULT_BRANCH` build var) and `app/pages/posts/[...slug].vue`.
+The sitemap always excludes drafts, in every environment.
 
 ### Add a Project
 
@@ -105,23 +109,24 @@ time and switches its content database to Cloudflare D1 (binding name `DB`).
 `wrangler.jsonc` is **not committed** — it's generated at build/dev time
 from `wrangler.jsonc.example` by `scripts/generate-wrangler-config.mjs`
 (runs automatically as a `prebuild`/`predev` step), substituting the real D1
-`database_id` from the `CF_D1_DATABASE_ID` environment variable. This isn't
-because the database id is a secret (it isn't — you still need a real
-Cloudflare API token to do anything with it) but to keep infra resource ids
-out of the public repo.
+`database_id` for the current build. This isn't because the database id is
+a secret (it isn't — you still need a real Cloudflare API token to do
+anything with it) but to keep infra resource ids out of the public repo.
 
-```bash
-# Local dev/build: set once in your shell, or add to .env / .dev.vars
-export CF_D1_DATABASE_ID=<your-d1-database-id>
-```
-
-On Cloudflare Pages' git integration, set `CF_D1_DATABASE_ID` as a project
-environment variable (Dashboard → Workers & Pages → your project → Settings
-→ Environment variables) — it doesn't need to be marked "secret", just set.
-
-If `CF_D1_DATABASE_ID` isn't set and no `wrangler.jsonc` exists yet, the
-generator script warns and exits without failing the build — useful for
-CI steps that don't need the Cloudflare preset (e.g. pure lint/typecheck).
+There are **two separate D1 databases** — production and preview — picked
+automatically based on Cloudflare Workers Builds' `WORKERS_CI_DEFAULT_BRANCH`
+env var (`"true"` on the production branch, anything else — including
+unset, e.g. local dev — is treated as preview). This is deliberate: PR
+branches can carry unpublished/in-progress markdown content, and
+`@nuxt/content` syncs its D1 content index from whatever's checked out in
+the current build. A single shared database would let a preview build's
+sync overwrite the index production reads from live, transiently serving
+unreleased content on the real domain. Both ids are hardcoded directly in
+`scripts/generate-wrangler-config.mjs` — no environment variable needed;
+an earlier attempt at sourcing this from a Cloudflare Workers Builds
+dashboard env var (`CF_D1_DATABASE_ID`) proved unreliable in practice (the
+build step never observed it despite it being set correctly on the
+dashboard).
 
 ### Commands
 

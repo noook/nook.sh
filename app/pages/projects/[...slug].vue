@@ -5,9 +5,11 @@ const { data: project } = await useAsyncData(`project-${route.path}`, () => {
   return queryCollection('projects').path(route.path).first()
 })
 
-// Drafts 404 in production even via direct URL - see posts/[...slug].vue
-// for why import.meta.dev makes this dev-only, not just listing-hidden.
-if (!project.value || (project.value.draft && !import.meta.dev)) {
+// Drafts 404 in production even via direct URL, but stay reachable on
+// Cloudflare preview deploys - see nuxt.config.ts runtimeConfig.showDrafts
+// and posts/[...slug].vue for the same pattern.
+const { public: { showDrafts } } = useRuntimeConfig()
+if (!project.value || (project.value.draft && !showDrafts)) {
   throw createError({ statusCode: 404, statusMessage: 'Project not found' })
 }
 

@@ -5,10 +5,11 @@ const { data: post } = await useAsyncData(`post-${route.path}`, () => {
   return queryCollection('posts').path(route.path).first()
 })
 
-// Drafts 404 in production even via direct URL - import.meta.dev is a
-// Nuxt build-time constant, false in every production build regardless
-// of who requests the URL. See blog.vue for the listing-side filter.
-if (!post.value || (post.value.draft && !import.meta.dev)) {
+// Drafts 404 in production even via direct URL, but stay reachable on
+// Cloudflare preview deploys - see nuxt.config.ts runtimeConfig.showDrafts
+// and blog.vue for the listing-side filter.
+const { public: { showDrafts } } = useRuntimeConfig()
+if (!post.value || (post.value.draft && !showDrafts)) {
   throw createError({ statusCode: 404, statusMessage: 'Post not found' })
 }
 

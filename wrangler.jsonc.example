@@ -12,14 +12,15 @@
   //
   // @nuxt/content requires a D1 database on Cloudflare (binding name must
   // be "DB" - it's hardcoded by @nuxt/content's cloudflare preset).
-  // database_id is templated in from CF_D1_DATABASE_ID at build time by
-  // scripts/generate-wrangler-config.mjs - see that script and README's
-  // Deployment section. Never hardcode the real id in this template file.
+  // database_id is templated in at build time by
+  // scripts/generate-wrangler-config.mjs, which picks the production or
+  // preview D1 database based on WORKERS_CI_DEFAULT_BRANCH - see that
+  // script and README's Deployment section for why there are two.
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "nook-sh-content",
-      "database_id": "__CF_D1_DATABASE_ID__",
+      "database_id": "__D1_DATABASE_ID__",
     },
   ],
 }
