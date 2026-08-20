@@ -1,19 +1,35 @@
 #!/usr/bin/env node
 // Generates wrangler.jsonc from wrangler.jsonc.example, substituting the
-// real D1 database_id from an environment variable. This keeps the
-// database_id out of git while still letting Nitro's cloudflare-pages
-// preset and `wrangler pages dev/deploy` find a real wrangler.jsonc.
+// real D1 database_id for the current build. This keeps both database ids
+// out of the template that ships in git-tracked example form, while still
+// letting Nitro's cloudflare-module preset and `wrangler deploy` find a
+// real wrangler.jsonc every build.
 //
-// Usage:
-//   CF_D1_DATABASE_ID=<uuid> node scripts/generate-wrangler-config.mjs
+// Which database gets used is picked automatically from
+// WORKERS_CI_DEFAULT_BRANCH, the same Cloudflare Workers Builds env var
+// nuxt.config.ts reads for runtimeConfig.public.showDrafts - "true" means
+// this build is the production branch, anything else (including unset,
+// e.g. local dev) means a preview build:
+//   - production branch build -> PRODUCTION_D1_DATABASE_ID
+//   - preview build (any other branch, local dev)
+//     -> PREVIEW_D1_DATABASE_ID
 //
-// Run automatically as a "prebuild" step (see package.json) for local
-// builds. On Cloudflare Pages' git integration, set CF_D1_DATABASE_ID as
-// a project environment variable in the dashboard (Settings > Environment
-// variables) - it does not need to be a "secret", it's not sensitive, this
-// is purely to keep infra resource ids out of the public repo.
+// Deliberately two SEPARATE databases, not one shared id read from an env
+// var: @nuxt/content syncs its D1 content index from the markdown checked
+// out in the current build, and previews build from PR branches that can
+// contain unpublished/in-progress content. A shared database means a
+// preview build's content sync can overwrite the index production reads
+// from live, transiently serving unreleased content on the real domain
+// until production's next deploy re-syncs it back. Separate databases
+// make that impossible - a preview build can only ever touch the preview
+// database. Neither id is a secret (no credential lets you do anything
+// with it beyond querying content that's public once merged anyway), see
+// README's Deployment section - only kept out of the template for tidiness
+// and because trying to source this from a Cloudflare Workers Builds
+// dashboard env var proved unreliable in practice (the build step never
+// observed CF_D1_DATABASE_ID despite it being set correctly there).
 
-import { readFileSync, writeFileSync, existsSync } from 'node:fs'
+import { readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 
@@ -22,22 +38,15 @@ const root = join(__dirname, '..')
 const templatePath = join(root, 'wrangler.jsonc.example')
 const outputPath = join(root, 'wrangler.jsonc')
 
-const databaseId = process.env.CF_D1_DATABASE_ID
+const PRODUCTION_D1_DATABASE_ID = '8192bc2d-6882-4113-9968-7f0276ac4864'
+const PREVIEW_D1_DATABASE_ID = '7ce96675-78ae-427b-91c8-66f84fad9d29'
 
-if (!databaseId) {
-  if (existsSync(outputPath)) {
-    console.log('[wrangler-config] CF_D1_DATABASE_ID not set, keeping existing wrangler.jsonc as-is.')
-    process.exit(0)
-  }
-  console.warn(
-    '[wrangler-config] CF_D1_DATABASE_ID is not set and no wrangler.jsonc exists yet.\n'
-    + '  Local dev/build against the Cloudflare preset will fail to find the D1 binding.\n'
-    + '  Set CF_D1_DATABASE_ID (see README Deployment section) or create wrangler.jsonc manually.',
-  )
-  process.exit(0)
-}
+const isProductionBranch = process.env.WORKERS_CI_DEFAULT_BRANCH === 'true'
+const databaseId = isProductionBranch ? PRODUCTION_D1_DATABASE_ID : PREVIEW_D1_DATABASE_ID
 
 const template = readFileSync(templatePath, 'utf-8')
-const output = template.replaceAll('__CF_D1_DATABASE_ID__', databaseId)
+const output = template.replaceAll('__D1_DATABASE_ID__', databaseId)
 writeFileSync(outputPath, output)
-console.log(`[wrangler-config] wrote wrangler.jsonc with database_id from CF_D1_DATABASE_ID.`)
+console.log(
+  `[wrangler-config] wrote wrangler.jsonc using the ${isProductionBranch ? 'PRODUCTION' : 'PREVIEW'} D1 database.`,
+)
