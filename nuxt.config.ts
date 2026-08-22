@@ -49,15 +49,25 @@ export default defineNuxtConfig({
   // "this build is the production branch" ("true") vs a preview build for
   // any other branch ("false") - see
   // https://developers.cloudflare.com/workers/ci-cd/builds/configuration/#environment-variables
-  // Drafts are visible in local `nuxt dev` and on any Cloudflare preview
-  // deploy (WORKERS_CI_DEFAULT_BRANCH unset or "false"), hidden only once
-  // it's explicitly "true" (a real production build) - see
-  // content.config.ts for the always-on sitemap exclusion, and
-  // app/pages/{blog,posts/[...slug],projects/index,projects/[...slug]}.vue
-  // for where this flag is consumed.
+  //
+  // Deliberately safe-by-default: showDrafts is true ONLY when Cloudflare
+  // explicitly tells us this is a known Workers Builds preview build
+  // (WORKERS_CI_DEFAULT_BRANCH === 'false'). Every other case - including
+  // unset - defaults to hidden. This var is only ever set when the build
+  // runs through Workers Builds' git integration; any build/deploy outside
+  // that path (a manual `wrangler deploy` from a laptop, a CI job that
+  // isn't Workers Builds, etc.) never has it set at all, and an unset var
+  // must NOT be treated the same as a known preview build - that previously
+  // let a real production deploy through this path serve every draft and
+  // mock post/project live on nook.sh (checked against `!== 'true'`, which
+  // defaults to *visible*). Local `nuxt dev` doesn't depend on this flag at
+  // all - see the separate `import.meta.dev` bypass in
+  // app/pages/{blog,posts/[...slug],projects/index,projects/[...slug]}.vue,
+  // which already shows everything (including mocks) unconditionally.
+  // See content.config.ts for the always-on sitemap exclusion.
   runtimeConfig: {
     public: {
-      showDrafts: process.env.WORKERS_CI_DEFAULT_BRANCH !== 'true',
+      showDrafts: process.env.WORKERS_CI_DEFAULT_BRANCH === 'false',
     },
   },
 
