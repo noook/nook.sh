@@ -1,13 +1,13 @@
 ---
 title: "Fixing a type lie in Spotify's official TypeScript SDK"
 description: "How a typing bug I hit as a user of Spotify's web-api-ts-sdk turned into a merged PR, and the TypeScript trick that made it possible."
-date: "[TODO: YYYY-MM-DD]"
+date: "2026-08-22"
 tags:
   - typescript
   - open-source
   - spotify
 # image: "/images/posts/spotify-sdk-search-types/cover.jpg"  # optional
-draft: true
+draft: false
 ---
 
 For a while I was writing my own Spotify API client in TypeScript, around the
