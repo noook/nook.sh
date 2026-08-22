@@ -5,7 +5,7 @@
   "scripts": {
     "prebuild": "node scripts/generate-wrangler-config.mjs",
     "predev": "node scripts/generate-wrangler-config.mjs",
-    "build": "nuxt build",
+    "build": "NODE_OPTIONS=--max-old-space-size=6144 nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
