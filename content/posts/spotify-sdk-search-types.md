@@ -96,19 +96,19 @@ similar at a glance but aren't: a fixed-length tuple like `['track']`
 versus an open-ended array like `string[]`. TypeScript exposes a way to
 tell them apart through the array's `length` property:
 
-```ts twoslash
+```ts
 type Case1 = [1, 2, 3]["length"]
-//   ^?
+//   ^? 3
 
 type Case2 = number[]["length"]
-//   ^?
+//   ^? number
 ```
 
 A tuple's `length` resolves to a literal number. An array's `length`
 resolves to the general type `number`. That difference is exactly the hook
 we need - if `number` extends the array's `length` type, it's not a tuple:
 
-```ts twoslash
+```ts
 type IsTuple<T extends readonly unknown[]> =
   number extends T["length"] ? false : true
 ```
@@ -123,9 +123,8 @@ passed in, not just widen it to `ItemTypes[]`. That means a generic
 `const` type parameter (TypeScript 5.0+; a `const` assertion at the call
 site achieves the same thing on older versions):
 
-```ts twoslash
+```ts
 type ItemTypes = "track" | "artist" | "album"
-// ---cut---
 declare const search: <const T extends readonly ItemTypes[]>(
   types: T,
 ) => unknown //  ^ to be replaced below
@@ -137,7 +136,7 @@ With `T` captured, `T[number]` gives every individual element type in the
 array, which is enough to `Pick` only the relevant keys out of a type where
 *everything* is optional by default:
 
-```ts twoslash
+```ts
 type ItemTypes = "track" | "artist" | "album"
 interface ResourceTypeToResultKey {
   track: "tracks"
@@ -147,7 +146,6 @@ interface ResourceTypeToResultKey {
 type SearchResults = {
   [K in ItemTypes as ResourceTypeToResultKey[K]]?: unknown
 }
-// ---cut---
 type Result<T extends readonly ItemTypes[]> =
   Pick<SearchResults, ResourceTypeToResultKey[T[number]]>
 ```
@@ -158,7 +156,7 @@ Last piece: feed that `Pick` through `infer` so it can be reused, then
 branch on `IsTuple`. Non-tuple input keeps the properties optional; tuple
 input gets wrapped in `Required<...>`:
 
-```ts twoslash
+```ts
 type ItemTypes = "track" | "artist" | "album"
 interface ResourceTypeToResultKey {
   track: "tracks"
@@ -170,7 +168,6 @@ type SearchResults = {
 }
 type IsTuple<T extends readonly unknown[]> =
   number extends T["length"] ? false : true
-// ---cut---
 type SearchResultsFor<T extends readonly ItemTypes[]> =
   Pick<SearchResults, ResourceTypeToResultKey[T[number]]> extends infer R
     ? IsTuple<T> extends false
@@ -185,11 +182,11 @@ declare const search: <const T extends readonly ItemTypes[]>(
 declare const dynamicTypes: ItemTypes[]
 const a = search(dynamicTypes)
 a.tracks
-//  ^?
+//  ^? Page<Track> | undefined
 
 const b = search(["track"])
 b.tracks
-//  ^?
+//  ^? Page<Track>
 ```
 
 Search with a runtime-built array and `tracks` comes back optional, exactly
