@@ -35,6 +35,36 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  // nuxt-content-twoslash defaults includeNuxtTypes to true, which prepends
+  // a `/// <reference path=".../.nuxt/nuxt.d.ts" />` to every `ts twoslash`
+  // block so samples can use Nuxt auto-imports/composables. That reference
+  // path isn't resolving in this project (file-not-found error 6053 from
+  // twoslash itself), and once that reference fails the TS compiler context
+  // twoslash builds breaks badly enough that even plain lib.es5 globals
+  // (`Pick`, `Required`) stop resolving - not a real types-availability
+  // problem, an artifact of the broken reference injection. None of the
+  // current twoslash content (content/posts/spotify-sdk-search-types.md)
+  // uses Nuxt composables/auto-imports - it's self-contained TypeScript -
+  // so turning this off avoids the broken injection entirely. Revisit if a
+  // future twoslash sample needs real Nuxt types.
+  //
+  // Separately (and this was the actual root cause of Pick/Required not
+  // resolving, confirmed by reproducing directly against twoslash-vue's
+  // createTwoslasher outside Nuxt entirely): the module's own default
+  // compilerOptions passes `lib: ['esnext', 'dom']` - short-form lib
+  // names. TypeScript's compiler API only expands those short names when
+  // parsing a real tsconfig.json; passed directly as a compilerOptions
+  // object (as twoslash does here) they're not resolved, so no lib -
+  // including lib.es5.d.ts, hence `Pick`/`Required` etc. going missing -
+  // ever gets loaded. Full filenames (`lib.esnext.d.ts`, `lib.dom.d.ts`)
+  // work correctly and are what this overrides to.
+  twoslash: {
+    includeNuxtTypes: false,
+    compilerOptions: {
+      lib: ['lib.esnext.d.ts', 'lib.dom.d.ts'],
+    },
+  },
+
   // Canonical origin - used by @nuxtjs/sitemap, @nuxtjs/robots (sitemap
   // reference), and nuxt-og-image (absolute OG image URLs) to build
   // absolute URLs. www.nook.sh redirects to this apex at the app level
