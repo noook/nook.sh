@@ -37,7 +37,7 @@ const titleTransitionStyle = supportsViewTransitions
 </script>
 
 <template>
-  <article class="max-w-3xl">
+  <article class="max-w-3xl mx-auto">
     <!-- Back button -->
     <NuxtLink
       to="/projects"
