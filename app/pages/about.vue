@@ -33,7 +33,7 @@ const engineeringStack = [
 
 // Personal tools: day-to-day setup, not a skills claim.
 const personalTools = [
-  { name: 'Cursor', icon: 'material-icon-theme:cursor' },
+  { name: 'Cursor', icon: 'simple-icons:cursor' },
   { name: 'Claude Code', icon: 'simple-icons:claude' },
   { name: 'Firefox Developer Edition', icon: 'simple-icons:firefoxbrowser' },
   { name: 'Raycast', icon: 'simple-icons:raycast' },
@@ -42,9 +42,8 @@ const personalTools = [
   { name: 'Hermes', icon: 'material-symbols:smart-toy-outline' },
   { name: 'Proton Mail', icon: 'simple-icons:protonmail' },
   { name: 'Tailscale', icon: 'simple-icons:tailscale' },
-  { name: 'OrbStack', icon: 'simple-icons:orbstack' },
   { name: 'Signal', icon: 'simple-icons:signal' },
-  { name: 'Telegram', icon: 'simple-icons:telegram' },
+  { name: 'opencode', icon: 'simple-icons:opencode' },
   { name: 'Bitwarden', icon: 'simple-icons:bitwarden' },
 ]
 
