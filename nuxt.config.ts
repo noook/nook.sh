@@ -1,6 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
+    // Must precede @nuxt/content: injects the Shiki twoslash transformer
+    // that @nuxt/content's MDC renderer picks up for ```ts twoslash fences.
+    'nuxt-content-twoslash',
     '@nuxt/content',
     '@nuxt/eslint',
     '@nuxt/image',
