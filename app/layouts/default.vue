@@ -29,7 +29,7 @@
     <UFooter>
       <template #default>
         <p class="text-center text-sm text-muted">
-          © 2025, Neil Richter - All rights reserved.
+          © {{ new Date().getFullYear() }}, Neil Richter - All rights reserved.
         </p>
       </template>
     </UFooter>
