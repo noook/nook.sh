@@ -42,9 +42,9 @@ const personalTools = [
   { name: 'Hermes', icon: 'material-symbols:smart-toy-outline' },
   { name: 'Proton Mail', icon: 'simple-icons:protonmail' },
   { name: 'Tailscale', icon: 'simple-icons:tailscale' },
-  { name: 'OrbStack', icon: 'simple-icons:orbstack' },
+  { name: 'OrbStack', icon: 'selfhst:orb-dark' },
   { name: 'Signal', icon: 'simple-icons:signal' },
-  { name: 'Telegram', icon: 'simple-icons:telegram' },
+  { name: 'opencode', icon: 'simple-icons:opencode' },
   { name: 'Bitwarden', icon: 'simple-icons:bitwarden' },
 ]
 
