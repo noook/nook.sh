@@ -27,15 +27,25 @@ const engineeringStack = [
   { name: 'Vue.js', icon: 'simple-icons:vuedotjs' },
   { name: 'Tailwind CSS', icon: 'simple-icons:tailwindcss' },
   { name: 'Supabase', icon: 'simple-icons:supabase' },
+  { name: 'Kotlin', icon: 'simple-icons:kotlin' },
+  { name: 'Jetpack Compose', icon: 'simple-icons:jetpackcompose' },
 ]
 
 // Personal tools: day-to-day setup, not a skills claim.
 const personalTools = [
   { name: 'Cursor', icon: 'material-icon-theme:cursor' },
+  { name: 'Claude Code', icon: 'simple-icons:claude' },
   { name: 'Firefox Developer Edition', icon: 'simple-icons:firefoxbrowser' },
   { name: 'Raycast', icon: 'simple-icons:raycast' },
+  { name: 'Obsidian', icon: 'simple-icons:obsidian' },
   { name: 'Anytype', icon: 'simple-icons:anytype' },
+  { name: 'Hermes', icon: 'material-symbols:smart-toy-outline' },
+  { name: 'Proton Mail', icon: 'simple-icons:protonmail' },
+  { name: 'Tailscale', icon: 'simple-icons:tailscale' },
+  { name: 'OrbStack', icon: 'simple-icons:orbstack' },
   { name: 'Signal', icon: 'simple-icons:signal' },
+  { name: 'Telegram', icon: 'simple-icons:telegram' },
+  { name: 'Bitwarden', icon: 'simple-icons:bitwarden' },
 ]
 
 useHead({
