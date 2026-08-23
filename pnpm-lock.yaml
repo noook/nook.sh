@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   floating-vue@5.2.2:
-    hash: 2369f7b39da25c059ca82ddff39506b01215f1b978e28cabe67009e8d37a75ad
+    hash: e7dd861639e2275c94eac6c200534752634f4fbb98ddcc3298b313172ea25c7d
     path: patches/floating-vue@5.2.2.patch
 
 importers:
@@ -8698,7 +8698,7 @@ snapshots:
   '@shikijs/vitepress-twoslash@4.4.3(@nuxt/kit@4.5.2(magic-string@1.2.2)(magicast@0.5.4)(oxc-parser@0.139.0)(rolldown@1.2.5)(unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.5)(rollup@4.62.5)(vite@8.2.2(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))))(typescript@5.9.3)':
     dependencies:
       '@shikijs/twoslash': 4.4.3(typescript@5.9.3)
-      floating-vue: 5.2.2(patch_hash=2369f7b39da25c059ca82ddff39506b01215f1b978e28cabe67009e8d37a75ad)(@nuxt/kit@4.5.2(magic-string@1.2.2)(magicast@0.5.4)(oxc-parser@0.139.0)(rolldown@1.2.5)(unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.5)(rollup@4.62.5)(vite@8.2.2(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))))(vue@3.5.41(typescript@5.9.3))
+      floating-vue: 5.2.2(patch_hash=e7dd861639e2275c94eac6c200534752634f4fbb98ddcc3298b313172ea25c7d)(@nuxt/kit@4.5.2(magic-string@1.2.2)(magicast@0.5.4)(oxc-parser@0.139.0)(rolldown@1.2.5)(unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.5)(rollup@4.62.5)(vite@8.2.2(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))))(vue@3.5.41(typescript@5.9.3))
       lz-string: 1.5.0
       magic-string: 1.2.2
       markdown-it: 14.3.0
@@ -10710,7 +10710,7 @@ snapshots:
 
   flatted@3.4.4: {}
 
-  floating-vue@5.2.2(patch_hash=2369f7b39da25c059ca82ddff39506b01215f1b978e28cabe67009e8d37a75ad)(@nuxt/kit@4.5.2(magic-string@1.2.2)(magicast@0.5.4)(oxc-parser@0.139.0)(rolldown@1.2.5)(unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.5)(rollup@4.62.5)(vite@8.2.2(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))))(vue@3.5.41(typescript@5.9.3)):
+  floating-vue@5.2.2(patch_hash=e7dd861639e2275c94eac6c200534752634f4fbb98ddcc3298b313172ea25c7d)(@nuxt/kit@4.5.2(magic-string@1.2.2)(magicast@0.5.4)(oxc-parser@0.139.0)(rolldown@1.2.5)(unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.5)(rollup@4.62.5)(vite@8.2.2(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))))(vue@3.5.41(typescript@5.9.3)):
     dependencies:
       '@floating-ui/dom': 1.1.1
       vue: 3.5.41(typescript@5.9.3)
