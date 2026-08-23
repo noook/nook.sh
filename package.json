@@ -29,7 +29,10 @@
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
+    "@iconify-json/carbon": "^1.2.25",
+    "@iconify-json/heroicons": "^1.2.3",
     "@iconify-json/lucide": "^1.2.71",
+    "@iconify-json/mdi": "^1.2.3",
     "@nuxtjs/robots": "6.1.5",
     "@nuxtjs/sitemap": "8.3.4",
     "nuxt-og-image": "6.7.8",
@@ -43,6 +46,9 @@
       "sharp",
       "unrs-resolver",
       "vue-demi"
-    ]
+    ],
+    "patchedDependencies": {
+      "floating-vue@5.2.2": "patches/floating-vue@5.2.2.patch"
+    }
   }
 }

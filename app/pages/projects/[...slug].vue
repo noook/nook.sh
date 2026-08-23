@@ -25,15 +25,12 @@ useHead({
 })
 defineOgImage('Default', { title: project.value.title })
 
-// Shared-element view transitions: see app/pages/blog.vue for the full
-// explanation. Keyed by route.path, matching project.path on the listing.
-const supportsViewTransitions = import.meta.client && 'startViewTransition' in document
-const imageTransitionStyle = supportsViewTransitions
-  ? { viewTransitionName: `project-image-${route.path.replace(/\//g, '-')}` }
-  : undefined
-const titleTransitionStyle = supportsViewTransitions
-  ? { viewTransitionName: `project-title-${route.path.replace(/\//g, '-')}` }
-  : undefined
+// Shared-element view transitions: see app/composables/useViewTransitionName.ts
+// for the full explanation. Keyed by route.path, matching project.path on
+// the listing.
+const { transitionStyle } = useViewTransitionName()
+const imageTransitionStyle = computed(() => transitionStyle('project-image', route.path))
+const titleTransitionStyle = computed(() => transitionStyle('project-title', route.path))
 </script>
 
 <template>

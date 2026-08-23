@@ -27,17 +27,14 @@ useHead({
 })
 defineOgImage('Default', { title: post.value.title })
 
-// Shared-element view transitions: see blog.vue for the full explanation.
-// Same name (keyed by route.path, matching post.path there) on the hero
-// image/title here as on the listing card makes the browser morph
-// between them on navigation instead of cross-fading the whole page.
-const supportsViewTransitions = import.meta.client && 'startViewTransition' in document
-const imageTransitionStyle = supportsViewTransitions
-  ? { viewTransitionName: `post-image-${route.path.replace(/\//g, '-')}` }
-  : undefined
-const titleTransitionStyle = supportsViewTransitions
-  ? { viewTransitionName: `post-title-${route.path.replace(/\//g, '-')}` }
-  : undefined
+// Shared-element view transitions: see app/composables/useViewTransitionName.ts
+// for the full explanation. Same name (keyed by route.path, matching
+// post.path there) on the hero image/title here as on the listing card
+// makes the browser morph between them on navigation instead of
+// cross-fading the whole page.
+const { transitionStyle } = useViewTransitionName()
+const imageTransitionStyle = computed(() => transitionStyle('post-image', route.path))
+const titleTransitionStyle = computed(() => transitionStyle('post-title', route.path))
 </script>
 
 <template>

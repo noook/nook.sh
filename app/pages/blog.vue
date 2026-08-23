@@ -37,12 +37,16 @@ defineOgImage('Default', { title: 'Blog — Neil Richter' })
 // view transitions are actually supported (progressive enhancement, see
 // nuxt.config.ts) - the ternary falls back to `undefined` so `style`
 // simply isn't set otherwise, no dead attribute.
-const supportsViewTransitions = import.meta.client && 'startViewTransition' in document
+//
+// See app/composables/useViewTransitionName.ts for the full
+// hydration-mismatch reasoning behind why support detection is deferred
+// to onMounted.
+const { transitionStyle } = useViewTransitionName()
 function imageTransitionName(path: string) {
-  return supportsViewTransitions ? { viewTransitionName: `post-image-${path.replace(/\//g, '-')}` } : undefined
+  return transitionStyle('post-image', path)
 }
 function titleTransitionName(path: string) {
-  return supportsViewTransitions ? { viewTransitionName: `post-title-${path.replace(/\//g, '-')}` } : undefined
+  return transitionStyle('post-title', path)
 }
 </script>
 

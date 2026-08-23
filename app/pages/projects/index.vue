@@ -24,14 +24,15 @@ useHead({
 })
 defineOgImage('Default', { title: 'Projects — Neil Richter' })
 
-// Shared-element view transitions: see app/pages/blog.vue for the full
-// explanation. Keyed by project.path so each card gets a unique name.
-const supportsViewTransitions = import.meta.client && 'startViewTransition' in document
+// Shared-element view transitions: see app/composables/useViewTransitionName.ts
+// for the full explanation. Keyed by project.path so each card gets a
+// unique name.
+const { transitionStyle } = useViewTransitionName()
 function imageTransitionName(path: string) {
-  return supportsViewTransitions ? { viewTransitionName: `project-image-${path.replace(/\//g, '-')}` } : undefined
+  return transitionStyle('project-image', path)
 }
 function titleTransitionName(path: string) {
-  return supportsViewTransitions ? { viewTransitionName: `project-title-${path.replace(/\//g, '-')}` } : undefined
+  return transitionStyle('project-title', path)
 }
 </script>
 

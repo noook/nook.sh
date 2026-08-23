@@ -1,0 +1,50 @@
+# floating-vue's popper `randomId` was generated with Math.random()+Date.now(),
+# a different value on SSR vs client hydration. That desyncs the internal
+# shownChildren/hide bookkeeping (keyed by randomId) from the DOM node
+# actually rendered, so twoslash "^?" and hover tooltips on blog posts get
+# stuck open (mouseleave/second-click no longer hits the tracked id).
+# Fix: deterministic incrementing counter instead of random id, so SSR and
+# client agree, PLUS reset that counter in install() (module-scope state
+# otherwise survives across every request handled by the same Node/Worker
+# process, e.g. Nuxt dev server or Cloudflare's per-request-reused isolate,
+# so ids keep climbing on the SSR side and never match a fresh client render
+# again after the very first page load).
+# Base fix is the same as the (still unmerged, as of 2026-08) draft PR
+# https://github.com/antfu/nuxt-content-twoslash/pull/21 by Groupguanfang;
+# the install()-reset addition is ours, needed on top of it.
+# Safe to drop this patch once floating-vue publishes a real fix upstream —
+# re-check on any floating-vue version bump, this diff targets 5.2.2's
+# minified dist/floating-vue.mjs by exact source match.
+diff --git a/dist/floating-vue.mjs b/dist/floating-vue.mjs
+index d54beb90f1fd341fb0aa41e1503afdbbece12cbb..a49630c19ba1b4551436cfd50bb88ca7e2a09bb4 100644
+--- a/dist/floating-vue.mjs
++++ b/dist/floating-vue.mjs
+@@ -4,6 +4,10 @@ function ye(e, t) {
+   for (const o in t)
+     Object.prototype.hasOwnProperty.call(t, o) && (typeof t[o] == "object" && e[o] ? ye(e[o], t[o]) : e[o] = t[o]);
+ }
++let uid = 0;
++function getPopperId() {
++  return `popper_${uid++}`;
++}
+ const h = {
+   // Disable popper components
+   disabled: !1,
+@@ -382,7 +386,7 @@ const q = "__floating-vue__popper", Q = () => O({
+         },
+         transformOrigin: null
+       },
+-      randomId: `popper_${[Math.random(), Date.now()].map((e) => e.toString(36).substring(2, 10)).join("_")}`,
++      randomId: `popper_${getPopperId()}`,
+       shownChildren: /* @__PURE__ */ new Set(),
+       lastAutoHide: !0,
+       pendingHide: !1,
+@@ -1549,7 +1553,7 @@ const ie = {
+   }
+ }, Ht = h, Ot = oe, Mt = oe, Bt = ie, Et = ie, kt = Se, Lt = be, Dt = Q, It = ee, Ft = te, Rt = k, jt = Z, Vt = Ce, Wt = ze;
+ function Ct(e, t = {}) {
+-  e.$_vTooltipInstalled || (e.$_vTooltipInstalled = !0, ye(h, t), e.directive("tooltip", oe), e.directive("close-popper", ie), e.component("VTooltip", Ce), e.component("VDropdown", Se), e.component("VMenu", be));
++  e.$_vTooltipInstalled || (e.$_vTooltipInstalled = !0, uid = 0, ye(h, t), e.directive("tooltip", oe), e.directive("close-popper", ie), e.component("VTooltip", Ce), e.component("VDropdown", Se), e.component("VMenu", be));
+ }
+ const Gt = {
+   // eslint-disable-next-line no-undef
