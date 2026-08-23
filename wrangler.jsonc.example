@@ -23,5 +23,26 @@
       "database_id": "__D1_DATABASE_ID__",
     },
   ],
+
+  // Workers Logs - captures invocation logs (request/response metadata),
+  // console.log/error output, and uncaught exceptions to the Cloudflare
+  // dashboard (Workers & Pages > nook-sh > Observability). Traces are left
+  // off for now (extra cost/volume, not needed yet) - flip traces.enabled
+  // to true later if request-level tracing is needed.
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "persist": true,
+      "invocation_logs": true,
+    },
+    "traces": {
+      "enabled": false,
+      "persist": true,
+      "head_sampling_rate": 1,
+    },
+  },
 }
 
