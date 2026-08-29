@@ -14,6 +14,20 @@ export default defineNuxtConfig({
     'nuxt-og-image',
   ],
 
+  // nuxt-og-image's own module default canvas is 1200x600, not the
+  // platform-standard 1200x630 (1.91:1) that Twitter/Facebook/Discord/
+  // LinkedIn actually expect - a mismatched ratio gets cropped or
+  // letterboxed by those platforms. Every OgImage/*.takumi.vue component
+  // already sets width/height:630px internally to match, but that inner
+  // style is irrelevant if the render canvas itself is still 600px tall -
+  // this is the actual canvas size fed to the renderer.
+  ogImage: {
+    defaults: {
+      width: 1200,
+      height: 630,
+    },
+  },
+
   devtools: { enabled: true },
 
   app: {

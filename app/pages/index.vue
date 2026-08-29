@@ -5,9 +5,16 @@ const { data: page } = await useAsyncData('page-index', () => {
 
 useHead({
   title: 'Home',
+  meta: [
+    { name: 'description', content: 'Neil Richter — software engineer. Open source, TypeScript, and building things.' },
+  ],
   link: [
     { rel: 'canonical', href: 'https://nook.sh/' },
   ],
+})
+useSeoMeta({
+  ogTitle: 'Neil Richter',
+  ogDescription: 'Software engineer. Open source, TypeScript, and building things.',
 })
 defineOgImage('Default', { title: 'Neil Richter' })
 </script>

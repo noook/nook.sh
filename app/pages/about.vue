@@ -49,9 +49,16 @@ const personalTools = [
 
 useHead({
   title: 'About',
+  meta: [
+    { name: 'description', content: 'Software engineer building open source, TypeScript tools, and side projects.' },
+  ],
   link: [
     { rel: 'canonical', href: 'https://nook.sh/about' },
   ],
+})
+useSeoMeta({
+  ogTitle: 'About — Neil Richter',
+  ogDescription: 'Software engineer building open source, TypeScript tools, and side projects.',
 })
 defineOgImage('Default', { title: 'About — Neil Richter' })
 </script>
