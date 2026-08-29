@@ -18,9 +18,16 @@ const { data: projects } = await useAsyncData('projects', () => {
 
 useHead({
   title: 'Projects',
+  meta: [
+    { name: 'description', content: 'Development projects, experiments, and IRL projects from Neil Richter.' },
+  ],
   link: [
     { rel: 'canonical', href: 'https://nook.sh/projects' },
   ],
+})
+useSeoMeta({
+  ogTitle: 'Projects — Neil Richter',
+  ogDescription: 'Development projects, experiments, and IRL projects from Neil Richter.',
 })
 defineOgImage('Default', { title: 'Projects — Neil Richter' })
 
