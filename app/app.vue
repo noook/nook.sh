@@ -24,6 +24,17 @@ useHead({
     lang: 'en',
   },
 })
+
+// Site-wide OG/Twitter defaults - individual pages only need to set
+// ogTitle/ogDescription when they differ from the page <title>/description
+// (useSeoMeta falls back to title/description automatically otherwise).
+// og:site_name is what Discord/Slack/etc show above the link title -
+// without it the card looks anonymous/unbranded. Twitter card type must
+// be set explicitly too, it's not inferred from og:image alone.
+useSeoMeta({
+  ogSiteName: 'Neil Richter',
+  twitterCard: 'summary_large_image',
+})
 </script>
 
 <template>

@@ -18,12 +18,23 @@ if (!post.value || (post.value.mock && !import.meta.dev) || (post.value.draft &&
 
 useHead({
   title: post.value.title,
+  // Post titles already read as a complete sentence/headline on their own
+  // ("Fixing a type lie in ...") - appending the global " — Neil Richter"
+  // site suffix (see nuxt.config.ts app.head.titleTemplate) pushes long
+  // post titles past Google's ~60 char search-snippet guidance for no
+  // real benefit here. Other pages (Blog, About, home) keep the suffix -
+  // their titles are short generic labels that need the brand context.
+  titleTemplate: '%s',
   meta: [
     { name: 'description', content: post.value.description },
   ],
   link: [
     { rel: 'canonical', href: `https://nook.sh${route.path}` },
   ],
+})
+useSeoMeta({
+  ogTitle: post.value.title,
+  ogDescription: post.value.description,
 })
 // Per-post custom OG card for the Spotify SDK type-lie post; everything
 // else still gets the generic Default card. Swap/extend this to a

@@ -23,6 +23,10 @@ useHead({
     { rel: 'canonical', href: `https://nook.sh${route.path}` },
   ],
 })
+useSeoMeta({
+  ogTitle: project.value.title,
+  ogDescription: project.value.description,
+})
 defineOgImage('Default', { title: project.value.title })
 
 // Shared-element view transitions: see app/composables/useViewTransitionName.ts
