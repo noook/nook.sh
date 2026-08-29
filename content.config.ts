@@ -19,7 +19,13 @@ export default defineContentConfig({
         // Cover image shown on the /blog listing card - optional, cards
         // fall back to a themed placeholder (see blog.vue) when unset so
         // the grid still looks intentional before real photos exist.
+        // `image` is the light-mode (or single/theme-agnostic) cover;
+        // `imageDark` is an optional dark-mode variant shown instead via
+        // Tailwind's `dark:` class toggle (see blog.vue / posts/[...slug].vue)
+        // - only relevant when a design genuinely needs different art per
+        // theme rather than one image that already reads fine in both.
         image: z.string().optional(),
+        imageDark: z.string().optional(),
         // Draft posts are excluded from listings and the sitemap always;
         // whether they 404 on direct URL access depends on environment -
         // see nuxt.config.ts runtimeConfig.showDrafts (visible in local
@@ -55,6 +61,7 @@ export default defineContentConfig({
         tags: z.array(z.string()).default([]),
         type: z.enum(['code', 'irl']).default('code'),
         image: z.string().optional(),
+        imageDark: z.string().optional(),
         draft: z.boolean().default(false),
         mock: z.boolean().default(false),
         sitemap: defineSitemapSchema({

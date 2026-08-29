@@ -75,12 +75,19 @@ function titleTransitionName(path: string) {
           <template #header>
             <div
               v-if="post.image"
-              class="aspect-video overflow-hidden"
+              class="aspect-video overflow-hidden relative"
             >
               <NuxtImg
                 :src="post.image"
                 :alt="post.title"
-                class="w-full h-full object-cover"
+                class="w-full h-full object-cover dark:hidden"
+                :style="imageTransitionName(post.path)"
+              />
+              <NuxtImg
+                v-if="post.imageDark"
+                :src="post.imageDark"
+                :alt="post.title"
+                class="w-full h-full object-cover hidden dark:block"
                 :style="imageTransitionName(post.path)"
               />
             </div>

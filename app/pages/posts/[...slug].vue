@@ -25,7 +25,15 @@ useHead({
     { rel: 'canonical', href: `https://nook.sh${route.path}` },
   ],
 })
-defineOgImage('Default', { title: post.value.title })
+// Per-post custom OG card for the Spotify SDK type-lie post; everything
+// else still gets the generic Default card. Swap/extend this to a
+// frontmatter-driven lookup if more posts get bespoke OG art later.
+if (route.path === '/posts/spotify-sdk-search-types') {
+  defineOgImage('TypeCard', { title: post.value.title })
+}
+else {
+  defineOgImage('Default', { title: post.value.title })
+}
 
 // Shared-element view transitions: see app/composables/useViewTransitionName.ts
 // for the full explanation. Same name (keyed by route.path, matching
@@ -51,12 +59,19 @@ const titleTransitionStyle = computed(() => transitionStyle('post-title', route.
     <!-- Hero image -->
     <div
       v-if="post.image"
-      class="aspect-video rounded-lg overflow-hidden mb-8"
+      class="aspect-video rounded-lg overflow-hidden mb-8 relative"
     >
       <NuxtImg
         :src="post.image"
         :alt="post.title"
-        class="w-full h-full object-cover"
+        class="w-full h-full object-cover dark:hidden"
+        :style="imageTransitionStyle"
+      />
+      <NuxtImg
+        v-if="post.imageDark"
+        :src="post.imageDark"
+        :alt="post.title"
+        class="w-full h-full object-cover hidden dark:block"
         :style="imageTransitionStyle"
       />
     </div>

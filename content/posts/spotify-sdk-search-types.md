@@ -6,7 +6,8 @@ tags:
   - typescript
   - open-source
   - spotify
-# image: "/images/posts/spotify-sdk-search-types/cover.jpg"  # optional
+image: "/images/posts/spotify-sdk-search-types/cover-light.png"
+imageDark: "/images/posts/spotify-sdk-search-types/cover-dark.png"
 draft: false
 ---
 
