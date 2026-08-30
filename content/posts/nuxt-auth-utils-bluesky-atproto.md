@@ -13,16 +13,15 @@ imageDark: "/images/posts/nuxt-auth-utils-bluesky/cover-dark.png"
 draft: false
 ---
 
-Most OAuth providers you add to an auth library are the same fifty lines with different URLs
-swapped in: an authorize endpoint, a token endpoint, a client ID, a client secret. I've added a
-few of those to [`nuxt-auth-utils`][0] before and they're a non-event. Bluesky was not one of
-those fifty-line PRs. It took [a stretch of work spanning several months][1], one honest "I'm not
-satisfied with this" course-correction in the middle, a maintainer catching me almost shipping a
-memory leak, and a fair amount of reading the AT Proto spec to understand why the classic
-OAuth shape doesn't apply here at all.
+Most OAuth providers you add to an auth library are the same fifty lines with a different set of
+URLs swapped in: an authorize endpoint, a token endpoint, a client ID, a client secret. Bluesky
+wasn't that. Getting [this PR][1] right took a real back-and-forth with the maintainer, one honest
+"I'm not satisfied with this" course-correction in the middle, a maintainer catching me almost
+shipping a memory leak, and enough digging into the AT Proto spec to understand why a normal
+OAuth integration just doesn't work here.
 
 This is the writeup of that PR, and I wanted the actual discussion in it, not just the diff.
-Half of what makes this one worth telling is visible only in the comments.
+Half of what makes this one worth telling only shows up in the comments.
 
 ## Why this protocol exists in the first place
 
@@ -41,40 +40,38 @@ left Twitter/X* than about Bluesky itself:
   reversals, verification changes, and a general sense that a single company's decisions could
   reshape your reach and audience overnight.
 
-Bluesky's answer to all three wasn't "trust us more," it was structural: **AT Proto** is
-designed so that your identity and your data aren't owned by any single company's server. You can
-self-host your own PDS (Personal Data Server), move providers without losing your identity or
-followers, and no single entity controls the whole network the way Twitter/X controls Twitter/X.
-That's the part that actually broke OAuth's assumptions and is why this PR ended up being so much
-more than "add a login button."
+Bluesky's answer to all three wasn't "trust us more," it was structural: **AT Proto** is built
+so that your identity and your data aren't owned by any single company's server. You can
+self-host your own account server, move providers without losing your identity or followers, and
+no single company controls the whole network the way X controls X. That's the part that actually
+broke OAuth's assumptions, and it's why this PR ended up being a lot more than "add a login
+button."
 
 Mastodon is the other name that comes up in the same breath as decentralized social, and it's
 worth being precise about the comparison instead of waving at it, because the two aren't
 decentralized in the same way. Mastodon's federation is real and in daily use: thousands of
 independently run servers with their own moderation rules, genuinely talking to each other,
 sometimes genuinely refusing to. AT Proto's is, for the most part, still theoretical. As of early
-2026 something like 99% of AT Proto accounts live on Bluesky PBC's own infrastructure, and most
-of what's left is spam. Legitimate independent PDS operators are counted in the tens of
-thousands, not millions. Bluesky talks about "credible exit" and portable identity as core to
-the design, and structurally it is, but almost nobody has actually exited yet.
+2026 something like 99% of AT Proto accounts live on Bluesky's own infrastructure, and most of
+what's left is spam accounts. People actually running their own independent server are counted in
+the tens of thousands, not millions. Bluesky talks about letting you leave without losing
+anything as core to the design, and structurally it is, but almost nobody has actually left yet.
 
 So why did Bluesky pull ahead of a network that's more decentralized in practice? Mostly UX and
-timing, not architecture. Mastodon makes you pick a server before you understand why that
-choice matters, which is a hard wall to put in front of someone who just wants to leave Twitter.
+timing, not architecture. Mastodon makes you pick a server before you understand why that choice
+even matters, and that's a hard wall to put in front of someone who just wants to leave Twitter.
 Bluesky put a single, familiar, Twitter-shaped app in front of people at the exact moment the
 Twitter/X exodus needed somewhere to land, and asked nothing else of them up front. Looking like
 Twitter won more users than being architecturally different from Twitter did.
 
-Which raises the real question: if almost nobody self-hosts a PDS, why does any of this matter?
-Because portability isn't a feature you use day to day, it's insurance. Nobody wants to migrate
-PDS the way nobody wants to restore from a backup, right up until the day the company running
-their identity gets acquired, changes its moderation policy, or shuts down. The value isn't in
-the migrating, it's in the fact that the option exists at all, which changes the leverage a
-platform has over its users even when nobody's exercising it. And for this post specifically,
-that's not just a values statement: it's the direct reason the OAuth flow had to be built the
-way it is. "No fixed issuer" isn't an abstract decentralization talking point here, it's the
-literal consequence of Bluesky taking that portability seriously enough to build for it, and
-it's why the rest of this PR looks nothing like the fifty-line providers that came before it.
+Which raises the real question: if almost nobody self-hosts, why does any of this matter? Because
+being able to leave isn't a feature you use day to day, it's insurance. Nobody wants to migrate
+the way nobody wants to restore from a backup, right up until the day the company running their
+identity gets acquired, changes its moderation policy, or shuts down. The value isn't in the
+migrating, it's in the fact that the option exists at all. And for this post specifically, that's
+not just a nice idea: it's the direct reason the OAuth flow had to be built the way it is. There's
+no single company you always log into, because the whole point is that there doesn't have to be
+one, and that's the thread the rest of this post pulls on.
 
 ## The problem OAuth doesn't have an answer for
 
@@ -82,24 +79,17 @@ Every OAuth provider `nuxt-auth-utils` already supported - GitHub, GitLab, Spoti
 one fixed issuer. You know the authorize URL and the token URL before the user has told you
 anything about themselves, because there's exactly one GitHub.
 
-Bluesky doesn't work that way, because it isn't really "Bluesky" underneath. It's one client
-of AT Proto, a federated network where a user's account can live on any compliant server
-(a "PDS", Personal Data Server), not just Bluesky's own. That means you can't know the
-authorize/token endpoints up front. You first need the user's **handle**, resolve which PDS
-instance actually hosts their account, and only then can you kick off an OAuth-shaped flow
-against that specific instance.
+Bluesky doesn't work that way, because it isn't really "Bluesky" underneath. It's one app built
+on AT Proto, a network where a user's account can live on any compatible server, not just
+Bluesky's own. So you can't know the authorize/token endpoints up front. You first need the
+user's **handle**, figure out which server actually hosts their account, and only then can you
+start something OAuth-shaped against that specific server.
 
 Handling that resolution and verification by hand is enough work that I opted to lean on
-`@atproto/oauth-client-node` and `@atproto/api` rather than reimplement it, which is how I framed
-it in the PR description:
+`@atproto/oauth-client-node` and `@atproto/api` rather than reimplement it myself:
 
 ::pr-quote{author="Neil Richter" handle="noook" avatar="https://github.com/noook.png" role="Author" date="Nov 14, 2024" href="https://github.com/atinux/nuxt-auth-utils/pull/281" mine}
-Resolves: [#267](https://github.com/atinux/nuxt-auth-utils/issues/267)
-
 This PR adds Bluesky as a provider.
-
-This provider requires the user to install extra dependencies to properly handle authorization,
-because of the way Bluesky works.
 
 In order to begin the authorization process, we first need to know the user handle. This is
 required because we need to know against which instance of Bluesky we need to verify the user.
@@ -111,92 +101,63 @@ Doing all the verifications manually require a lot of steps and adds complexity,
 
 The first pass worked. It also bugged me, because I'd basically hardcoded "Bluesky" into
 something that was really a generic protocol underneath, and AT Proto is explicitly meant to
-host more than one service. If another AT Proto-based app showed up later, this whole provider
-would need to be rebuilt from scratch instead of reused. I said as much mid-PR, three days after
-the first version landed:
+host more than one app. If another AT Proto-based service showed up later, this provider would
+need to be rebuilt from scratch instead of reused. I said as much a few days after the first
+version landed:
 
 ::pr-quote{author="Neil Richter" handle="noook" avatar="https://github.com/noook.png" role="Author" date="Nov 14, 2024" href="https://github.com/atinux/nuxt-auth-utils/pull/281#issuecomment-2476068454" mine}
 I'm not sure I'm satisfied regarding the current implementation. Basically Bluesky is just a
 provider using atproto underneath, and we could have sooner or later another atproto provider.
 
-I think I'm facing the same issues that come with the complexity of providing a generic OIDC
-provider, but with the additional build time constraints on top of that (exposing the discovery
-document)
-
 So the configuration would be split into two parts:
-- `atproto` -> next to `oauth` and `webauthn` configuration. Probably a boolean, so we can check
-  that the peer dependencies are installed.
+- `atproto` -> next to `oauth` and `webauthn` configuration.
 - `oauth.${atprotoProvider}` -> Should implement an interface such that matches the "Client ID
   Metadata Document" section on [this document](https://atproto.com/specs/oauth#clients) that
   seems to be a common base for future atproto providers
-
-I guess the new challenge here is to provide the dynamic metadata handler
 ::
 
-That's the moment the PR stops being "add a login button" and becomes "model a provider family
+That's the moment the PR stopped being "add a login button" and became "model a provider family
 that doesn't exist yet in this codebase." atinux's reply was immediate buy-in:
 
 ::pr-quote{author="Sébastien Chopin" handle="atinux" avatar="https://github.com/atinux.png" role="Maintainer" date="Nov 14, 2024" href="https://github.com/atinux/nuxt-auth-utils/pull/281#issuecomment-2476073379"}
 I love this approach!
 ::
 
-## Under the hood: where atproto's OAuth profile actually diverges from vanilla OAuth2/OIDC
+## Under the hood: what actually makes AT Proto's OAuth different
 
-Once you get past "it needs a handle first," the AT Proto OAuth spec (`atproto.com/specs/oauth`,
-built on top of several still-in-draft IETF extensions) makes a handful of concrete, spec-level
-departures from a standard OAuth2/OIDC provider integration. These are the ones that actually
-shaped the implementation:
+Once you get past "we need the handle first," a few things about how AT Proto handles login
+don't look anything like normal OAuth. Here's the short version of each.
 
-**1. The client ID is a URL, not an opaque string.** Under the draft
-[OAuth Client ID Metadata Document][3] spec that atproto adopts, `client_id` must be a
-fully-qualified, fetchable URL (e.g. `https://app.example.com/oauth-client-metadata.json`), and
-it must resolve to a JSON document whose own `client_id` field matches that exact URL. There's no
-developer-portal registration step at all. The Authorization Server fetches and validates your
-metadata live, on every authorization request (with caching). This is what forced the "dynamic
-metadata handler" work described above. A classic OAuth integration never has to *serve* anything,
-it only ever *consumes* endpoints.
+Normally you register your app once in a developer dashboard and get back a client ID that's
+just a random string, and that's it forever. AT Proto skips the dashboard entirely: your app
+publishes a small JSON file about itself somewhere public, and that file's URL becomes your
+client ID. Every login, the server fetches it and checks the contents match. Think of it as a
+name tag the bouncer rereads on the way in each time, rather than a membership card issued once.
 
-**2. DPoP is mandatory, not optional.** Every atproto client metadata document must declare
-`"dpop_bound_access_tokens": true`. [DPoP][4] (Demonstrating Proof-of-Possession, RFC 9449) binds
-issued tokens to a client-held key pair, so a stolen bearer token alone isn't enough to replay a
-request, the attacker would also need the private key. Most OAuth providers treat DPoP as
-optional-if-supported-at-all, but atproto requires it unconditionally for every client.
+Access tokens get tied to a key your app holds onto, using a mechanism called DPoP. A regular
+bearer token works a bit like a hotel key card: whoever has a copy can use it. Here, copying the
+token alone doesn't get you anywhere, you'd need the private key it was issued against too.
 
-**3. Identity resolution runs *before* OAuth even starts.** A regular OAuth flow begins at a known
-authorize endpoint. Here, the client first resolves the user's **handle** to a **DID**
-(Decentralized Identifier, e.g. `did:plc:...` or `did:web:...`), atproto's stable, portable
-account identifier that survives a handle change or a PDS migration. The DID resolves to a DID
-document, which is what actually points at the account's current **PDS** (Personal Data Server)
-host. Only that PDS (not Bluesky's own servers, unless the account happens to live there) is
-authoritative for who that account is, which is the load-bearing security property: without this
-step, a malicious or compromised server could claim to authenticate a DID it doesn't actually
-control.
+Then there's the handle itself. `@you.bsky.social` can change any time, so it can't be the real
+identifier underneath. Before login even starts, the app resolves it to a DID, a stable ID that
+survives a handle change or a server move, and the DID points at wherever the account actually
+lives. That's the part carrying the real weight: only that server gets to vouch for the account,
+so a compromised or malicious server elsewhere on the network can't just claim it.
 
-**4. Server discovery is itself a two-step lookup, not a single well-known URL.** The client
-fetches [OAuth Protected Resource Metadata][5] (another IETF draft) from the resolved PDS to learn
-the `authorization_servers` value, then fetches that Authorization Server's own OAuth metadata
-document (a superset of the standard OIDC discovery document) to get the real authorize/token/PAR
-endpoints. A normal OAuth integration hardcodes those two endpoints once, for one issuer, forever.
-Here they're resolved fresh per-account because the account's issuer genuinely isn't fixed.
+And because the account's home server is different for every user, none of the OAuth endpoints
+are fixed the way `github.com/login/oauth` is. A normal integration hardcodes those URLs once.
+Here they get looked up fresh, every single login.
 
-**5. Confidential clients can't use a shared secret at all.** Because client metadata is a public
-JSON document with no mechanism to keep a value private, `client_secret`/`client_secret_post`/
-`client_secret_basic` are explicitly disallowed. Confidential clients instead authenticate with
-`private_key_jwt` (a JWT signed with a key whose public half is published via `jwks`/`jwks_uri` in
-the same metadata document). This repo's provider is a public client (`token_endpoint_auth_method:
-none`), so it sidesteps that requirement, but it's a meaningful divergence from "client ID + client
-secret" as a mental model.
-
-None of this is exotic for the sake of it. PAR, DPoP, and client ID metadata documents are all
-being pulled in from adjacent IETF drafts because a federated network genuinely can't rely on the
-"register once with the one authorization server" assumption that makes vanilla OAuth simple in
-the first place.
+None of this exists to be clever. Every one of these pieces is there because a network without a
+single central authority genuinely can't rely on "register once with the one company that runs
+everything," which is the assumption that makes a normal OAuth integration simple in the first
+place.
 
 ## The part that doesn't exist in classic OAuth: dynamic client metadata
 
 Regular OAuth apps register their client ID once, by hand, in a developer dashboard, and that's
-it forever. AT Proto instead expects your app to **serve a metadata document describing
-itself**, at a URL the protocol treats as your client ID:
+it forever. AT Proto instead expects your app to **serve a small file describing itself**, at the
+exact URL the protocol treats as your client ID:
 
 ```json
 // GET https://your-app.com/.well-known/oauth-client-metadata.json (illustrative)
@@ -208,11 +169,11 @@ itself**, at a URL the protocol treats as your client ID:
 }
 ```
 
-Because the client ID *is* a URL that gets fetched, and the redirect URL/app URL aren't known
-until someone actually deploys the site, this can't be a static file checked into the repo. It
-has to be generated at request time from the running config. That's the "new challenge" flagged
-in the comment above, and it became its own commit, wiring an event handler that serves the
-metadata document dynamically from the module's config:
+Because that URL gets fetched live, and the app's actual redirect URL isn't known until someone
+deploys the site, this can't be a static file checked into the repo. It has to be generated on
+the fly, using whatever config the site is actually running with. That's the "new challenge"
+from the comment above, and it became its own piece of work: an endpoint that builds this file
+dynamically from the module's config.
 
 ```ts
 // src/runtime/server/lib/oauth/bluesky.ts (simplified)
@@ -234,32 +195,30 @@ export function defineOAuthBlueskyEventHandler({ config, onSuccess, onError }: O
 }
 ```
 
-The metadata endpoint itself just mirrors that same config back out as JSON, on demand, so it's
-always consistent with whatever `publicUrl`/`redirectURL` the app is actually running with,
-instead of a value someone typed into a dashboard once and forgot about.
+The metadata endpoint just mirrors that same config back out as JSON, on request, so it's always
+consistent with whatever the app is actually running with, instead of a value someone typed into
+a dashboard once and forgot about.
 
-## A production lesson from the maintainer: be careful with serverless environments
+## A production lesson from the maintainer: don't assume memory sticks around
 
 The first working version stored OAuth state and session data with `unstorage`, the same
-key-value abstraction `nuxt-auth-utils` already used elsewhere. It worked locally. atinux caught
-the problem before it shipped:
+key-value abstraction `nuxt-auth-utils` already used elsewhere. It worked fine locally. atinux
+caught the problem before it shipped, and the point underneath his comment is one worth
+stating plainly: Nuxt can run in a lot of different places, a regular Node server, Cloudflare
+Workers, and plenty of other serverless environments, and the code has to work the same way
+regardless of where it ends up. That means leaning on things that are available everywhere
+(cookies, the request itself) instead of patterns that quietly assume there's one long-running
+process holding state in memory between requests.
 
-::pr-quote{author="Sébastien Chopin" handle="atinux" avatar="https://github.com/atinux.png" role="Maintainer" date="Nov 28, 2024" href="https://github.com/atinux/nuxt-auth-utils/pull/281#issuecomment-2506326831"}
-I just noticed that you use `useStorage` which can be tricky as it needs to be configured in
-serverless environment in order to properly work. One solution could be to use cookies to store
-the state, see [pilcrowonpaper/atproto-oauth-example](https://github.com/pilcrowonpaper/atproto-oauth-example/blob/2ebfd7836b5ce9921df31e66fb332ee8ae8d5823/src/pages/login/callback.ts#L15-L17)
-::
+`useStorage` defaults to in-memory storage on a lot of targets unless you configure something
+else, which is fine for a long-lived server but breaks on serverless, where a fresh instance can
+handle the very next request with nothing remembered from the last one. An OAuth flow that
+redirects out to Bluesky and back needs that in-between state to survive no matter where the app
+is deployed, so relying on memory-by-default storage was the wrong call for a library meant to
+run anywhere.
 
-`useStorage` defaults to in-memory on a lot of deploy targets, which is fine for a long-lived
-Node server but needs deliberate configuration on serverless/edge, where every request can land
-on a fresh instance with nothing remembered from the last one. Those environments don't have
-the same persistence capabilities a long-running process gets for free. An OAuth flow that spans
-a redirect to Bluesky and back needs that state to survive between requests no matter where it's
-deployed, so relying on in-memory-by-default storage was the wrong default for a library meant
-to run anywhere.
-
-I came back to it over a month later and reworked session/state storage to use signed cookies
-instead - no shared storage dependency, works identically on every deploy target:
+I came back to it later and reworked session/state storage to use signed cookies instead, no
+shared storage dependency, same behavior on every deploy target:
 
 ```ts
 // storing OAuth state in a cookie instead of unstorage
@@ -271,34 +230,24 @@ setCookie(event, 'nuxt-auth-atproto-state', JSON.stringify(state), {
 })
 ```
 
-and proposed cleaning up after ourselves once the flow completes:
-
-::pr-quote{author="Neil Richter" handle="noook" avatar="https://github.com/noook.png" role="Author" date="Jan 24, 2025" href="https://github.com/atinux/nuxt-auth-utils/pull/281#issuecomment-2612677906" mine}
-Sorry, been away for a long time @atinux. I updated the code so that it uses cookies for storing
-state and session. I think we could delete the session once it's read, as it's not longer used
-after authentication, wdyt ?
-::
-
-::pr-quote{author="Sébastien Chopin" handle="atinux" avatar="https://github.com/atinux.png" role="Maintainer" date="Jan 30, 2025" href="https://github.com/atinux/nuxt-auth-utils/pull/281#issuecomment-2624217112"}
-Agree! Happy to do it and fix the conflicts? 🙏
-
-Don't apologize, it's open source, no hurry at all :D
-::
+The code was already reworked to use cookies for state and session storage by this point; the
+one thing still worth doing was deleting the session cookie right after it's read, since it's
+dead weight once authentication finishes. That cleanup went in as a small follow-up, no drama
+attached.
 
 ## The near-miss: a one-line "fix" that would have been a memory leak
 
-Late in review, atinux suggested a small cleanup to deduplicate OAuth scopes using a GitHub
-suggested-change diff:
+Late in review, atinux suggested a small cleanup to deduplicate OAuth scopes:
 
 ```ts
 // suggested
 const scope = [...new Set(config.scope)].scope.join(' ')
 ```
 
-It looked harmless - dedupe an array, join it back into a string - but it operated on the shared
-module config object, not a local copy. Since that config gets read on every incoming request,
-mutating it in place would mean the "deduped" scope list quietly grew on every request that
-happened to add a scope, forever, for the lifetime of the server process. I caught it before
+It looked harmless, dedupe an array, join it back into a string, but it mutated the shared
+module config object directly instead of working on a copy. Since that config gets read on every
+incoming request, the "deduped" list would have quietly grown a little more on every request that
+added a scope, forever, for as long as the server process stayed alive. I caught it before
 merging:
 
 ::pr-quote{author="Neil Richter" handle="noook" avatar="https://github.com/noook.png" role="Author" date="Nov 14, 2024" href="https://github.com/atinux/nuxt-auth-utils/pull/281#discussion_r1842069022" mine}
@@ -307,31 +256,28 @@ will add the configured scope to the list of scopes. I should configure the merg
 `defu` instead
 ::
 
-The actual fix was to stop mutating shared config altogether and instead teach `defu` (the
-deep-merge utility the module already uses for combining user config with defaults) to dedupe
-scopes as part of the merge itself, so every request gets a freshly computed result instead of
-a shared mutable one accumulating state across requests.
+The actual fix was to stop mutating shared config altogether, and instead teach `defu` (the
+deep-merge utility the module already uses to combine user config with defaults) to dedupe scopes
+as part of the merge itself. That way every request gets a freshly computed result instead of a
+shared value slowly accumulating state across requests.
 
-## Shipping, and the same-day follow-up
+## Shipping
 
-`#281` merged on February 5, 2025, spanning mid-November to early February, and landing a
-generic `atproto` config block, dynamic client metadata, cookie-based session storage, and full
-docs for setting up AT Proto socials. A same-day follow-up, [`#340`][2], fixed one more edge case
-in how sessions were mapped locally before the dust settled.
+[`#281`][1] merged on February 5, 2025, landing a generic `atproto` config block, dynamic client
+metadata, cookie-based session storage, and docs for setting up AT Proto logins. A same-day
+follow-up, [`#340`][2], fixed one more edge case in how sessions were mapped locally before the
+dust settled.
 
 ## What I'd take from this one
 
 The interesting part of contributing to open source is rarely the code you type. It's usually the
 moment you stop and say "wait, this abstraction is wrong" in the middle of otherwise working
-code, or the moment a maintainer with more production scars than you catches something you
-didn't think to check. AT Proto forced both here: it doesn't fit the OAuth mental model cleanly,
-so getting the abstraction right took an actual design conversation, not just an implementation
-pass. That conversation is the part I wanted to preserve, quotes and all,
-rather than flatten it down to "added Bluesky login."
+code, or the moment a maintainer with more production scars than you catches something you didn't
+think to check. AT Proto forced both here: it doesn't fit the OAuth mental model cleanly, so
+getting the shape right took an actual conversation, not just an implementation pass. That
+conversation is the part I wanted to preserve, quotes and all, rather than flatten it down to
+"added Bluesky login."
 
 [0]: https://github.com/atinux/nuxt-auth-utils
 [1]: https://github.com/atinux/nuxt-auth-utils/pull/281
 [2]: https://github.com/atinux/nuxt-auth-utils/pull/340
-[3]: https://datatracker.ietf.org/doc/draft-ietf-oauth-client-id-metadata-document/
-[4]: https://datatracker.ietf.org/doc/html/rfc9449
-[5]: https://datatracker.ietf.org/doc/draft-ietf-oauth-resource-metadata/
