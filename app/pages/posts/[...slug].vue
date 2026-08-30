@@ -29,7 +29,7 @@ useHead({
     { name: 'description', content: post.value.description },
   ],
   link: [
-    { rel: 'canonical', href: `https://nook.sh${route.path}` },
+    { rel: 'canonical', href: `${useSiteConfig().url}${route.path}` },
   ],
 })
 useSeoMeta({

@@ -53,7 +53,7 @@ useHead({
     { name: 'description', content: 'Software engineer building open source, TypeScript tools, and side projects.' },
   ],
   link: [
-    { rel: 'canonical', href: 'https://nook.sh/about' },
+    { rel: 'canonical', href: `${useSiteConfig().url}/about` },
   ],
 })
 useSeoMeta({

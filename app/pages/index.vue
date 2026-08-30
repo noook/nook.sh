@@ -3,13 +3,21 @@ const { data: page } = await useAsyncData('page-index', () => {
   return queryCollection('content').path('/').first()
 })
 
+// useSiteConfig().url resolves against the actual deployed host at runtime
+// (nuxt-site-config reads it from the request on preview/prod Cloudflare
+// deploys) - nuxt.config.ts site.url is only the lowest-priority fallback.
+// A hardcoded 'https://nook.sh/...' literal here would bypass that
+// resolution entirely and always point canonical/OG at production, even
+// from a branch preview deploy.
+const siteConfig = useSiteConfig()
+
 useHead({
   title: 'Home',
   meta: [
     { name: 'description', content: 'Neil Richter — software engineer. Open source, TypeScript, and building things.' },
   ],
   link: [
-    { rel: 'canonical', href: 'https://nook.sh/' },
+    { rel: 'canonical', href: siteConfig.url },
   ],
 })
 useSeoMeta({
