@@ -52,9 +52,22 @@ export default defineNuxtConfig({
   // Canonical origin - used by @nuxtjs/sitemap, @nuxtjs/robots (sitemap
   // reference), and nuxt-og-image (absolute OG image URLs) to build
   // absolute URLs. www.nook.sh redirects to this apex at the app level
-  // (server/middleware/www-redirect.ts), so this is the one true origin.
+  // (server/middleware/www-redirect.ts), so this is the one true origin
+  // on production.
+  //
+  // Only set on the production branch build. nuxt-site-config's own
+  // runtime host detection (reading the actual request, e.g. a Cloudflare
+  // branch-preview *.workers.dev domain) is LOWER priority than this
+  // `config` source (site-config-stack's SiteConfigPriority: config=-3
+  // outranks its own nitro/system auto-detection at -4/-15) - so setting
+  // this unconditionally would make every preview deploy still resolve
+  // useSiteConfig().url (and therefore canonical links, defineOgImage
+  // absolute URLs, etc.) to production's nook.sh, even though the
+  // content is actually only live on the preview domain. Leaving it
+  // unset on non-production builds lets the runtime detection take over
+  // and resolve against whatever host actually served the request.
   site: {
-    url: 'https://nook.sh',
+    url: process.env.WORKERS_CI_DEFAULT_BRANCH === 'true' ? 'https://nook.sh' : undefined,
   },
 
   // Baked at build time (not a runtime env read - Cloudflare Workers Builds
