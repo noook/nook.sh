@@ -48,6 +48,34 @@ followers, and no single entity controls the whole network the way Twitter/X con
 That's the part that actually broke OAuth's assumptions and is why this PR ended up being so much
 more than "add a login button."
 
+Mastodon is the other name that comes up in the same breath as decentralized social, and it's
+worth being precise about the comparison instead of waving at it, because the two aren't
+decentralized in the same way. Mastodon's federation is real and in daily use: thousands of
+independently run servers with their own moderation rules, genuinely talking to each other,
+sometimes genuinely refusing to. AT Proto's is, for the most part, still theoretical. As of early
+2026 something like 99% of AT Proto accounts live on Bluesky PBC's own infrastructure, and most
+of what's left is spam. Legitimate independent PDS operators are counted in the tens of
+thousands, not millions. Bluesky talks about "credible exit" and portable identity as core to
+the design, and structurally it is, but almost nobody has actually exited yet.
+
+So why did Bluesky pull ahead of a network that's more decentralized in practice? Mostly UX and
+timing, not architecture. Mastodon makes you pick a server before you understand why that
+choice matters, which is a hard wall to put in front of someone who just wants to leave Twitter.
+Bluesky put a single, familiar, Twitter-shaped app in front of people at the exact moment the
+Twitter/X exodus needed somewhere to land, and asked nothing else of them up front. Looking like
+Twitter won more users than being architecturally different from Twitter did.
+
+Which raises the real question: if almost nobody self-hosts a PDS, why does any of this matter?
+Because portability isn't a feature you use day to day, it's insurance. Nobody wants to migrate
+PDS the way nobody wants to restore from a backup, right up until the day the company running
+their identity gets acquired, changes its moderation policy, or shuts down. The value isn't in
+the migrating, it's in the fact that the option exists at all, which changes the leverage a
+platform has over its users even when nobody's exercising it. And for this post specifically,
+that's not just a values statement: it's the direct reason the OAuth flow had to be built the
+way it is. "No fixed issuer" isn't an abstract decentralization talking point here, it's the
+literal consequence of Bluesky taking that portability seriously enough to build for it, and
+it's why the rest of this PR looks nothing like the fifty-line providers that came before it.
+
 ## The problem OAuth doesn't have an answer for
 
 Every OAuth provider `nuxt-auth-utils` already supported - GitHub, GitLab, Spotify, Google - has
