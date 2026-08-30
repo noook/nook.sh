@@ -1,6 +1,6 @@
 ---
-title: "Bluesky doesn't fit OAuth, so I helped teach nuxt-auth-utils AT Protocol instead"
-description: "Building the Bluesky provider for nuxt-auth-utils: why AT Protocol breaks classic OAuth assumptions, and the design pivot the maintainer and I worked out live in the PR."
+title: "Implementing Bluesky/AT Protocol auth in nuxt-auth-utils: a new kind of authentication"
+description: "Building the Bluesky/AT Protocol provider for nuxt-auth-utils: why AT Protocol breaks classic OAuth assumptions, and the design pivot the maintainer and I worked out live in the PR."
 date: "2025-02-05"
 tags:
   - open-source
@@ -16,13 +16,37 @@ draft: false
 Most OAuth providers you add to an auth library are the same fifty lines with different URLs
 swapped in: an authorize endpoint, a token endpoint, a client ID, a client secret. I've added a
 few of those to [`nuxt-auth-utils`][0] before and they're a non-event. Bluesky was not one of
-those fifty-line PRs. It took [24 commits over about three months][1], one honest "I'm not
+those fifty-line PRs. It took [a stretch of work spanning several months][1], one honest "I'm not
 satisfied with this" course-correction in the middle, a maintainer catching me almost shipping a
 memory leak, and a fair amount of reading the AT Protocol spec to understand why the classic
 OAuth shape doesn't apply here at all.
 
 This is the writeup of that PR - and I wanted the actual discussion in it, not just the diff.
 Half of what makes this one worth telling is visible only in the comments.
+
+## Why this protocol exists in the first place
+
+None of this would have been worth building if Bluesky hadn't gone from a niche invite-only beta
+to a real destination almost overnight. That happened for reasons that are more about *why people
+left Twitter/X* than about Bluesky itself:
+
+- **The Twitter acquisition.** Once Twitter became X under new ownership, a chunk of its userbase
+  - journalists, researchers, moderation-sensitive communities - started actively looking for
+  somewhere else to be, not just complaining about the old place.
+- **Algorithm opacity.** X's ranking became more opaque and, at times, openly editorial (boosted
+  reach for the owner's own posts is the most visible example), which pushed people toward a
+  platform that advertises transparent, swappable feed algorithms as a core feature rather than a
+  black box.
+- **The politics of the platform itself**, not just of the content on it - moderation policy
+  reversals, verification changes, and a general sense that a single company's decisions could
+  reshape your reach and audience overnight.
+
+Bluesky's answer to all three wasn't "trust us more," it was structural: **AT Protocol** is
+designed so that your identity and your data aren't owned by any single company's server. You can
+self-host your own PDS (Personal Data Server), move providers without losing your identity or
+followers, and no single entity controls the whole network the way Twitter/X controls Twitter/X.
+That's the part that actually broke OAuth's assumptions and is why this PR ended up being so much
+more than "add a login button."
 
 ## The problem OAuth doesn't have an answer for
 
@@ -87,6 +111,58 @@ that doesn't exist yet in this codebase." atinux's reply was immediate buy-in:
 ::pr-quote{author="Sébastien Chopin" handle="atinux" avatar="https://github.com/atinux.png" role="Maintainer" date="Nov 14, 2024" href="https://github.com/atinux/nuxt-auth-utils/pull/281#issuecomment-2476073379"}
 I love this approach!
 ::
+
+## Under the hood: where atproto's OAuth profile actually diverges from vanilla OAuth2/OIDC
+
+Once you get past "it needs a handle first," the AT Protocol OAuth spec (`atproto.com/specs/oauth`,
+built on top of several still-in-draft IETF extensions) makes a handful of concrete, spec-level
+departures from a standard OAuth2/OIDC provider integration. These are the ones that actually
+shaped the implementation:
+
+**1. The client ID is a URL, not an opaque string.** Under the draft
+[OAuth Client ID Metadata Document][3] spec that atproto adopts, `client_id` must be a
+fully-qualified, fetchable URL (e.g. `https://app.example.com/oauth-client-metadata.json`), and
+it must resolve to a JSON document whose own `client_id` field matches that exact URL. There's no
+developer-portal registration step at all - the Authorization Server fetches and validates your
+metadata live, on every authorization request (with caching). This is what forced the "dynamic
+metadata handler" work described above; a classic OAuth integration never has to *serve* anything,
+it only ever *consumes* endpoints.
+
+**2. DPoP is mandatory, not optional.** Every atproto client metadata document must declare
+`"dpop_bound_access_tokens": true`. [DPoP][4] (Demonstrating Proof-of-Possession, RFC 9449) binds
+issued tokens to a client-held key pair, so a stolen bearer token alone isn't enough to replay a
+request - the attacker would also need the private key. Most OAuth providers treat DPoP as
+optional-if-supported-at-all; atproto requires it unconditionally for every client.
+
+**3. Identity resolution runs *before* OAuth even starts.** A regular OAuth flow begins at a known
+authorize endpoint. Here, the client first resolves the user's **handle** to a **DID**
+(Decentralized Identifier, e.g. `did:plc:...` or `did:web:...`) - atproto's stable, portable
+account identifier that survives a handle change or a PDS migration. The DID resolves to a DID
+document, which is what actually points at the account's current **PDS** (Personal Data Server)
+host. Only that PDS - not Bluesky's own servers, unless the account happens to live there - is
+authoritative for who that account is, which is the load-bearing security property: without this
+step, a malicious or compromised server could claim to authenticate a DID it doesn't actually
+control.
+
+**4. Server discovery is itself a two-step lookup, not a single well-known URL.** The client
+fetches [OAuth Protected Resource Metadata][5] (another IETF draft) from the resolved PDS to learn
+the `authorization_servers` value, then fetches that Authorization Server's own OAuth metadata
+document (a superset of the standard OIDC discovery document) to get the real authorize/token/PAR
+endpoints. A normal OAuth integration hardcodes those two endpoints once, for one issuer, forever;
+here they're resolved fresh per-account because the account's issuer genuinely isn't fixed.
+
+**5. Confidential clients can't use a shared secret at all.** Because client metadata is a public
+JSON document with no mechanism to keep a value private, `client_secret`/`client_secret_post`/
+`client_secret_basic` are explicitly disallowed. Confidential clients instead authenticate with
+`private_key_jwt` (a JWT signed with a key whose public half is published via `jwks`/`jwks_uri` in
+the same metadata document) - this repo's provider is a public client (`token_endpoint_auth_method:
+none`), so it sidesteps that requirement, but it's a meaningful divergence from "client ID + client
+secret" as a mental model.
+
+None of this is exotic for the sake of it - PAR, DPoP, and client ID metadata documents are all
+being pulled in from adjacent IETF drafts because a federated network genuinely can't rely on the
+"register once with the one authorization server" assumption that makes vanilla OAuth simple in
+the first place.
 
 ## The part that doesn't exist in classic OAuth: dynamic client metadata
 
@@ -208,7 +284,7 @@ a shared mutable one accumulating state across requests.
 
 ## Shipping, and the same-day follow-up
 
-`#281` merged on February 5, 2025 - 24 commits, spanning mid-November to early February, plus a
+`#281` merged on February 5, 2025 - spanning mid-November to early February, and landing a
 generic `atproto` config block, dynamic client metadata, cookie-based session storage, and full
 docs for setting up AT Proto socials. A same-day follow-up, [`#340`][2], fixed one more edge case
 in how sessions were mapped locally before the dust settled.
@@ -226,3 +302,6 @@ rather than flatten it down to "added Bluesky login."
 [0]: https://github.com/atinux/nuxt-auth-utils
 [1]: https://github.com/atinux/nuxt-auth-utils/pull/281
 [2]: https://github.com/atinux/nuxt-auth-utils/pull/340
+[3]: https://datatracker.ietf.org/doc/draft-ietf-oauth-client-id-metadata-document/
+[4]: https://datatracker.ietf.org/doc/html/rfc9449
+[5]: https://datatracker.ietf.org/doc/draft-ietf-oauth-resource-metadata/

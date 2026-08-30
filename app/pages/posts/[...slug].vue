@@ -36,11 +36,15 @@ useSeoMeta({
   ogTitle: post.value.title,
   ogDescription: post.value.description,
 })
-// Per-post custom OG card for the Spotify SDK type-lie post; everything
-// else still gets the generic Default card. Swap/extend this to a
-// frontmatter-driven lookup if more posts get bespoke OG art later.
+// Per-post custom OG cards: the Spotify SDK type-lie post, and the
+// Bluesky/AT Proto federated-network post; everything else gets the
+// generic Default card. Swap/extend this to a frontmatter-driven lookup
+// if more posts get bespoke OG art later.
 if (route.path === '/posts/spotify-sdk-search-types') {
   defineOgImage('TypeCard', { title: post.value.title })
+}
+else if (route.path === '/posts/nuxt-auth-utils-bluesky-atproto') {
+  defineOgImage('AtprotoNetwork', { title: post.value.title })
 }
 else {
   defineOgImage('Default', { title: post.value.title })
