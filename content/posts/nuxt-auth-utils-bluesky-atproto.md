@@ -1,6 +1,6 @@
 ---
-title: "Implementing Bluesky/AT Protocol auth in nuxt-auth-utils: a new kind of authentication"
-description: "Building the Bluesky/AT Protocol provider for nuxt-auth-utils: why AT Protocol breaks classic OAuth assumptions, and the design pivot the maintainer and I worked out live in the PR."
+title: "Implementing Bluesky/AT Proto auth in nuxt-auth-utils: a new kind of authentication"
+description: "Building the Bluesky/AT Proto provider for nuxt-auth-utils: why AT Proto breaks classic OAuth assumptions, and the design pivot the maintainer and I worked out live in the PR."
 date: "2025-02-05"
 tags:
   - open-source
@@ -18,7 +18,7 @@ swapped in: an authorize endpoint, a token endpoint, a client ID, a client secre
 few of those to [`nuxt-auth-utils`][0] before and they're a non-event. Bluesky was not one of
 those fifty-line PRs. It took [a stretch of work spanning several months][1], one honest "I'm not
 satisfied with this" course-correction in the middle, a maintainer catching me almost shipping a
-memory leak, and a fair amount of reading the AT Protocol spec to understand why the classic
+memory leak, and a fair amount of reading the AT Proto spec to understand why the classic
 OAuth shape doesn't apply here at all.
 
 This is the writeup of that PR - and I wanted the actual discussion in it, not just the diff.
@@ -30,9 +30,9 @@ None of this would have been worth building if Bluesky hadn't gone from a niche 
 to a real destination almost overnight. That happened for reasons that are more about *why people
 left Twitter/X* than about Bluesky itself:
 
-- **The Twitter acquisition.** Once Twitter became X under new ownership, a chunk of its userbase
-  - journalists, researchers, moderation-sensitive communities - started actively looking for
-  somewhere else to be, not just complaining about the old place.
+- **The Twitter acquisition.** Once Twitter became X under new ownership, a chunk of its
+  userbase - journalists, researchers, moderation-sensitive communities - started actively
+  looking for somewhere else to be, not just complaining about the old place.
 - **Algorithm opacity.** X's ranking became more opaque and, at times, openly editorial (boosted
   reach for the owner's own posts is the most visible example), which pushed people toward a
   platform that advertises transparent, swappable feed algorithms as a core feature rather than a
@@ -41,7 +41,7 @@ left Twitter/X* than about Bluesky itself:
   reversals, verification changes, and a general sense that a single company's decisions could
   reshape your reach and audience overnight.
 
-Bluesky's answer to all three wasn't "trust us more," it was structural: **AT Protocol** is
+Bluesky's answer to all three wasn't "trust us more," it was structural: **AT Proto** is
 designed so that your identity and your data aren't owned by any single company's server. You can
 self-host your own PDS (Personal Data Server), move providers without losing your identity or
 followers, and no single entity controls the whole network the way Twitter/X controls Twitter/X.
@@ -55,7 +55,7 @@ one fixed issuer. You know the authorize URL and the token URL before the user h
 anything about themselves, because there's exactly one GitHub.
 
 Bluesky doesn't work that way, because it isn't really "Bluesky" underneath - it's one client
-of the AT Protocol, a federated network where a user's account can live on any compliant server
+of AT Proto, a federated network where a user's account can live on any compliant server
 (a "PDS", Personal Data Server), not just Bluesky's own. That means you can't know the
 authorize/token endpoints up front. You first need the user's **handle**, resolve which PDS
 instance actually hosts their account, and only then can you kick off an OAuth-shaped flow
@@ -82,7 +82,7 @@ Doing all the verifications manually require a lot of steps and adds complexity,
 ## The pivot: this isn't a Bluesky problem, it's an AT Proto problem
 
 The first pass worked. It also bugged me, because I'd basically hardcoded "Bluesky" into
-something that was really a generic protocol underneath - and AT Protocol is explicitly meant to
+something that was really a generic protocol underneath - and AT Proto is explicitly meant to
 host more than one service. If another AT Proto-based app showed up later, this whole provider
 would need to be rebuilt from scratch instead of reused. I said as much mid-PR, three days after
 the first version landed:
@@ -114,7 +114,7 @@ I love this approach!
 
 ## Under the hood: where atproto's OAuth profile actually diverges from vanilla OAuth2/OIDC
 
-Once you get past "it needs a handle first," the AT Protocol OAuth spec (`atproto.com/specs/oauth`,
+Once you get past "it needs a handle first," the AT Proto OAuth spec (`atproto.com/specs/oauth`,
 built on top of several still-in-draft IETF extensions) makes a handful of concrete, spec-level
 departures from a standard OAuth2/OIDC provider integration. These are the ones that actually
 shaped the implementation:
@@ -167,7 +167,7 @@ the first place.
 ## The part that doesn't exist in classic OAuth: dynamic client metadata
 
 Regular OAuth apps register their client ID once, by hand, in a developer dashboard, and that's
-it forever. AT Protocol instead expects your app to **serve a metadata document describing
+it forever. AT Proto instead expects your app to **serve a metadata document describing
 itself**, at a URL the protocol treats as your client ID:
 
 ```json
@@ -210,7 +210,7 @@ The metadata endpoint itself just mirrors that same config back out as JSON, on 
 always consistent with whatever `publicUrl`/`redirectURL` the app is actually running with -
 instead of a value someone typed into a dashboard once and forgot about.
 
-## A production lesson from the maintainer: don't trust serverless storage
+## A production lesson from the maintainer: be careful with serverless environments
 
 The first working version stored OAuth state and session data with `unstorage`, the same
 key-value abstraction `nuxt-auth-utils` already used elsewhere. It worked locally. atinux caught
@@ -223,10 +223,12 @@ the state, see [pilcrowonpaper/atproto-oauth-example](https://github.com/pilcrow
 ::
 
 `useStorage` defaults to in-memory on a lot of deploy targets, which is fine for a long-lived
-Node server and silently broken on serverless/edge, where every request can land on a fresh
-instance with nothing remembered from the last one. An OAuth flow that spans a redirect to
-Bluesky and back needs that state to survive between requests no matter where it's deployed, so
-in-memory-by-default storage was the wrong default for a library meant to run anywhere.
+Node server but needs deliberate configuration on serverless/edge, where every request can land
+on a fresh instance with nothing remembered from the last one - those environments don't have
+the same persistence capabilities a long-running process gets for free. An OAuth flow that spans
+a redirect to Bluesky and back needs that state to survive between requests no matter where it's
+deployed, so relying on in-memory-by-default storage was the wrong default for a library meant
+to run anywhere.
 
 I came back to it over a month later and reworked session/state storage to use signed cookies
 instead - no shared storage dependency, works identically on every deploy target:
@@ -294,7 +296,7 @@ in how sessions were mapped locally before the dust settled.
 The interesting part of contributing to open source is rarely the code you type - it's the
 moments where you stop and say "wait, this abstraction is wrong" in the middle of otherwise
 working code, and the moments a maintainer with more production scars than you catches something
-you didn't think to check. AT Protocol forced both of those here: it doesn't fit the OAuth
+you didn't think to check. AT Proto forced both of those here: it doesn't fit the OAuth
 mental model cleanly, so getting the abstraction right took an actual design conversation, not
 just an implementation pass. That conversation is the part I wanted to preserve, quotes and all,
 rather than flatten it down to "added Bluesky login."
