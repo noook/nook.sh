@@ -26,7 +26,7 @@ useHead({
     { name: 'description', content: 'Posts on open source, TypeScript, and building things — from Neil Richter.' },
   ],
   link: [
-    { rel: 'canonical', href: `${useSiteConfig().url}/blog` },
+    { rel: 'canonical', href: `${useSiteConfig().url.replace(/\/$/, '')}/blog` },
   ],
 })
 useSeoMeta({

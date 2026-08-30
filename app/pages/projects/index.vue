@@ -22,7 +22,7 @@ useHead({
     { name: 'description', content: 'Development projects, experiments, and IRL projects from Neil Richter.' },
   ],
   link: [
-    { rel: 'canonical', href: `${useSiteConfig().url}/projects` },
+    { rel: 'canonical', href: `${useSiteConfig().url.replace(/\/$/, '')}/projects` },
   ],
 })
 useSeoMeta({

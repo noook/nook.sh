@@ -20,7 +20,7 @@ useHead({
     { name: 'description', content: project.value.description },
   ],
   link: [
-    { rel: 'canonical', href: `${useSiteConfig().url}${route.path}` },
+    { rel: 'canonical', href: `${useSiteConfig().url.replace(/\/$/, '')}${route.path}` },
   ],
 })
 useSeoMeta({
