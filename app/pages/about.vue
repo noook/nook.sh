@@ -33,8 +33,10 @@ const engineeringStack = [
 
 // Personal tools: day-to-day setup, not a skills claim.
 const personalTools = [
-  { name: 'Cursor', icon: 'simple-icons:cursor' },
+  { name: 'VS Code', icon: 'simple-icons:visualstudiocode' },
   { name: 'Claude Code', icon: 'simple-icons:claude' },
+  { name: 'Ghostty', icon: 'simple-icons:ghostty' },
+  { name: 'Cursor', icon: 'simple-icons:cursor' },
   { name: 'Firefox Developer Edition', icon: 'simple-icons:firefoxbrowser' },
   { name: 'Raycast', icon: 'simple-icons:raycast' },
   { name: 'Obsidian', icon: 'simple-icons:obsidian' },
@@ -96,7 +98,7 @@ defineOgImage('Default', { title: 'About — Neil Richter' })
       <ol class="space-y-4">
         <li
           v-for="experience in experiences"
-          :key="experience.title"
+          :key="`${experience.title}-${experience.company}`"
         >
           <h3 class="text-lg font-semibold text-highlighted">
             {{ experience.title }}
