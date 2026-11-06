@@ -34,6 +34,8 @@ const engineeringStack = [
 // Personal tools: day-to-day setup, not a skills claim.
 const personalTools = [
   { name: 'Cursor', icon: 'simple-icons:cursor' },
+  { name: 'VS Code', icon: 'simple-icons:visualstudiocode' },
+  { name: 'Ghostty', icon: 'simple-icons:ghostty' },
   { name: 'Claude Code', icon: 'simple-icons:claude' },
   { name: 'Firefox Developer Edition', icon: 'simple-icons:firefoxbrowser' },
   { name: 'Raycast', icon: 'simple-icons:raycast' },
