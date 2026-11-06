@@ -1,4 +1,8 @@
 items:
+  - title: "Software Engineer"
+    period: "Oct 2026 – Now"
+    company: "Spendesk"
+    description: "Cards UX team. I work on the web side of the card experience: ordering and activating physical cards, requesting and managing virtual cards, and the settings admins use to control them (spending limits, merchant categories, schedules)."
   - title: "Lead Engineer"
     period: "Mar 2025 – Feb 2026"
     company: "Madami (freelance, full-time)"
