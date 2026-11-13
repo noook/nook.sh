@@ -15,6 +15,8 @@ I built my current PC at 26, and the whole project was more about identity than 
 
 The FormD T1 does exactly that. Most people who see it don't clock it as a computer at all. My favorite reaction is when I tell someone it's right there on the desk and they keep looking around for "the actual computer". It's 9.95 liters of CNC-machined aluminium, 13.5 × 22 × 33.5 cm, with roughly the footprint of an A4 sheet of paper.
 
+![The T1 with its panels on, in the evening sun on the balcony](/images/posts/sff-pc-build/outside-panels-on.jpg)
+
 I found the small form factor (SFF) world almost by accident. A [Louqe Ghost S1](https://caseend.com/data/abee/louqe-ghost-s1) ad showed up in my instagram feed, and the idea of a tiny, minimalist PC case was funny enough that I went looking. That led me to the SFF Discord community and to [a massive spreadsheet][1] that half the SFF world seems to use when comparing cases and other parts. Out of everything on it, the T1 was the one that stood out.
 
 Getting one was its own little ordeal. FormD restocks at random moments, a handful of units at a time, and they're gone almost immediately. I watched their Discord for about four months, and several times I couldn't complete the purchase before the stock was gone. When I finally got one, I was in the middle of a class when the Shop app notified me of the restock. I was the teacher, so I asked my students to wait while I completed my T1 purchase.
@@ -43,7 +45,13 @@ Inside a case this small, that question gets narrow fast. Of all the 9070 XT var
 
 Then I tested a few slot and spacing configurations to find the best combination, with an offset spacer between the motherboard and the GPU. The spacer decides how much room the card has to breathe. It also turned out to leave just enough space between the motherboard and the GPU to route cables through that gap instead of around it.
 
+![The GPU side with the mesh panel on: the card is just visible behind the holes](/images/posts/sff-pc-build/outside-gpu-side-mesh.jpg)
+
 ![The Radeon card seen from the top, with the offset spacer and the cables running through the gap](/images/posts/sff-pc-build/v2-gpu-spacer.jpg)
+
+![The open GPU side in the sun, with the card's three fans](/images/posts/sff-pc-build/outside-gpu-open.jpg)
+
+![The same side from an angle, the CPU cooler's copper fins above the card](/images/posts/sff-pc-build/outside-gpu-open-angle.jpg)
 
 ## V3: getting rid of the last "gamer" cable
 
@@ -64,6 +72,8 @@ After three versions spent avoiding anything gamer-coded, I added lights. I know
 The reason is dumber and more practical than it looks. When the machine was idle, there was zero sign it was even on. No LED, nothing. I'd stand in front of it, unsure whether to press the power button or not. So the lights are a status indicator, the one the case was missing. I wanted it minimal, dim and configurable.
 
 I went with two Corsair LS340 Aurora light strips wrapped around the two Noctua NF-A12x25 top exhaust fans. They run standalone, no iCUE link needed. I tried to get as close to Noctua's beige and brown as I could, but LEDs don't do beige convincingly. I landed on something in the same spirit and eventually settled on a very pale indigo for good.
+
+![The top panel opened, with the two Noctua NF-A12x25 exhaust fans](/images/posts/sff-pc-build/outside-top-fans.jpg)
 
 ![The T1 in a dark room with the pale indigo strip lit](/images/posts/sff-pc-build/v4-lights-1.jpg)
 
