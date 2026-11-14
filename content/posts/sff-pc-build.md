@@ -6,6 +6,8 @@ tags:
   - sff
   - hardware
   - pc-build
+image: "/images/posts/sff-pc-build/cover-light.png"
+imageDark: "/images/posts/sff-pc-build/cover-dark.png"
 draft: false
 ---
 

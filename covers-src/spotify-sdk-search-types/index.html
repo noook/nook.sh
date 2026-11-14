@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>spotify-sdk-search-types cover</title>
+<!--
+  Cover for content/posts/spotify-sdk-search-types.md.
+  ?theme=light | ?theme=dark — render with ../render.mjs
+-->
+<link rel="stylesheet" href="../_shared/cover.css">
+<style>
+  :root { --accent: #58b760; --code: #3f9f4a; }
+  :root[data-theme='dark'] { --code: #58b760; }
+
+  .code  { top: 262px; font-size: 44px; line-height: 1; letter-spacing: 0; }
+  .code .s { color: var(--code); }
+  .lede  { top: 380px; }
+
+  /* SearchResults panel */
+  .panel {
+    position: absolute; left: 1080px; right: var(--pad); top: 150px;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 18px;
+    box-shadow: 0 40px 90px -50px rgba(0, 0, 0, 0.35);
+  }
+  .bar {
+    display: flex; align-items: center; gap: 14px;
+    padding: 30px 36px; border-bottom: 2px solid var(--border);
+    font-size: 32px; line-height: 1; color: var(--muted);
+  }
+  .bar i { width: 16px; height: 16px; border-radius: 50%; background: var(--border-strong); }
+  .bar span { margin-left: 18px; }
+  .rows { display: flex; flex-direction: column; gap: 16px; padding: 32px 36px 36px; }
+  .row {
+    display: flex; align-items: center; gap: 16px;
+    height: 84px; padding: 0 24px; border-radius: 10px;
+    font-size: 30px; line-height: 1; white-space: nowrap;
+  }
+  .row .t { color: var(--code); }
+  .row .ic {
+    margin-left: auto; width: 38px; height: 38px; border-radius: 50%;
+    display: grid; place-items: center; font-size: 22px;
+  }
+  .row.real { background: var(--surface-2); border: 2px solid var(--border-strong); }
+  .row.real .ic { border: 2px solid var(--code); color: var(--code); }
+  .row.ghost { border: 2px dashed var(--border-strong); color: var(--faint); }
+  .row.ghost .t { color: var(--faint); }
+  .row.ghost .ic { border: 2px dashed var(--faint); color: var(--faint); }
+</style>
+<script>
+  const t = new URLSearchParams(location.search).get('theme')
+    ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+  document.documentElement.dataset.theme = t
+</script>
+</head>
+<body>
+  <div class="rule"></div>
+
+  <div class="left">
+    <div class="at kicker">OPEN SOURCE · TYPESCRIPT</div>
+    <div class="at code">search(q, <span class="s">['track', 'artist']</span>)</div>
+    <div class="at lede">
+      returns exactly the keys you<br>
+      asked for — <b>the types said<br>
+      otherwise.</b>
+    </div>
+    <div class="at caption">SearchResults&lt;T&gt; · conditional types</div>
+  </div>
+
+  <div class="panel">
+    <div class="bar"><i></i><i></i><i></i><span>SearchResults</span></div>
+    <div class="rows">
+      <div class="row real">tracks <span class="t">Page&lt;Track&gt;</span><span class="ic">✓</span></div>
+      <div class="row real">artists <span class="t">Page&lt;Artist&gt;</span><span class="ic">✓</span></div>
+      <div class="row ghost">albums <span class="t">Page&lt;SimplifiedAlbum&gt;</span><span class="ic">?</span></div>
+      <div class="row ghost">playlists <span class="t">Page&lt;PlaylistBase&gt;</span><span class="ic">?</span></div>
+      <div class="row ghost">shows <span class="t">Page&lt;SimplifiedShow&gt;</span><span class="ic">?</span></div>
+    </div>
+  </div>
+
+  <div class="tag">spotify-web-api-ts-sdk</div>
+</body>
+</html>

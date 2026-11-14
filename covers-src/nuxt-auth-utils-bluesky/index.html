@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>nuxt-auth-utils-bluesky cover</title>
+<!--
+  Cover for content/posts/nuxt-auth-utils-bluesky-atproto.md.
+  ?theme=light | ?theme=dark — render with ../render.mjs
+-->
+<link rel="stylesheet" href="../_shared/cover.css">
+<style>
+  :root { --accent: #3e7db4; --value: #236a9c; --line: #cfd3ce; }
+  :root[data-theme='dark'] { --value: #79d0fa; --line: #34393a; }
+
+  /* key → value rows */
+  .rows {
+    position: absolute; left: 0; top: 262px;
+    display: grid; grid-template-columns: max-content max-content max-content;
+    column-gap: 28px; row-gap: 40px;
+    font-size: 44px; line-height: 1; white-space: nowrap;
+  }
+  .rows .k { color: var(--muted); }
+  .rows .a { color: var(--faint); }
+  .rows .v { color: var(--value); }
+  .rows .v.ink { color: var(--text); }
+
+  /* network diagram */
+  .net { position: absolute; left: 1000px; top: 120px; width: 800px; height: 760px; }
+  .net svg { position: absolute; inset: 0; overflow: visible; }
+  .net line { stroke: var(--line); stroke-width: 3; }
+  .net line.main { stroke: var(--accent); stroke-width: 4; }
+  .net line.dash { stroke-dasharray: 10 10; }
+  .node {
+    position: absolute; transform: translate(-50%, -50%);
+    width: 250px; padding: 22px 0 20px;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    background: var(--surface); border: 2px solid var(--border-strong); border-radius: 16px;
+    box-shadow: 0 24px 50px -30px rgba(0, 0, 0, 0.3);
+    white-space: nowrap; line-height: 1;
+  }
+  .node::before { content: ''; width: 14px; height: 14px; border-radius: 50%; background: var(--border-strong); }
+  .node b { font-size: 28px; font-weight: 500; color: var(--text); }
+  .node small { font-size: 22px; color: var(--muted); }
+  .node.me { border: 4px solid var(--accent); width: 270px; }
+  .node.me::before { background: var(--value); }
+  .node.me small { color: var(--value); }
+  .node.ghost { border-style: dashed; background: var(--bg); box-shadow: none; }
+  .node.ghost b, .node.ghost small { color: var(--faint); }
+  .node.other b { color: var(--muted); }
+</style>
+<script>
+  const t = new URLSearchParams(location.search).get('theme')
+    ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+  document.documentElement.dataset.theme = t
+</script>
+</head>
+<body>
+  <div class="rule"></div>
+
+  <div class="left">
+    <div class="at kicker">OPEN SOURCE · AT PROTOCOL</div>
+    <div class="rows">
+      <span class="k">handle</span><span class="a">→</span><span class="v ink">@user.bsky.social</span>
+      <span class="k">did</span><span class="a">→</span><span class="v">did:plc:z72i7…</span>
+      <span class="k">pds</span><span class="a">→</span><span class="v">bsky.social</span>
+    </div>
+    <div class="at caption">no fixed issuer · resolved per account</div>
+  </div>
+
+  <!-- node centres are in .net coordinates (800 × 760) -->
+  <div class="net">
+    <svg viewBox="0 0 800 760" width="800" height="760">
+      <line class="dash" x1="140" y1="100" x2="660" y2="120" />
+      <line class="dash" x1="130" y1="650" x2="530" y2="680" />
+      <line class="main" x1="360" y1="380" x2="140" y2="100" />
+      <line x1="360" y1="380" x2="660" y2="120" />
+      <line x1="360" y1="380" x2="670" y2="400" />
+      <line x1="360" y1="380" x2="130" y2="650" />
+      <line x1="360" y1="380" x2="530" y2="680" />
+    </svg>
+    <div class="node other" style="left:140px; top:100px"><b>pds.example</b><small>independent</small></div>
+    <div class="node other" style="left:660px; top:120px"><b>self-hosted</b><small>independent</small></div>
+    <div class="node me"    style="left:360px; top:380px"><b>bsky.social</b><small>your account</small></div>
+    <div class="node other" style="left:670px; top:400px"><b>provider.dev</b><small>independent</small></div>
+    <div class="node other" style="left:130px; top:650px"><b>social.coop</b><small>independent</small></div>
+    <div class="node ghost" style="left:530px; top:680px"><b>oauth.provider</b><small>single issuer</small></div>
+  </div>
+
+  <div class="tag">nuxt-auth-utils</div>
+</body>
+</html>

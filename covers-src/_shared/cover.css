@@ -1,0 +1,103 @@
+/*
+  Shared base for blog covers — 1920 × 1080, rendered at deviceScaleFactor 1.
+
+  Covers are shown at ~436 px wide in the blog grid (≈ 0.23×) and ~768 px
+  in the post hero (0.4×). The type scale is sized for that: body text
+  stays ≥ 9 px in the grid and ≥ 16 px in the hero.
+*/
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2');
+  font-weight: 500;
+}
+
+:root {
+  --pad: 120px;          /* outer margin, left and right */
+  --top: 150px;          /* kicker cap line */
+  --bottom: 930px;       /* caption / tag cap line */
+
+  --fs-kicker: 38px;
+  --fs-title: 84px;
+  --fs-lede: 42px;
+  --fs-caption: 32px;
+
+  --accent: #58b760;
+  --bg: #f5f6f4;
+  --surface: #ffffff;
+  --surface-2: #f1f2ef;
+  --text: #151815;
+  --muted: #6d736d;
+  --faint: #a9aea8;
+  --rule: #e0e3df;
+  --border: #e4e6e3;
+  --border-strong: #c8ccc7;
+}
+:root[data-theme='dark'] {
+  --bg: #0b0d0e;
+  --surface: #141718;
+  --surface-2: #181c1d;
+  --text: #eff1f0;
+  --muted: #7e8688;
+  --faint: #4a5052;
+  --rule: #272b2b;
+  --border: #252829;
+  --border-strong: #35393a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; }
+body {
+  position: relative;
+  background: var(--bg);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'calt' 0, 'liga' 0;
+}
+
+.rule {
+  position: absolute; left: calc(var(--pad) - 1px); top: 0; bottom: 0;
+  width: 2px; background: var(--rule);
+}
+
+.left { position: absolute; left: var(--pad); top: 0; height: 100%; }
+.at { position: absolute; left: 0; white-space: nowrap; }
+
+.kicker {
+  top: var(--top); left: 36px;
+  font-size: var(--fs-kicker); line-height: 1; letter-spacing: 0.08em; font-weight: 500;
+  color: var(--muted);
+}
+.kicker::before {
+  content: ''; position: absolute; left: -36px; top: 10px;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--accent);
+}
+
+.title {
+  font-size: var(--fs-title); line-height: 1; font-weight: 500; letter-spacing: -0.01em;
+}
+.lede {
+  font-size: var(--fs-lede); line-height: 1.45; letter-spacing: 0.01em;
+  color: var(--muted);
+}
+.lede b { font-weight: 500; color: var(--text); }
+
+.caption {
+  top: var(--bottom);
+  font-size: var(--fs-caption); line-height: 1; letter-spacing: 0.02em;
+  color: var(--faint);
+}
+
+.tag {
+  position: absolute; right: var(--pad); top: var(--bottom); z-index: 2;
+  display: flex; align-items: center; gap: 18px;
+  font-size: var(--fs-caption); line-height: 1; letter-spacing: 0.02em;
+  color: var(--muted);
+}
+.tag::before { content: ''; width: 16px; height: 16px; background: var(--accent); }
