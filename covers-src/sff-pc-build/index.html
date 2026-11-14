@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>sff-pc-build cover</title>
+<!--
+  Cover for content/posts/sff-pc-build.md.
+  Photo: t1-desk-day.jpg, crop of PXL_20261113_152018004.jpg (Drive).
+  ?theme=light | ?theme=dark — render with ../render.mjs
+-->
+<link rel="stylesheet" href="../_shared/cover.css">
+<style>
+  :root { --accent: #b4b8ff; }   /* LED strip, pale indigo */
+
+  .title { top: 248px; }
+  .lede  { top: 384px; }
+
+  .photo { position: absolute; right: 0; top: 0; width: 860px; height: 1080px; overflow: hidden; }
+  .photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 100% 50%; }
+  .photo::after {            /* keeps the tag readable on the desk */
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 300px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.45));
+  }
+  .tag { color: rgba(255, 255, 255, 0.92); }
+</style>
+<script>
+  const t = new URLSearchParams(location.search).get('theme')
+    ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+  document.documentElement.dataset.theme = t
+</script>
+</head>
+<body>
+  <div class="rule"></div>
+
+  <div class="left">
+    <div class="at kicker">HARDWARE · SMALL FORM FACTOR</div>
+    <div class="at title">FormD T1</div>
+    <div class="at lede">
+      journey to building a discreet,<br>
+      compact and fully capable<br>
+      machine of <b>9.95 L</b>
+    </div>
+    <div class="at caption">an A4 sheet of footprint</div>
+  </div>
+
+  <div class="photo"><img src="t1-desk-day.jpg" alt=""></div>
+  <div class="tag">sff-pc-build</div>
+</body>
+</html>
