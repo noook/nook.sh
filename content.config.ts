@@ -127,6 +127,8 @@ export default defineContentConfig({
           title: z.string(),
           text: z.string(),
           legends: z.array(z.object({ key: z.string(), legend: z.string(), meaning: z.string() })).default([]),
+          // Keys shown on the /uses card (by `key`); the board's own page shows all of them.
+          featured: z.array(z.string()).default([]),
         }).optional(),
         specs: z.array(z.object({ label: z.string(), value: z.string() })).default([]),
         // Board events for the swap log. Switch moves come from the

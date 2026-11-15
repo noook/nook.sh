@@ -8,7 +8,6 @@ const { data: switches } = await useAsyncData('uses-switches', () =>
 
 // Data entries are keyed by file name: content/uses/keyboards/tofu-tkl.yml -> 'tofu-tkl'.
 const slugOf = (entry: { stem: string }) => entry.stem.split('/').pop() ?? entry.stem
-const hostOf = (url: string) => new URL(url).hostname.replace(/^www\./, '')
 
 const keyboardNames = computed(() =>
   Object.fromEntries((keyboards.value ?? []).map(k => [slugOf(k), k.name])))
@@ -56,7 +55,10 @@ onKeyStroke(sections.map(s => s.key), (e) => {
   document.getElementById(section!.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 })
 
-const activeLegend = ref(0)
+// Card preview of a keycap set: the `featured` keys, in the set's own order.
+function featuredLegends(keycaps: { featured: string[], legends: { key: string, legend: string, meaning: string }[] }) {
+  return keycaps.featured.length ? keycaps.legends.filter(l => keycaps.featured.includes(l.key)) : keycaps.legends
+}
 // Desk: items with x/y get a numbered dot on the photo, the rest are listed apart.
 const pictured = computed(() => (setup.value?.desk.items ?? [])
   .filter(d => d.x != null && d.y != null)
@@ -163,7 +165,12 @@ defineOgImage('Default', { title: 'Uses — Neil Richter' })
 
           <div class="flex items-start justify-between gap-3">
             <h3 class="text-xl font-semibold text-highlighted">
-              {{ k.name }}
+              <NuxtLink
+                :to="`/uses/${slugOf(k)}`"
+                class="hover:text-primary"
+              >
+                {{ k.name }}
+              </NuxtLink>
             </h3>
             <UBadge
               v-if="k.status === 'in-use'"
@@ -189,28 +196,19 @@ defineOgImage('Default', { title: 'Uses — Neil Richter' })
           >
             <span class="block font-mono text-[11px] uppercase tracking-wider text-muted">Keycaps · {{ k.keycaps.title }}</span>
             <p class="text-sm">
-              {{ k.keycaps.text }} Tap one.
+              {{ k.keycaps.text }} A few of them, tap one:
             </p>
-            <div class="flex flex-wrap gap-1.5">
-              <button
-                v-for="(l, i) in k.keycaps.legends"
-                :key="l.key"
-                type="button"
-                :aria-pressed="activeLegend === i"
-                class="flex min-h-11 cursor-pointer flex-col items-start rounded-md bg-[#7A1F24] px-2.5 pt-1 pb-2 text-sm font-medium text-[#E9B36A] shadow-[inset_0_-4px_0_rgb(0_0_0/0.28)] outline-offset-2"
-                :class="activeLegend === i ? 'outline-2 outline-primary' : ''"
-                @click="activeLegend = i"
-              >
-                <span class="font-mono text-[9px] text-[#f1d9cc]">{{ l.key }}</span>
-                {{ l.legend }}
-              </button>
-            </div>
-            <p
-              class="min-h-10 text-sm"
-              aria-live="polite"
+            <UsesHangulLegends :legends="featuredLegends(k.keycaps)" />
+            <ULink
+              :to="`/uses/${slugOf(k)}#keycaps`"
+              class="inline-flex min-h-8 items-center gap-1 text-sm font-medium text-primary"
             >
-              <span lang="ko">{{ k.keycaps.legends[activeLegend]?.legend }}</span>: {{ k.keycaps.legends[activeLegend]?.meaning }}
-            </p>
+              See all {{ k.keycaps.legends.length }} keys
+              <UIcon
+                name="i-lucide-arrow-right"
+                class="size-4"
+              />
+            </ULink>
           </div>
 
           <div class="flex flex-wrap gap-1.5">
@@ -223,42 +221,16 @@ defineOgImage('Default', { title: 'Uses — Neil Richter' })
             />
           </div>
 
-          <details class="group mt-auto border-t border-default pt-2.5">
-            <summary class="flex min-h-8 cursor-pointer list-none items-center gap-1.5 text-sm font-medium [&::-webkit-details-marker]:hidden">
-              <UIcon
-                name="i-lucide-chevron-down"
-                class="size-4 transition-transform group-open:rotate-180"
-              />
-              Specs
-            </summary>
-            <dl class="mt-1.5 space-y-1 text-sm">
-              <div
-                v-for="s in k.specs"
-                :key="s.label"
-                class="flex gap-3"
-              >
-                <dt class="min-w-23 font-mono text-xs leading-5 text-muted">
-                  {{ s.label }}
-                </dt>
-                <dd>{{ s.value }}</dd>
-              </div>
-              <div
-                v-if="k.url"
-                class="flex gap-3"
-              >
-                <dt class="min-w-23 font-mono text-xs leading-5 text-muted">
-                  Link
-                </dt>
-                <dd>
-                  <ULink
-                    :to="k.url"
-                    target="_blank"
-                    class="text-primary"
-                  >{{ hostOf(k.url) }}</ULink>
-                </dd>
-              </div>
-            </dl>
-          </details>
+          <div class="mt-auto border-t border-default pt-2.5">
+            <UButton
+              :to="`/uses/${slugOf(k)}`"
+              variant="link"
+              color="neutral"
+              trailing-icon="i-lucide-arrow-right"
+              class="-ml-2.5 min-h-8 px-2.5"
+              label="Parts, switches and history"
+            />
+          </div>
         </UCard>
       </div>
     </section>

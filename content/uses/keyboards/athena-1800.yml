@@ -13,7 +13,7 @@ drawing:
   colors:
     alpha: { cap: '#F7F7F7', legend: '#3F6A50' }
     mod: { cap: '#A48E79', legend: '#F7F7F7' }
-  alt: "Drawing of the Athena 1800: pine green case, Blanc Céruse alphas with Vert Sapin Bépo legends, Grain Sable modifiers, ISO Enter with the long ANSI left Shift"
+  alt: "Drawing of the Athena 1800: pine green case, Blanc Céruse alphas with Vert Sapin Bépo legends, Grain Sable modifiers, ANSI Enter and Ç, ISO split left Shift with Ê"
 specs:
   - { label: PCB, value: "FR4 hotswap, ANSI/ISO, foam kit" }
   - { label: Plate, value: FR4 }
