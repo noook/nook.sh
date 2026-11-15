@@ -31,24 +31,6 @@ const engineeringStack = [
   { name: 'Jetpack Compose', icon: 'simple-icons:jetpackcompose' },
 ]
 
-// Personal tools: day-to-day setup, not a skills claim.
-const personalTools = [
-  { name: 'VS Code', icon: 'simple-icons:visualstudiocode' },
-  { name: 'Claude Code', icon: 'simple-icons:claude' },
-  { name: 'Ghostty', icon: 'simple-icons:ghostty' },
-  { name: 'Cursor', icon: 'simple-icons:cursor' },
-  { name: 'Firefox Developer Edition', icon: 'simple-icons:firefoxbrowser' },
-  { name: 'Raycast', icon: 'simple-icons:raycast' },
-  { name: 'Obsidian', icon: 'simple-icons:obsidian' },
-  { name: 'Anytype', icon: 'simple-icons:anytype' },
-  { name: 'Hermes', icon: 'material-symbols:smart-toy-outline' },
-  { name: 'Proton Mail', icon: 'simple-icons:protonmail' },
-  { name: 'Tailscale', icon: 'simple-icons:tailscale' },
-  { name: 'Signal', icon: 'simple-icons:signal' },
-  { name: 'opencode', icon: 'simple-icons:opencode' },
-  { name: 'Bitwarden', icon: 'simple-icons:bitwarden' },
-]
-
 useHead({
   title: 'About',
   meta: [
@@ -144,30 +126,13 @@ defineOgImage('Default', { title: 'About — Neil Richter' })
       <h2 class="text-2xl font-bold mb-4 text-highlighted">
         Daily setup
       </h2>
-      <p class="text-muted mb-6">
-        Apps and tools I run day to day — not a skills list, just what's on my machine.
+      <p class="text-muted">
+        The apps I run every day, the keyboards I type on and the rest of the desk now live on
+        <ULink
+          to="/uses"
+          class="text-primary font-medium"
+        >my uses page</ULink>.
       </p>
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        <UPageCard
-          v-for="tool in personalTools"
-          :key="tool.name"
-          spotlight
-          class="aspect-square"
-          :ui="{ container: 'p-0' }"
-        >
-          <div class="grid size-full place-items-center text-center gap-2">
-            <div class="grid place-items-center">
-              <UIcon
-                :name="tool.icon"
-                class="size-8 text-muted group-hover:text-primary-500 transition-colors"
-              />
-            </div>
-            <span class="text-sm font-medium text-highlighted">
-              {{ tool.name }}
-            </span>
-          </div>
-        </UPageCard>
-      </div>
     </section>
   </div>
 </template>

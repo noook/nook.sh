@@ -103,6 +103,8 @@ The fan curves took some sorting out. Out of the box, before I'd configured anyt
 
 My favorite part of this project is how meticulous the case forces me to be. Fighting the cable routing until it's both efficient and clean, working out exactly which parts fit in a volume this small: a mid-tower never asked for that kind of attention. I'd never have spent five months getting a GPU bracket made for one, either.
 
+The full parts list, kept up to date, lives on my [uses page](/uses).
+
 [1]: https://docs.google.com/spreadsheets/d/1AddRvGWJ_f4B6UC7_IftDiVudVc8CJ8sxLUqlxVsCz4/edit?gid=1824037046#gid=1824037046
 [2]: https://www.etsy.com/listing/1480956978
 [3]: https://formdt1.com/products/t1-gpu-travel-kit
