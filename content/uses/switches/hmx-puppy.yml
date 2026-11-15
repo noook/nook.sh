@@ -1,0 +1,10 @@
+order: 2
+name: HMX Puppy
+type: tactile
+feel: Large rounded bump, deep and low-pitched.
+shop:
+  name: milktooth.com
+  url: https://milktooth.com/products/puppy
+history:
+- at: '2025-08'
+  to: athena-1800

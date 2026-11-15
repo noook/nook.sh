@@ -1,0 +1,172 @@
+updated: '2026-11-15'
+intro: Everything I type on, plug in and run. The Mac is for work, the Windows box is for games, and keyboards are the part I can't stop tinkering with. Switches and keycaps move from one board to another,
+  so the bottom of the page keeps a log of what changed and when.
+desk:
+  photo:
+    src: /images/uses/desk.jpg
+    alt: 'My desk: an ultrawide and a vertical monitor on arms, the FormD T1 on the left, the Keychron Q10 Max on a red Year of the Horse desk mat'
+  items:
+  - name: Alienware AW3425DW
+    note: 34" 21:9 QD-OLED, 240 Hz · DisplayPort to the PC, HDMI to the Mac
+    x: 64
+    y: 40
+  - name: Dell P2423DE
+    note: vertical · one USB-C for power, USB and video
+    x: 32
+    y: 36
+  - name: FormD T1
+    note: the PC, see Computers
+    x: 17
+    y: 54
+  - name: Keychron Q10 Max
+    note: home keyboard
+    x: 53
+    y: 71
+  - name: Roccat Kain 120
+    note: seven years old, due for a replacement
+    x: 72
+    y: 80
+  - name: Logitech C920
+    note: webcam, 1080p
+    x: 60
+    y: 24
+  - name: Philips Hue Play × 2
+    note: one behind each screen
+    x: 80
+    y: 15
+  - name: Monitor arms × 2
+    note: one per screen
+    x: 73
+    y: 58
+  - name: IKEA Mittzon
+    note: motorized sit/stand, 160 × 80 cm
+    x: 90
+    y: 90
+  - name: MacBook Pro, clamshell
+    note: 'slid into three IKEA Begripa handles under the desk, two cables: HDMI and one USB-C'
+  - name: USB switch
+    note: moves the keyboard and mouse between the Mac and the PC
+  - name: Musso V900, Corail
+    note: chair
+  - name: Speakers
+    note: none yet
+pc:
+  name: FormD T1
+  summary: 9.95 L · Windows, for games
+  photo:
+    src: /images/uses/formd-t1.jpg
+    alt: The FormD T1 on the desk, its pale indigo LED strip glowing through the mesh
+  post: /posts/sff-pc-build
+  parts:
+  - label: CPU
+    value: AMD Ryzen 7 7700X
+  - label: Cooler
+    value: Thermalright AXP90-X47 + Noctua NF-A9x14
+  - label: Motherboard
+    value: ASRock B850I Lightning
+  - label: RAM
+    value: Corsair Vengeance DDR5 2 × 16 GB, 6000 MT/s CL30
+  - label: GPU
+    value: Asus Prime Radeon RX 9070 XT OC
+  - label: Storage
+    value: WD_Black SN770 1 TB + Samsung 980 Pro 1 TB
+  - label: PSU
+    value: Corsair SF1000
+  - label: Fans
+    value: 2 × Noctua NF-A12x25, top exhaust
+  - label: Cables
+    value: custom, by Ray from DreamBigByRay, White and Coffee
+  - label: Lighting
+    value: 2 × Corsair LS340 Aurora, pale indigo
+  - label: Extras
+    value: FormD GPU Travel Kit
+machines:
+- kind: Personal laptop
+  name: MacBook Pro 14" · M4 Pro
+  note: 'Clamshell under the desk, two cables: HDMI and one USB-C.'
+- kind: Work laptop
+  name: MacBook Pro · M5 Pro
+  note: Closed, with an external screen and the Tofu TKL.
+- kind: Homelab
+  name: ThinkCentre M900 Tiny
+  note: i5-6600T · 32 GB at 2133 MT/s, the CPU's ceiling · 1 TB NVMe + 256 GB SATA
+  link:
+    label: 'What runs on it: noook/hanok'
+    url: https://github.com/noook/hanok
+software:
+- name: VS Code
+  icon: simple-icons:visualstudiocode
+  line: Never looked back on this one.
+- name: Claude Code
+  icon: simple-icons:claude
+  line: My main coding agent, for personal and work projects.
+- name: Ghostty
+  icon: simple-icons:ghostty
+  line: Tried it after six years on iTerm2, and I really like it. Rose Pine Moon, Monaspace Neon, oh my zsh.
+  config:
+    path: ~/.config/ghostty/config
+    body: |
+      theme = Rose Pine Moon
+      font-family = "Monaspace Neon"
+      font-size = 14
+      font-feature = calt
+      macos-option-as-alt = left
+      macos-titlebar-style = tabs
+
+      window-padding-x = 8
+      window-padding-y = 6
+      window-padding-balance = true
+      window-save-state = always
+
+      cursor-style = bar
+      cursor-style-blink = false
+      copy-on-select = clipboard
+      mouse-hide-while-typing = true
+
+      keybind = global:ctrl+grave_accent=toggle_quick_terminal
+      keybind = alt+backspace=text:\x1b\x7f
+      quick-terminal-position = top
+- name: Raycast
+  icon: simple-icons:raycast
+  line: Much faster than Spotlight. I only use a small part of it.
+- name: Firefox Developer Edition
+  icon: simple-icons:firefoxbrowser
+  line: My daily browser, my small part against Chrome's monopoly 💪
+- name: Obsidian
+  icon: simple-icons:obsidian
+  line: After Notion and Anytype, the one that fits. Synced with a self-hosted LiveSync.
+- name: Hermes
+  icon: material-symbols:smart-toy-outline
+  line: Best discovery of 2026. Runs on the homelab, on Telegram from my phone.
+- name: Tailscale
+  icon: simple-icons:tailscale
+  line: How my services reach each other. My family's NAS too, and exit nodes abroad.
+kits:
+- title: Getting around
+  items:
+  - name: Decathlon Elops 900 LD
+    note: daily commute
+  - name: Honda CB650R (2021)
+    note: motorcycle
+  - name: HJC RPHA 91
+    note: helmet
+  - name: Insta360 X4
+    note: filming the rides
+- title: Music
+  items:
+  - name: Pioneer DDJ-FLX4
+    note: DJ controller
+  - name: Sony WH-1000XM5
+    note: headphones
+  - name: Monitors
+    note: not yet
+- title: In the bag
+  items:
+  - name: Pixel 9 Pro
+    note: phone
+  - name: Pixel Watch 2
+    note: watch, battery due for a replacement
+  - name: Pixel Buds Pro · OpenDots 2
+    note: earbuds
+  - name: The North Face Borealis
+    note: backpack, black

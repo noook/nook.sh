@@ -1,0 +1,24 @@
+order: 4
+name: Air75 V3
+edition: NuPhy · low profile
+status: shelf
+line: Nothing special about the board itself. The blank black and white ceramic caps from Cerakey are what make it fun.
+chips: [75% low profile, Nano Brown + Blush, Cerakey ceramic]
+url: https://nuphy.com/products/nuphy-air75-v3
+drawing:
+  layout: nuphy-air75-v3
+  case: '#2B2C2F'
+  legends: false
+  lowProfile: true
+  glossy: true
+  colors:
+    alpha: { cap: '#F4F2EE' }
+    mod: { cap: '#151517' }
+    knob: { cap: '#F26B2A' }
+  alt: Drawing of the NuPhy Air75 V3 with blank black and white ceramic keycaps and an orange knob
+specs:
+  - { label: Switches, value: "NuPhy Nano Brown (mods), Blush (alphas)" }
+  - { label: Keycaps, value: "Cerakey ceramic, blank, black and white" }
+  - { label: Since, value: '2025-06' }
+log:
+  - { at: '2025-06', what: added }

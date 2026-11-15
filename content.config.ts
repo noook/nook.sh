@@ -1,6 +1,13 @@
 import { defineContentConfig, defineCollection, z } from '@nuxt/content'
 import { defineSitemapSchema } from '@nuxtjs/sitemap/content'
 
+// /uses: one YAML file per keyboard and per switch set, plus one file for
+// the rest of the setup. Months are 'YYYY-MM' strings so they sort as text.
+const month = z.string().regex(/^\d{4}-\d{2}$/)
+const slug = z.string().regex(/^[a-z0-9-]+$/)
+const photo = z.object({ src: z.string(), alt: z.string() })
+const labelled = z.object({ name: z.string(), note: z.string().default('') })
+
 export default defineContentConfig({
   collections: {
     content: defineCollection({
@@ -86,6 +93,95 @@ export default defineContentConfig({
           company: z.string(),
           description: z.string(),
         })),
+      }),
+    }),
+    usesKeyboards: defineCollection({
+      type: 'data',
+      source: 'uses/keyboards/*.yml',
+      schema: z.object({
+        order: z.number(),
+        name: z.string(),
+        edition: z.string(),
+        status: z.enum(['in-use', 'shelf']),
+        place: z.enum(['home', 'work']).optional(),
+        line: z.string(),
+        chips: z.array(z.string()).default([]),
+        url: z.string().url().optional(),
+        // A real photo wins. Without one, the card draws the board from
+        // its KLE layout (app/utils/uses/layouts.ts) and this colorway.
+        photo: photo.optional(),
+        drawing: z.object({
+          layout: z.enum(['athena-1800', 'q10-max', 'nuphy-air75-v3']),
+          case: z.string(),
+          // Keys get a role from the layout (alpha, mod, accent, knob);
+          // each role maps to a cap colour and an optional legend colour.
+          colors: z.record(z.string(), z.object({ cap: z.string(), legend: z.string().optional() })),
+          legends: z.boolean().default(true),
+          font: z.string().optional(),
+          lowProfile: z.boolean().default(false),
+          glossy: z.boolean().default(false),
+          alt: z.string(),
+        }).optional(),
+        keycaps: z.object({
+          title: z.string(),
+          text: z.string(),
+          legends: z.array(z.object({ key: z.string(), legend: z.string(), meaning: z.string() })).default([]),
+        }).optional(),
+        specs: z.array(z.object({ label: z.string(), value: z.string() })).default([]),
+        // Board events for the swap log. Switch moves come from the
+        // switch sets' own history.
+        log: z.array(z.object({ at: month, what: z.string() })).default([]),
+      }),
+    }),
+    usesSwitches: defineCollection({
+      type: 'data',
+      source: 'uses/switches/*.yml',
+      schema: z.object({
+        order: z.number(),
+        name: z.string(),
+        type: z.enum(['linear', 'tactile', 'silent tactile', 'clicky']),
+        feel: z.string().default(''),
+        note: z.string().optional(),
+        // Own photo only; the card keeps an empty slot until there is one.
+        photo: photo.optional(),
+        shop: z.object({ name: z.string(), url: z.string().url() }),
+        // `to` is a keyboard file stem, or null for the drawer. The last
+        // entry is where the set is now; no history means the drawer.
+        history: z.array(z.object({ at: month, to: slug.nullable() })).default([]),
+      }),
+    }),
+    usesSetup: defineCollection({
+      type: 'data',
+      source: 'uses/setup.yml',
+      schema: z.object({
+        intro: z.string(),
+        updated: z.string(),
+        desk: z.object({
+          photo,
+          // x/y are percentages on the photo; items without them are
+          // listed but get no dot.
+          items: z.array(labelled.extend({ x: z.number().optional(), y: z.number().optional() })),
+        }),
+        pc: z.object({
+          name: z.string(),
+          summary: z.string(),
+          photo,
+          post: z.string(),
+          parts: z.array(z.object({ label: z.string(), value: z.string() })),
+        }),
+        machines: z.array(z.object({
+          kind: z.string(),
+          name: z.string(),
+          note: z.string(),
+          link: z.object({ label: z.string(), url: z.string() }).optional(),
+        })),
+        software: z.array(z.object({
+          name: z.string(),
+          icon: z.string(),
+          line: z.string(),
+          config: z.object({ path: z.string(), body: z.string() }).optional(),
+        })),
+        kits: z.array(z.object({ title: z.string(), items: z.array(labelled) })),
       }),
     }),
   },
