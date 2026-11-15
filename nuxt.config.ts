@@ -21,7 +21,13 @@ export default defineNuxtConfig({
     head: {
       titleTemplate: '%s — Neil Richter',
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        // favicon.svg switches colours with prefers-color-scheme; the
+        // .ico (slate tile, readable on any tab bar) is the fallback.
+        // Sources and generator live in brand/.
+        { rel: 'icon', href: '/favicon.ico', sizes: '48x48' },
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+        { rel: 'manifest', href: '/site.webmanifest' },
       ],
     },
     // Native browser View Transitions API (progressive enhancement - a
