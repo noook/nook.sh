@@ -8,3 +8,9 @@ photo:
 shop:
   name: milktooth.com
   url: https://milktooth.com/products/jupiter-banana
+stockWith: Keychron Q1 Max
+history:
+- at: '2025-01'
+  to: q1-max
+- at: '2025-10'
+  to: drawer

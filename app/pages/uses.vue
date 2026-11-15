@@ -14,16 +14,23 @@ const keyboardNames = computed(() =>
   Object.fromEntries((keyboards.value ?? []).map(k => [slugOf(k), k.name])))
 
 const drawer = computed(() => (switches.value ?? []).map((s) => {
-  const now = s.history.at(-1)?.to ?? null
+  // 'drawer' (or null) means boxed, not in a board.
+  const last = s.history.at(-1)?.to ?? null
+  const now = last === 'drawer' ? null : last
   const nowLabel = s.where ?? (now ? `in ${keyboardNames.value[now] ?? now}` : 'in the drawer')
-  return { ...s, slug: slugOf(s), now: now ?? s.where ?? null, nowLabel }
+  const origin = s.stockWith ? `stock, ${s.stockWith}` : s.bought ? `since ${s.bought}` : ''
+  return { ...s, slug: slugOf(s), now: now ?? s.where ?? null, nowLabel, origin }
 }))
 
-// Swap log: board events plus every switch move, newest first.
+// Swap log: purchases, board events and switch moves, newest first.
+// Within a month: bought, then boards built, then moves (`step`).
 const log = computed(() => [
-  ...(keyboards.value ?? []).flatMap(k => k.log.map(l => ({ at: l.at, subject: slugOf(k), what: l.what }))),
-  ...(switches.value ?? []).flatMap(s => s.history.map(h => ({ at: h.at, subject: slugOf(s), what: `→ ${h.to ?? 'drawer'}` }))),
-].sort((a, b) => b.at.localeCompare(a.at)))
+  ...(keyboards.value ?? []).flatMap(k => k.log.map(l => ({ at: l.at, step: 1, subject: slugOf(k), what: l.what }))),
+  ...(switches.value ?? []).flatMap(s => [
+    ...(s.bought && !s.stockWith ? [{ at: s.bought, step: 0, subject: slugOf(s), what: 'bought' }] : []),
+    ...s.history.map(h => ({ at: h.at, step: 2, subject: slugOf(s), what: `→ ${h.to ?? 'drawer'}` })),
+  ]),
+].sort((a, b) => b.at.localeCompare(a.at) || b.step - a.step))
 
 const sections = [
   { key: '1', id: 'keyboards', label: 'Keyboards' },
@@ -303,7 +310,7 @@ defineOgImage('Default', { title: 'Uses — Neil Richter' })
               <h3 class="text-[15px] font-semibold leading-tight text-highlighted">
                 {{ s.name }}
               </h3>
-              <span class="font-mono text-[11px] text-muted">{{ s.type }}</span>
+              <span class="font-mono text-[11px] text-muted">{{ s.type }}<template v-if="s.origin"> · {{ s.origin }}</template></span>
             </div>
             <p class="grow text-[13px] leading-snug text-muted">
               {{ s.feel || s.note }}

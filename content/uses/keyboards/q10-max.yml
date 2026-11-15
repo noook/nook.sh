@@ -19,6 +19,6 @@ specs:
   - { label: PCB, value: "ANSI, tri-mode" }
   - { label: Layout, value: drawn from its VIA definition }
   - { label: Stabs, value: stock }
-  - { label: Since, value: '2025-01' }
+  - { label: Since, value: '2024-11' }
 log:
-  - { at: '2025-01', what: added }
+  - { at: '2024-11', what: added }

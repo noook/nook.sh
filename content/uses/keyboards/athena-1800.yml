@@ -19,6 +19,7 @@ specs:
   - { label: Plate, value: FR4 }
   - { label: Stabs, value: Swagkeys Knight V4 }
   - { label: Keycaps, value: "Balaguères Bépo · Blanc Céruse, Vert Sapin, Grain Sable · Space Grotesk" }
-  - { label: Since, value: '2025-08' }
+  - { label: Since, value: bought 2025-08 · built 2025-11 }
 log:
-  - { at: '2025-08', what: "built, with the Balaguères Bépo set" }
+  - { at: '2025-08', what: bought }
+  - { at: '2025-11', what: "built, once the Balaguères Bépo set, the stabs and its first switches arrived" }
