@@ -9,6 +9,9 @@ photo:
 shop:
   name: milktooth.com
   url: https://milktooth.com/products/volume-0-t
+bought: '2025-12'
 history:
-- at: '2026-09'
+- at: '2025-12'
+  to: q10-max
+- at: '2026-11'
   to: tofu-tkl

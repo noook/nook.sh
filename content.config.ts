@@ -150,8 +150,13 @@ export default defineContentConfig({
         // over the history.
         where: z.string().optional(),
         shop: z.object({ name: z.string(), url: z.string().url() }),
-        // `to` is a keyboard file stem, or null for the drawer. The last
-        // entry is where the set is now; no history means the drawer.
+        // Purchase month, or the board it came with (stock switches).
+        bought: month.optional(),
+        stockWith: z.string().optional(),
+        // `to` is a keyboard file stem, 'drawer' (or null) when boxed, or
+        // any slug for a board that isn't on this page (pair it with
+        // `where`). The last entry is where the set is now; no history
+        // means the drawer.
         history: z.array(z.object({ at: month, to: slug.nullable() })).default([]),
       }),
     }),

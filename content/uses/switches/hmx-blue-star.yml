@@ -8,3 +8,15 @@ photo:
 shop:
   name: milktooth.com
   url: https://milktooth.com/products/blue-star
+bought: '2025-10'
+history:
+- at: '2025-11'
+  to: q10-max
+- at: '2025-12'
+  to: athena-1800
+- at: '2026-08'
+  to: drawer
+- at: '2026-09'
+  to: tofu-tkl
+- at: '2026-10'
+  to: drawer
