@@ -43,7 +43,12 @@ onKeyStroke(sections.map(s => s.key), (e) => {
 })
 
 const activeLegend = ref(0)
-const activeDeskItem = ref(3)
+// Desk: items with x/y get a numbered dot on the photo, the rest are listed apart.
+const pictured = computed(() => (setup.value?.desk.items ?? [])
+  .filter(d => d.x != null && d.y != null)
+  .map((d, i) => ({ ...d, n: i + 1 })))
+const offPhoto = computed(() => (setup.value?.desk.items ?? []).filter(d => d.x == null || d.y == null))
+const activeDeskItem = ref(4)
 
 useHead({
   title: 'Uses',
@@ -333,49 +338,70 @@ defineOgImage('Default', { title: 'Uses — Neil Richter' })
         jamo="ㄷ"
         index="03"
         title="Desk"
-        description="Hover a dot or a line."
+        description="Hover a dot or a name."
       />
-      <div class="flex flex-wrap items-start gap-6">
-        <div class="relative min-w-0 flex-[999_1_520px] overflow-hidden rounded-lg ring ring-default">
-          <NuxtImg
-            :src="setup.desk.photo.src"
-            :alt="setup.desk.photo.alt"
-            class="block h-auto w-full"
-          />
-          <template
-            v-for="(d, i) in setup.desk.items"
-            :key="d.name"
-          >
-            <button
-              v-if="d.x != null && d.y != null"
-              type="button"
-              :aria-label="d.name"
-              class="absolute flex size-11 -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center"
-              :style="{ left: `${d.x}%`, top: `${d.y}%` }"
-              @mouseenter="activeDeskItem = i"
-              @focus="activeDeskItem = i"
-              @click="activeDeskItem = i"
-            >
-              <span
-                class="flex size-6.5 items-center justify-center rounded-full font-mono text-xs font-medium shadow-[0_0_0_3px_rgb(15_23_43/0.35)]"
-                :class="activeDeskItem === i ? 'bg-primary text-inverted' : 'bg-white/90 text-slate-900'"
-              >{{ i + 1 }}</span>
-            </button>
-          </template>
-        </div>
-        <ul class="flex flex-[1_1_300px] flex-col gap-0.5">
+      <div class="relative overflow-hidden rounded-lg ring ring-default">
+        <NuxtImg
+          :src="setup.desk.photo.src"
+          :alt="setup.desk.photo.alt"
+          class="block h-auto w-full"
+        />
+        <button
+          v-for="d in pictured"
+          :key="d.name"
+          type="button"
+          :aria-label="d.name"
+          class="absolute flex size-11 -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center"
+          :style="{ left: `${d.x}%`, top: `${d.y}%` }"
+          @mouseenter="activeDeskItem = d.n"
+          @focus="activeDeskItem = d.n"
+          @click="activeDeskItem = d.n"
+        >
+          <span
+            class="flex size-6.5 items-center justify-center rounded-full font-mono text-xs font-medium shadow-[0_0_0_3px_rgb(15_23_43/0.35)]"
+            :class="activeDeskItem === d.n ? 'bg-primary text-inverted' : 'bg-white/90 text-slate-900'"
+          >{{ d.n }}</span>
+          <span
+            v-if="activeDeskItem === d.n"
+            aria-hidden="true"
+            class="pointer-events-none absolute top-1/2 -translate-y-1/2 whitespace-nowrap rounded-md bg-default/90 px-2 py-1 text-xs font-medium text-highlighted shadow-sm ring ring-default backdrop-blur"
+            :class="(d.x ?? 0) > 70 ? 'right-full mr-0.5' : 'left-full ml-0.5'"
+          >{{ d.name }}</span>
+        </button>
+      </div>
+
+      <ol class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-1">
+        <li
+          v-for="d in pictured"
+          :key="d.name"
+          class="flex gap-3 rounded-md px-2.5 py-2"
+          :class="activeDeskItem === d.n ? 'bg-elevated' : ''"
+          @mouseenter="activeDeskItem = d.n"
+        >
+          <span class="w-4 shrink-0 pt-0.5 font-mono text-xs text-muted">{{ d.n }}</span>
+          <div class="flex flex-col leading-snug">
+            <span class="text-sm font-medium text-highlighted">{{ d.name }}</span>
+            <span class="text-[13px] text-muted">{{ d.note }}</span>
+          </div>
+        </li>
+      </ol>
+
+      <div
+        v-if="offPhoto.length"
+        class="mt-4 border-t border-default pt-4"
+      >
+        <span class="mb-2 block font-mono text-[11px] uppercase tracking-wider text-muted">Not in the picture</span>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
           <li
-            v-for="(d, i) in setup.desk.items"
+            v-for="d in offPhoto"
             :key="d.name"
-            class="flex gap-3 rounded-md px-2.5 py-2"
-            :class="activeDeskItem === i ? 'bg-elevated' : ''"
-            @mouseenter="activeDeskItem = i"
+            class="flex gap-3 px-2.5 text-sm leading-snug"
           >
-            <span class="w-4.5 shrink-0 pt-0.5 font-mono text-xs text-muted">{{ d.x != null ? i + 1 : '·' }}</span>
-            <div class="flex flex-col leading-snug">
-              <span class="text-sm font-medium text-highlighted">{{ d.name }}</span>
-              <span class="text-[13px] text-muted">{{ d.note }}</span>
-            </div>
+            <span
+              aria-hidden="true"
+              class="mt-1 size-2 shrink-0 border-b-2 border-l-2 border-primary"
+            />
+            <span><span class="font-medium text-highlighted">{{ d.name }}</span> <span class="text-muted">· {{ d.note }}</span></span>
           </li>
         </ul>
       </div>
