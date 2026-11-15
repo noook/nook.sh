@@ -108,10 +108,11 @@ export default defineContentConfig({
         chips: z.array(z.string()).default([]),
         url: z.string().url().optional(),
         // A real photo wins. Without one, the card draws the board from
-        // its KLE layout (app/utils/uses/layouts.ts) and this colorway.
+        // its KLE layout (app/utils/keyboardLayouts.ts) and this colorway.
         photo: photo.optional(),
         drawing: z.object({
-          layout: z.enum(['athena-1800', 'q10-max', 'nuphy-air75-v3']),
+          // File stem in app/assets/uses/layouts/ (<layout>.kle.json + <layout>.config.json).
+          layout: z.string(),
           case: z.string(),
           // Keys get a role from the layout (alpha, mod, accent, knob);
           // each role maps to a cap colour and an optional legend colour.

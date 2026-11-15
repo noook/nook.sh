@@ -1,0 +1,10 @@
+{
+  "$comment": "Hand-written KLE: the label is the legend, p1-p4 are the Giroflée macro keys (1 to 4 petals).",
+  "roles": {
+    "byColor": {
+      "a": "alpha",
+      "m": "mod"
+    }
+  },
+  "legends": "label"
+}
