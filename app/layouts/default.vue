@@ -4,6 +4,11 @@
       title="Neil Richter"
       to="/"
     >
+      <template #title>
+        <NookLogo class="h-9.5 w-auto" />
+        <span class="sr-only">Neil Richter</span>
+      </template>
+
       <UNavigationMenu :items="headerLinks" />
 
       <template #right>
@@ -61,6 +66,11 @@ const headerLinks = computed<NavigationMenuItem[]>(() => [
     label: 'Blog',
     to: '/blog',
     active: route.path === '/blog',
+  },
+  {
+    label: 'Uses',
+    to: '/uses',
+    active: route.path === '/uses',
   },
 ])
 </script>

@@ -2,3 +2,32 @@
 @import "@nuxt/ui";
 
 @source "../../../content/**/*";
+
+/*
+  JetBrains Mono: the covers' monospace (covers-src/_shared/fonts), now the
+  site's mono too, used for metadata and code. Space Grotesk 500 is only
+  for the Bépo legends drawn on /uses, matching the real keycaps.
+  Both under the SIL Open Font License.
+*/
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('/fonts/space-grotesk-latin-500-normal.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@theme {
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
