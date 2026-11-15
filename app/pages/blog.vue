@@ -13,7 +13,10 @@ const { data: page } = await useAsyncData('page-blog', () => {
 // not something that should ever be reachable on a public URL.
 const { public: { showDrafts } } = useRuntimeConfig()
 const { data: posts } = await useAsyncData('posts', () => {
-  const query = queryCollection('posts')
+  // Newest first. Dates are ISO YYYY-MM-DD strings, so string order is
+  // date order. Without an explicit order, @nuxt/content returns
+  // entries by file name.
+  const query = queryCollection('posts').order('date', 'DESC')
   if (import.meta.dev) return query.all()
   return showDrafts
     ? query.where('mock', '=', false).all()

@@ -9,7 +9,10 @@ const { data: page } = await useAsyncData('page-projects', () => {
 // deploys - see blog.vue for the full reasoning.
 const { public: { showDrafts } } = useRuntimeConfig()
 const { data: projects } = await useAsyncData('projects', () => {
-  const query = queryCollection('projects')
+  // Newest first. Dates are ISO YYYY-MM-DD strings, so string order is
+  // date order. Without an explicit order, @nuxt/content returns
+  // entries by file name.
+  const query = queryCollection('projects').order('date', 'DESC')
   if (import.meta.dev) return query.all()
   return showDrafts
     ? query.where('mock', '=', false).all()
