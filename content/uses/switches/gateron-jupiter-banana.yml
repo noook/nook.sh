@@ -1,6 +1,10 @@
 order: 6
 name: Gateron Jupiter Banana
 type: tactile
+photo:
+  src: /images/uses/switches/gateron-jupiter-banana.webp
+  alt: The Gateron Jupiter Banana switch
+  credit: Milktooth
 shop:
   name: milktooth.com
   url: https://milktooth.com/products/jupiter-banana

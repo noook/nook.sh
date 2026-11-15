@@ -2,6 +2,10 @@ order: 7
 name: Gateron Jupiter Brown
 type: tactile
 note: The Q10 Max's stock switches.
+photo:
+  src: /images/uses/switches/gateron-jupiter-brown.webp
+  alt: The Gateron Jupiter Brown switch
+  credit: Milktooth
 shop:
   name: milktooth.com
   url: https://milktooth.com/products/jupiter-brown

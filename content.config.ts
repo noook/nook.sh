@@ -5,7 +5,7 @@ import { defineSitemapSchema } from '@nuxtjs/sitemap/content'
 // the rest of the setup. Months are 'YYYY-MM' strings so they sort as text.
 const month = z.string().regex(/^\d{4}-\d{2}$/)
 const slug = z.string().regex(/^[a-z0-9-]+$/)
-const photo = z.object({ src: z.string(), alt: z.string() })
+const photo = z.object({ src: z.string(), alt: z.string(), credit: z.string().optional() })
 const labelled = z.object({ name: z.string(), note: z.string().default('') })
 
 export default defineContentConfig({
@@ -143,8 +143,12 @@ export default defineContentConfig({
         type: z.enum(['linear', 'tactile', 'silent tactile', 'clicky']),
         feel: z.string().default(''),
         note: z.string().optional(),
-        // Own photo only; the card keeps an empty slot until there is one.
+        // The card keeps an empty slot until there is one. Set `credit`
+        // when the photo isn't mine (shop product shots).
         photo: photo.optional(),
+        // Free-text location for a board that isn't on this page; wins
+        // over the history.
+        where: z.string().optional(),
         shop: z.object({ name: z.string(), url: z.string().url() }),
         // `to` is a keyboard file stem, or null for the drawer. The last
         // entry is where the set is now; no history means the drawer.

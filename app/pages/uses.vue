@@ -15,7 +15,8 @@ const keyboardNames = computed(() =>
 
 const drawer = computed(() => (switches.value ?? []).map((s) => {
   const now = s.history.at(-1)?.to ?? null
-  return { ...s, slug: slugOf(s), now, nowLabel: now ? `in ${keyboardNames.value[now] ?? now}` : 'in the drawer' }
+  const nowLabel = s.where ?? (now ? `in ${keyboardNames.value[now] ?? now}` : 'in the drawer')
+  return { ...s, slug: slugOf(s), now: now ?? s.where ?? null, nowLabel }
 }))
 
 // Swap log: board events plus every switch move, newest first.
@@ -258,7 +259,7 @@ defineOgImage('Default', { title: 'Uses — Neil Richter' })
         jamo="ㄴ"
         index="02"
         title="Switch drawer"
-        description="Every set I own, boxed ones included. Photos are mine (coming), the link goes to the shop I bought them from."
+        description="Every set I use, boxed ones included, with a link to the shop I bought them from."
       />
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
         <article
@@ -267,12 +268,20 @@ defineOgImage('Default', { title: 'Uses — Neil Richter' })
           class="flex flex-col overflow-hidden rounded-lg bg-default ring ring-default"
         >
           <div class="relative flex aspect-square flex-col items-center justify-center gap-1.5 border-b border-default bg-elevated/50 text-muted">
-            <NuxtImg
-              v-if="s.photo"
-              :src="s.photo.src"
-              :alt="s.photo.alt"
-              class="absolute inset-0 size-full object-cover"
-            />
+            <template v-if="s.photo">
+              <NuxtImg
+                :src="s.photo.src"
+                :alt="s.photo.alt"
+                width="400"
+                height="400"
+                loading="lazy"
+                class="absolute inset-0 size-full object-cover"
+              />
+              <span
+                v-if="s.photo.credit"
+                class="absolute right-2 bottom-1.5 font-mono text-[10px] text-slate-500"
+              >photo: {{ s.photo.credit }}</span>
+            </template>
             <template v-else>
               <span
                 aria-hidden="true"
