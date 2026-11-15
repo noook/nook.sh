@@ -159,18 +159,6 @@ export default defineNuxtConfig({
       scan: {
         globInclude: ['**/*.{vue,jsx,tsx,ts,md,mdc,mdx,yml,yaml}'],
       },
-      // /uses software icons live in content/uses/setup.yml, outside the
-      // app sources the scanner walks - listed here so they're bundled too.
-      icons: [
-        'simple-icons:visualstudiocode',
-        'simple-icons:claude',
-        'simple-icons:ghostty',
-        'simple-icons:raycast',
-        'simple-icons:firefoxbrowser',
-        'simple-icons:obsidian',
-        'simple-icons:tailscale',
-        'material-symbols:smart-toy-outline',
-      ],
     },
   },
 
