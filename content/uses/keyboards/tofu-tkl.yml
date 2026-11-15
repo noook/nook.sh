@@ -1,0 +1,29 @@
+order: 1
+name: Tofu TKL
+edition: KBDfans · Year of the Horse edition
+status: in-use
+place: work
+line: Red anodized aluminium, a gold plate with a black horse. It arrived with a damaged PCB, the small switch next to Caps Lock was broken, and I still don't know what it's for.
+chips: [TKL, HMX Volume 0 T, Hangul set]
+url: https://keybay.tech/products/tofu-tkl-year-of-the-horse-limited-edition
+photo:
+  src: /images/uses/tofu-tkl.jpg
+  alt: The Tofu TKL in red anodized aluminium with the custom Hangul keycaps, on a red Year of the Horse desk mat
+keycaps:
+  title: Full-custom Hangul set
+  text: A set I designed myself, made with Balaguères, who agreed to produce it. Every modifier is a word that reminds me of my life in Korea.
+  legends:
+    - { key: Esc, legend: 퇴사, meaning: quitting your job }
+    - { key: Del, legend: 씨발, meaning: "the Korean «putain». Not a swear here, a wink to the French community's famous Putain keycap" }
+    - { key: End, legend: 퇴근, meaning: clocking out }
+    - { key: Enter, legend: "가자!", meaning: "let's go!" }
+    - { key: Bksp, legend: 취소취소, meaning: "cancel, cancel" }
+    - { key: Caps, legend: 이게 왜 커졌어, meaning: "why did this get big?" }
+specs:
+  - { label: PCB, value: dual-mode hotswap }
+  - { label: Plate, value: "WK aluminium, gold" }
+  - { label: Stabs, value: Swagkeys Knight V4 }
+  - { label: Since, value: case 2026-03 · built 2026-09 }
+log:
+  - { at: '2026-03', what: case arrived }
+  - { at: '2026-09', what: "built, with the Balaguères Hangul set" }

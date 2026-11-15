@@ -1,0 +1,14 @@
+order: 3
+name: Huano Sakura Tactile
+type: tactile
+feel: Bump right at the top, creamy bottom-out.
+photo:
+  src: /images/uses/switches/huano-sakura-tactile.webp
+  alt: The Huano Sakura Tactile switch
+  credit: Milktooth
+shop:
+  name: milktooth.com
+  url: https://milktooth.com/products/sakura-tactile
+history:
+- at: '2025-01'
+  to: q10-max

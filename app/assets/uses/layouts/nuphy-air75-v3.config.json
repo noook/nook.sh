@@ -1,0 +1,10 @@
+{
+  "$comment": "Hand-written KLE from a photo. Blank keycaps, so no legends.",
+  "roles": {
+    "byColor": {
+      "a": "alpha",
+      "m": "mod",
+      "k": "knob"
+    }
+  }
+}

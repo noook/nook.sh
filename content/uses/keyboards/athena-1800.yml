@@ -1,0 +1,24 @@
+order: 2
+name: Athena 1800
+edition: KBDfans · pine green
+status: in-use
+place: home
+line: Pine green with a brass weight, an FR4 plate, a rose gold badge and a small screen. Bépo keycaps, a mix of ISO and ANSI pieces, with Giroflée macro keys numbered one to four petals. I mostly write in English, though.
+chips: [1800 (96%), HMX Puppy, Bépo set]
+url: https://kbdfans.com/products/athena-1800
+drawing:
+  layout: athena-1800
+  case: '#2F4A3E'
+  font: "'Space Grotesk', sans-serif"
+  colors:
+    alpha: { cap: '#F7F7F7', legend: '#3F6A50' }
+    mod: { cap: '#A48E79', legend: '#F7F7F7' }
+  alt: "Drawing of the Athena 1800: pine green case, Blanc Céruse alphas with Vert Sapin Bépo legends, Grain Sable modifiers, ISO Enter with the long ANSI left Shift"
+specs:
+  - { label: PCB, value: "FR4 hotswap, ANSI/ISO, foam kit" }
+  - { label: Plate, value: FR4 }
+  - { label: Stabs, value: Swagkeys Knight V4 }
+  - { label: Keycaps, value: "Balaguères Bépo · Blanc Céruse, Vert Sapin, Grain Sable · Space Grotesk" }
+  - { label: Since, value: '2025-08' }
+log:
+  - { at: '2025-08', what: "built, with the Balaguères Bépo set" }

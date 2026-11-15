@@ -1,0 +1,24 @@
+order: 3
+name: Q10 Max
+edition: Keychron · Alice layout
+status: in-use
+place: home
+line: An Alice layout with a knob and a macro column. I swapped the thumb keys around (cmd, alt, space, fn) because the edge of the case hurt my thumb.
+chips: [Alice 75%, Huano Sakura Tactile, stock caps]
+url: https://www.keychron.com/products/keychron-q10-max-alice-layout-qmk-via-wireless-custom-mechanical-keyboard
+drawing:
+  layout: q10-max
+  case: '#26272B'
+  colors:
+    alpha: { cap: '#ECEBE6', legend: '#2B2C31' }
+    mod: { cap: '#34363C', legend: '#C9CBD1' }
+    accent: { cap: '#7FB3B5', legend: '#1F2E2F' }
+    knob: { cap: '#1B1C20' }
+  alt: "Drawing of the Keychron Q10 Max: Alice split layout with a macro column and a knob"
+specs:
+  - { label: PCB, value: "ANSI, tri-mode" }
+  - { label: Layout, value: drawn from its VIA definition }
+  - { label: Stabs, value: stock }
+  - { label: Since, value: '2025-01' }
+log:
+  - { at: '2025-01', what: added }
