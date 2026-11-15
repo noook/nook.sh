@@ -14,11 +14,18 @@ keycaps:
   text: A set I designed myself, made with Balaguères, who agreed to produce it. Every modifier is a word that reminds me of my life in Korea.
   legends:
     - { key: Esc, legend: 퇴사, meaning: quitting your job }
-    - { key: Del, legend: 씨발, meaning: "the Korean «putain». Not a swear here, a wink to the French community's famous Putain keycap" }
+    - { key: PrtSc, legend: 박제, meaning: "taxidermy: a screenshot that keeps something forever" }
+    - { key: ScrLk, legend: 진짜, meaning: "for real?" }
+    - { key: Pause, legend: "헐?", meaning: "no way?" }
+    - { key: Ins, legend: 노쓸, meaning: useless }
+    - { key: Home, legend: 막차, meaning: the last train }
+    - { key: PgUp, legend: 소주, meaning: soju }
+    - { key: Del, legend: 씨발, meaning: "the Korean «putain» («fuck»). As a Frenchman, I love this word. Got it tattooed on my arm" }
     - { key: End, legend: 퇴근, meaning: clocking out }
-    - { key: Enter, legend: "가자!", meaning: "let's go!" }
+    - { key: PgDn, legend: 숙취, meaning: hangover }
     - { key: Bksp, legend: 취소취소, meaning: "cancel, cancel" }
-    - { key: Caps, legend: 이게 왜 커졌어, meaning: "why did this get big?" }
+    - { key: Enter, legend: "가자!", meaning: "let's go!" }
+    - { key: Caps, legend: 이게 왜 켜졌어, meaning: "why is this on?" }
 specs:
   - { label: PCB, value: dual-mode hotswap }
   - { label: Plate, value: "WK aluminium, gold" }

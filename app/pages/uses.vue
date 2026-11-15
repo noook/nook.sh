@@ -32,6 +32,12 @@ const log = computed(() => [
   ]),
 ].sort((a, b) => b.at.localeCompare(a.at) || b.step - a.step))
 
+// The log keeps growing: show the latest events, the rest on demand.
+const LOG_PREVIEW = 8
+const showFullLog = ref(false)
+const visibleLog = computed(() => (showFullLog.value ? log.value : log.value.slice(0, LOG_PREVIEW)))
+const hiddenLogCount = computed(() => Math.max(0, log.value.length - LOG_PREVIEW))
+
 const sections = [
   { key: '1', id: 'keyboards', label: 'Keyboards' },
   { key: '2', id: 'switches', label: 'Switches' },
@@ -582,11 +588,14 @@ defineOgImage('Default', { title: 'Uses — Neil Richter' })
         jamo="ㅂ"
         index="06"
         title="Swap log"
-        description="Generated from each part's history, newest first."
+        description="Generated from each part's history: the latest changes first."
       />
-      <ol class="ml-2 border-l-2 border-accented">
+      <ol
+        id="swap-log"
+        class="ml-2 border-l-2 border-accented"
+      >
         <li
-          v-for="(l, i) in log"
+          v-for="(l, i) in visibleLog"
           :key="i"
           class="relative flex flex-wrap items-baseline gap-x-4 gap-y-1 py-2.5 pl-7 font-mono text-[13px]"
         >
@@ -599,6 +608,18 @@ defineOgImage('Default', { title: 'Uses — Neil Richter' })
           <span class="text-muted">{{ l.what }}</span>
         </li>
       </ol>
+      <UButton
+        v-if="hiddenLogCount"
+        color="neutral"
+        variant="ghost"
+        size="sm"
+        aria-controls="swap-log"
+        :aria-expanded="showFullLog"
+        :trailing-icon="showFullLog ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'"
+        :label="showFullLog ? 'Show only the latest' : `Show the full history (${hiddenLogCount} more)`"
+        class="mt-3 ml-1 min-h-11 font-mono"
+        @click="showFullLog = !showFullLog"
+      />
     </section>
   </div>
 </template>
