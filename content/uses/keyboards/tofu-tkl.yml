@@ -12,6 +12,8 @@ photo:
 keycaps:
   title: Full-custom Hangul set
   text: A set I designed myself, made with Balaguères, who agreed to produce it. Every modifier is a word that reminds me of my life in Korea.
+  # Keys shown on the /uses card; the keyboard's own page lists them all.
+  featured: [Del, Bksp, Caps, Left Shift, Right Shift]
   legends:
     - { key: Esc, legend: 퇴사, meaning: quitting your job }
     - { key: PrtSc, legend: 박제, meaning: "taxidermy: a screenshot that keeps something forever" }
@@ -24,8 +26,18 @@ keycaps:
     - { key: End, legend: 퇴근, meaning: clocking out }
     - { key: PgDn, legend: 숙취, meaning: hangover }
     - { key: Bksp, legend: 취소취소, meaning: "cancel, cancel" }
-    - { key: Enter, legend: "가자!", meaning: "let's go!" }
+    - { key: Tab, legend: 야호, meaning: "yahoo! Jumping from one element to the next" }
     - { key: Caps, legend: 이게 왜 켜졌어, meaning: "why is this on?" }
+    - { key: Enter, legend: "가자!", meaning: "let's go!" }
+    - { key: Left Shift, legend: 왼쪽, meaning: "left. I'm learning, and I always mix up left and right" }
+    - { key: Right Shift, legend: 오른쪽, meaning: "right. Same reason" }
+    - { key: Ctrl, legend: 포차, meaning: "pojangmacha, the outdoor tent bars" }
+    - { key: Alt, legend: 2차, meaning: "the second round" }
+    - { key: Meta, legend: 사과, meaning: "apple: the meta key" }
+    - { key: Right Alt, legend: 호떡, meaning: "hotteok, the sweet filled pancake" }
+    - { key: Fn, legend: 비밀, meaning: "secret" }
+    - { key: Menu, legend: 노래방, meaning: "karaoke. No deeper meaning, it's my other Ctrl" }
+    - { key: Right Ctrl, legend: 포차, meaning: "pojangmacha, the outdoor tent bars" }
 specs:
   - { label: PCB, value: dual-mode hotswap }
   - { label: Plate, value: "WK aluminium, gold" }

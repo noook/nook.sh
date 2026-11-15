@@ -70,7 +70,7 @@ const headerLinks = computed<NavigationMenuItem[]>(() => [
   {
     label: 'Uses',
     to: '/uses',
-    active: route.path === '/uses',
+    active: route.path.startsWith('/uses'),
   },
 ])
 </script>
