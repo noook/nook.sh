@@ -92,6 +92,8 @@ export default defineContentConfig({
           period: z.string(),
           company: z.string(),
           description: z.string(),
+          // Set when the company or product no longer exists ("shut down").
+          ended: z.string().optional(),
         })),
       }),
     }),

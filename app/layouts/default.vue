@@ -1,27 +1,35 @@
 <template>
   <div>
+    <!-- Three links fit at 360 px, so there is no burger menu: Blog and
+         Projects stay one tap away for someone landing from a social link.
+         The logo goes home; the theme picker lives in the footer. -->
     <UHeader
       title="Neil Richter"
       to="/"
+      :toggle="false"
     >
       <template #title>
-        <NookLogo class="h-9.5 w-auto" />
+        <NookLogo class="h-7 sm:h-9.5 w-auto" />
         <span class="sr-only">Neil Richter</span>
       </template>
 
-      <UNavigationMenu :items="headerLinks" />
-
       <template #right>
-        <ThemePicker />
-        <UColorModeButton />
-      </template>
-
-      <template #body>
-        <UNavigationMenu
-          :items="headerLinks"
-          orientation="vertical"
-          class="-mx-2.5"
-        />
+        <nav
+          aria-label="Main"
+          class="flex items-center gap-4 sm:gap-6 text-sm font-medium"
+        >
+          <NuxtLink
+            v-for="link in headerLinks"
+            :key="link.to"
+            :to="link.to"
+            class="transition-colors"
+            :class="isActive(link.to) ? 'text-primary' : 'text-muted hover:text-highlighted'"
+            :aria-current="isActive(link.to) ? 'page' : undefined"
+          >
+            {{ link.label }}
+          </NuxtLink>
+        </nav>
+        <UColorModeButton class="-mr-1.5" />
       </template>
     </UHeader>
 
@@ -32,9 +40,15 @@
     </UMain>
 
     <UFooter>
-      <template #default>
-        <p class="text-center text-sm text-muted">
-          © {{ new Date().getFullYear() }}, Neil Richter - All rights reserved.
+      <template #left>
+        <div class="flex items-center gap-2 font-mono text-xs text-muted">
+          theme
+          <ThemePicker />
+        </div>
+      </template>
+      <template #right>
+        <p class="font-mono text-xs text-muted">
+          © {{ new Date().getFullYear() }} neil richter<span class="mx-1.5 text-dimmed">ㆍ</span>paris
         </p>
       </template>
     </UFooter>
@@ -42,35 +56,15 @@
 </template>
 
 <script setup lang="ts">
-import type { NavigationMenuItem } from '@nuxt/ui'
-
 const route = useRoute()
 
-const headerLinks = computed<NavigationMenuItem[]>(() => [
-  {
-    label: 'Home',
-    to: '/',
-    active: route.path === '/',
-  },
-  {
-    label: 'About',
-    to: '/about',
-    active: route.path === '/about',
-  },
-  {
-    label: 'Projects',
-    to: '/projects',
-    active: route.path.startsWith('/projects'),
-  },
-  {
-    label: 'Blog',
-    to: '/blog',
-    active: route.path === '/blog',
-  },
-  {
-    label: 'Uses',
-    to: '/uses',
-    active: route.path.startsWith('/uses'),
-  },
-])
+const headerLinks = [
+  { label: 'Projects', to: '/projects' },
+  { label: 'Blog', to: '/blog' },
+  { label: 'Uses', to: '/uses' },
+]
+
+// A post belongs to Blog: /posts/* lights the Blog link.
+const isActive = (to: string) =>
+  route.path.startsWith(to) || (to === '/blog' && route.path.startsWith('/posts'))
 </script>

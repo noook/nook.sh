@@ -91,6 +91,11 @@ export default defineNuxtConfig({
     },
   },
 
+  // /about merged into the home page; old links and search results keep working.
+  routeRules: {
+    '/about': { redirect: { to: '/', statusCode: 301 } },
+  },
+
   // app.viewTransition above only sets the *runtime* enabled flag - the
   // client plugin that actually calls document.startViewTransition on
   // navigation is only registered at build time when this experimental

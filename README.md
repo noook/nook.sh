@@ -14,10 +14,10 @@ A modern portfolio built with **Nuxt 4**, **Nuxt UI**, and **Nuxt Content**.
 
 ### Pages
 
-- `/` - Home/About page
-- `/about` - Detailed about page with expandable experience sections and tech stack
+- `/` - Home and about in one page: the text lives in `content/index.md`, with the experience, stack and socials as MDC blocks (`app/components/content/Home*.vue`). `/about` redirects here.
 - `/projects` - List of all projects (code and IRL)
 - `/blog` - Blog posts
+- `/uses` - Keyboards, switches, desk, computers and software
 
 ### Content Collections
 
