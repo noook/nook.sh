@@ -9,7 +9,7 @@ I'm a **full-stack software engineer** focused on building clean, maintainable w
 
 I work mainly with **Node.js/NestJS**, **PHP/Symfony**, and **PostgreSQL** on the backend, with **Vue/Nuxt/TypeScript** on the frontend. Lately, I've been learning Rust, using it as an opportunity to deepen my understanding of algorithms, data structures, and efficient programming overall.
 
-I've worked in startups and larger teams, at **Bouygues Telecom**, **Beamy.io** and **Golem.ai**, and I built **Madami**, a donation and membership platform for French non-profits, on my own from the first line to the first users.
+I've worked in startups and larger teams, at **Bouygues Telecom**, **Beamy.io** and **Golem.ai**, and I co-built **Madami**, a donation and membership platform for French non-profits: the company was a friend's, and I was its only developer, from the first line to the first users.
 
 I'm now at **Spendesk**, working on company cards, and I keep finding excuses to improve our tooling along the way: types, developer experience, devtools.
 
