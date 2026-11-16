@@ -50,6 +50,20 @@ else {
   defineOgImage('Default', { title: post.value.title })
 }
 
+// Previous / next post, newest first like /blog. Hidden posts (drafts
+// outside preview deploys, mock posts outside dev) are never offered.
+const { data: surround } = await useAsyncData(`post-surround-${route.path}`, () => {
+  let query = queryCollectionItemSurroundings('posts', route.path, { fields: ['title', 'description'] })
+    .order('date', 'DESC')
+  if (!showDrafts) query = query.where('draft', '=', false)
+  if (!import.meta.dev) query = query.where('mock', '=', false)
+  return query
+})
+// Surroundings come back as [previous, next] in list order: the newer
+// post first, then the older one.
+const newer = computed(() => surround.value?.[0] ?? null)
+const older = computed(() => surround.value?.[1] ?? null)
+
 // Shared-element view transitions: see app/composables/useViewTransitionName.ts
 // for the full explanation. Same name (keyed by route.path, matching
 // post.path there) on the hero image/title here as on the listing card
@@ -127,5 +141,32 @@ const titleTransitionStyle = computed(() => transitionStyle('post-title', route.
     <div class="prose prose-lg dark:prose-invert max-w-none">
       <ContentRenderer :value="post" />
     </div>
+
+    <nav
+      v-if="older || newer"
+      aria-label="More posts"
+      class="mt-16 grid gap-3 border-t border-default pt-8 sm:grid-cols-2"
+    >
+      <NuxtLink
+        v-if="older"
+        :to="older.path"
+        class="group rounded-md border border-default p-4 hover:border-primary/50"
+      >
+        <span class="font-mono text-xs text-dimmed">← older</span>
+        <span class="mt-1 block font-semibold text-highlighted group-hover:text-primary">{{ older.title }}</span>
+      </NuxtLink>
+      <NuxtLink
+        v-if="newer"
+        :to="newer.path"
+        class="group rounded-md border border-default p-4 text-right hover:border-primary/50 sm:col-start-2"
+      >
+        <span class="font-mono text-xs text-dimmed">newer →</span>
+        <span class="mt-1 block font-semibold text-highlighted group-hover:text-primary">{{ newer.title }}</span>
+      </NuxtLink>
+    </nav>
+    <NuxtLink
+      to="/blog"
+      class="mt-6 inline-block font-mono text-sm text-primary hover:underline underline-offset-4"
+    >all posts →</NuxtLink>
   </article>
 </template>
