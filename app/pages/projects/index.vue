@@ -107,6 +107,12 @@ function titleTransitionName(path: string) {
             >
               {{ project.title }}
             </h3>
+            <p
+              v-if="project.status"
+              class="mb-2 font-mono text-xs text-dimmed"
+            >
+              {{ project.status }}
+            </p>
             <p class="text-muted mb-4">
               {{ project.description }}
             </p>

@@ -8,6 +8,7 @@ tags:
   - pc-build
 image: "/images/posts/sff-pc-build/cover-light.png"
 imageDark: "/images/posts/sff-pc-build/cover-dark.png"
+project: formd-t1
 draft: false
 ---
 
@@ -95,15 +96,13 @@ It's been further than the living room, too. I took it to my parents' place stra
 
 ## Current state
 
-It's done, in the sense that it does everything I need. The CPU, a 7700X, runs between 85 and 92°C under load. That's hot, but Ryzen 7000 chips are built to boost until they reach about 95°C, and nothing throttles. The fan curve below explains that range. A bigger cooler would bring it down, but I don't see a reason to spend money on something that already works. I don't know yet what would justify that upgrade, so for now it stays.
-
-The fan curves took some sorting out. Out of the box, before I'd configured anything, the T1 was impressively silent at idle, almost unsettling. Then it would ramp up loud the moment it hit any real load. In FanControl I set the two exhaust fans flat at 65%, which is roughly 1,300 RPM. The CPU and GPU fans keep a curve, and I set it so the burst comes late. The CPU fan stays at 40% until about 80°C, then climbs to 60% at 86°C and 90% at 91°C. The GPU fan stays at about 36% until 57°C, then reaches 60% at 79°C and 90% at 89°C. That's why the CPU sits between 85 and 92°C: the fan only really spins up once it gets there. I lose a bit of idle silence, but I'm no longer startled every time a game loads.
+It's done, in the sense that it does everything I need. Temperatures, fan curves and what might come next now live on [the project page](/projects/formd-t1), where I keep them up to date.
 
 ## What stuck with me
 
 My favorite part of this project is how meticulous the case forces me to be. Fighting the cable routing until it's both efficient and clean, working out exactly which parts fit in a volume this small: a mid-tower never asked for that kind of attention. I'd never have spent five months getting a GPU bracket made for one, either.
 
-The full parts list, kept up to date, lives on my [uses page](/uses).
+The full parts list, kept up to date, lives on [the project page](/projects/formd-t1).
 
 [1]: https://docs.google.com/spreadsheets/d/1AddRvGWJ_f4B6UC7_IftDiVudVc8CJ8sxLUqlxVsCz4/edit?gid=1824037046#gid=1824037046
 [2]: https://www.etsy.com/listing/1480956978

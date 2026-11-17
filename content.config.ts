@@ -53,6 +53,9 @@ export default defineContentConfig({
         // *advertised* to crawlers even when directly reachable for review.
         // This is deliberately unconditional, independent of
         // runtimeConfig.showDrafts / import.meta.dev.
+        // Slug of the project this post is about (content/projects/<slug>.md).
+        // The project page lists every post that points to it.
+        project: z.string().optional(),
         sitemap: defineSitemapSchema({
           name: 'posts',
           filter: entry => !entry.draft && !entry.mock,
@@ -71,6 +74,16 @@ export default defineContentConfig({
         imageDark: z.string().optional(),
         draft: z.boolean().default(false),
         mock: z.boolean().default(false),
+        // Short state shown in mono under the title: "v4 ㆍ in use", "live", "shut down".
+        status: z.string().optional(),
+        // A project that changes over time keeps its steps here, oldest first.
+        versions: z.array(z.object({
+          name: z.string(),
+          at: z.string().optional(),
+          line: z.string(),
+          image: z.string().optional(),
+          imageAlt: z.string().optional(),
+        })).default([]),
         sitemap: defineSitemapSchema({
           name: 'projects',
           filter: entry => !entry.draft && !entry.mock,
@@ -181,6 +194,8 @@ export default defineContentConfig({
           summary: z.string(),
           photo,
           post: z.string(),
+          // The project page, when the build has one: the Computers card links there first.
+          project: z.string().optional(),
           parts: z.array(z.object({ label: z.string(), value: z.string() })),
         }),
         machines: z.array(z.object({

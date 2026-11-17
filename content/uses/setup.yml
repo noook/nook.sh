@@ -57,6 +57,7 @@ pc:
     src: /images/uses/formd-t1.jpg
     alt: The FormD T1 on the desk, its pale indigo LED strip glowing through the mesh
   post: /posts/sff-pc-build
+  project: /projects/formd-t1
   parts:
   - label: CPU
     value: AMD Ryzen 7 7700X
