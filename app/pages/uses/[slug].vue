@@ -53,7 +53,7 @@ useHead({
 useSeoMeta({ ogTitle: () => `${board.value?.name} — Neil Richter`, ogDescription: board.value?.line })
 defineOgImage('Default', { title: `${board.value?.name} — Neil Richter` })
 
-// Extra photos open full size: see ImageLightbox.vue.
+// The photos open full size: see ImageLightbox.vue.
 const enlarged = ref<LightboxImage | null>(null)
 </script>
 
@@ -121,12 +121,19 @@ const enlarged = ref<LightboxImage | null>(null)
       class="relative flex items-center justify-center overflow-hidden rounded-lg bg-elevated/50 ring ring-default"
       :class="board.photo ? '' : 'px-6 pt-12 pb-10'"
     >
-      <NuxtImg
+      <button
         v-if="board.photo"
-        :src="board.photo.src"
-        :alt="board.photo.alt"
-        class="block h-auto w-full"
-      />
+        type="button"
+        class="block w-full cursor-zoom-in focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-primary"
+        :aria-label="`Enlarge: ${board.photo.alt}`"
+        @click="enlarged = { src: board.photo.full ?? board.photo.src, alt: board.photo.alt }"
+      >
+        <NuxtImg
+          :src="board.photo.src"
+          :alt="board.photo.alt"
+          class="block h-auto w-full"
+        />
+      </button>
       <template v-else-if="board.drawing">
         <UsesKeyboardPlate
           :layout="board.drawing.layout"
@@ -143,6 +150,8 @@ const enlarged = ref<LightboxImage | null>(null)
       <UsesNookCorners inset="16px" />
     </section>
 
+    <ImageLightbox v-model="enlarged" />
+
     <!-- More photos -->
     <section
       v-if="board.photos.length"
@@ -154,7 +163,7 @@ const enlarged = ref<LightboxImage | null>(null)
         type="button"
         class="group block cursor-zoom-in overflow-hidden rounded-lg ring ring-default focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         :aria-label="`Enlarge: ${p.alt}`"
-        @click="enlarged = { src: p.src, alt: p.alt }"
+        @click="enlarged = { src: p.full ?? p.src, alt: p.alt }"
       >
         <NuxtImg
           :src="p.src"
@@ -163,7 +172,6 @@ const enlarged = ref<LightboxImage | null>(null)
           loading="lazy"
         />
       </button>
-      <ImageLightbox v-model="enlarged" />
     </section>
 
     <!-- Keycaps -->
