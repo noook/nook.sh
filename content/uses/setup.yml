@@ -80,7 +80,7 @@ pc:
   - label: Lighting
     value: 2 × Corsair LS340 Aurora, pale indigo
   - label: Extras
-    value: FormD GPU Travel Kit
+    value: FormD GPU Travel Kit + front USB-C port
 machines:
 - kind: Personal laptop
   name: MacBook Pro 14" · M4 Pro
