@@ -172,6 +172,8 @@ Umami counted 103 visitors, 39 on Saturday and 65 on Sunday, and 98 of them were
 ::diagram-bars
 ---
 title: Visitors per day, 6 to 15 Nov
+unit: visitors
+labelSuffix: " Nov"
 bars:
   - { label: "6", value: 28 }
   - { label: "7", value: 39, highlight: true }
@@ -207,6 +209,8 @@ On 11 November my Telegram filled up with Plouf alerts saying the FFN had answer
 ::diagram-bars
 ---
 title: Requests to plouf.nook.sh per 15 minutes, 11 Nov (UTC)
+unit: requests
+labelSuffix: " UTC"
 labelEvery: 4
 bars:
   - label: "05:00"
