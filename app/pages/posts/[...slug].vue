@@ -140,7 +140,7 @@ const titleTransitionStyle = computed(() => transitionStyle('post-title', route.
     </div>
 
     <!-- Tags -->
-    <div class="flex gap-2 mb-12">
+    <div class="flex flex-wrap gap-2 mb-12">
       <UBadge
         v-for="tag in post.tags"
         :key="tag"
