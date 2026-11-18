@@ -6,7 +6,6 @@ items:
   - title: "Lead Engineer (freelance, full-time)"
     period: "Mar 2025 – Feb 2026"
     company: "Madami"
-    ended: "shut down"
     description: "Sole engineer on a 0→1 donation and membership platform for French non-profits — donation collection, member management, events and newsletters, taken from architecture through to onboarding the first non-profits in production."
   - title: "Fullstack Software Engineer"
     period: "Oct 2023 – Mar 2025"
