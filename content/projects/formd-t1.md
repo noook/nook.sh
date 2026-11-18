@@ -7,8 +7,8 @@ tags:
   - hardware
   - pc-build
 type: irl
-image: "/images/projects/formd-t1/hero-light.webp"
-imageDark: "/images/projects/formd-t1/hero-dark.webp"
+image: "/images/projects/formd-t1/cover-light.png"
+imageDark: "/images/projects/formd-t1/cover-dark.png"
 status: "v4 ㆍ in use"
 draft: false
 versions:
@@ -38,9 +38,21 @@ The T1 is my main PC, and the thing on my desk people keep asking about. How it 
 
 ## Current state
 
-![The open T1 from the GPU side: the Radeon's three fans, the Noctua exhaust fans on top, the rear I/O](/images/projects/formd-t1/open-gpu-side.webp)
+::themed-image
+---
+light: /images/projects/formd-t1/shot-gpu-light.jpg
+dark: /images/projects/formd-t1/shot-gpu-dark.jpg
+alt: "The open T1 from the GPU side: the Radeon's three fans, the Noctua exhaust fans on top, the rear I/O"
+---
+::
 
-![The open T1 from the CPU side: the Noctua-fanned cooler, the white and brown cables, the Corsair SF1000](/images/projects/formd-t1/open-cpu-side.webp)
+::themed-image
+---
+light: /images/projects/formd-t1/shot-cpu-light.jpg
+dark: /images/projects/formd-t1/shot-cpu-dark.jpg
+alt: "The open T1 from the CPU side: the Noctua-fanned cooler, the white and brown cables, the Corsair SF1000"
+---
+::
 
 It's done, in the sense that it does everything I need. The CPU, a 7700X, runs between 85 and 92°C under load. That's hot, but Ryzen 7000 chips are built to boost until they reach about 95°C, and nothing throttles. The fan curve below explains that range. A bigger cooler would bring it down, but I don't see a reason to spend money on something that already works. I don't know yet what would justify that upgrade, so for now it stays.
 
