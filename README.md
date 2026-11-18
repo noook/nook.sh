@@ -169,6 +169,19 @@ dashboard env var (`CF_D1_DATABASE_ID`) proved unreliable in practice (the
 build step never observed it despite it being set correctly on the
 dashboard).
 
+All previews share the preview database, so each preview build writes its
+content to its own tables: `_preview_<branch>_<collection>` instead of
+`@nuxt/content`'s stock `_content_<collection>` (prefix set at the top of
+`nuxt.config.ts`, made configurable by
+`patches/@nuxt__content@3.15.2.patch`). Without it, two open PRs overwrite
+each other's content and every preview URL serves whichever branch synced
+last. Production keeps `_content_`. When bumping `@nuxt/content`, re-apply
+the patch (`pnpm patch @nuxt/content@<version>`). Tables of merged branches
+stay in the preview database; they're small and safe to drop from its D1
+console (`SELECT name FROM sqlite_master WHERE name LIKE '_preview_%'`).
+The `_content_*` tables left there by earlier preview builds are unused
+now.
+
 ### Commands
 
 ```bash
