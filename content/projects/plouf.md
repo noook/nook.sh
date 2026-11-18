@@ -84,7 +84,7 @@ One network is fine on a quiet Saturday. The Interclubs weekend had 119 meets on
 
 A friend's or family member's Egress is one public container: Tailscale in userspace mode and a small proxy that only lets traffic through to the FFN's two hosts, with no published port. TLS goes end to end, so their machine relays encrypted bytes and holds no Plouf secret. It runs from one `docker run` line, or a compose file in Coolify.
 
-The worker finds Egresses on its own. Every 15 seconds it reads the local Tailscale daemon, and a peer with the right tag and name joins the pool once its proxy answers. Each Egress gets its own 2 requests per second. A live meet sticks to one network (rendezvous hashing), and Extranat requests go to the least busy one. A 429 or a confirmed 403 pauses that network alone. The pool exists to spread the load, and it is never used to get around an FFN refusal.
+The worker finds Egresses on its own. Every 15 seconds it reads the local Tailscale daemon, and a peer with the right tag and name joins the pool once its proxy answers. Each Egress gets its own 2 requests per second. A live meet sticks to one network ([rendezvous hashing](https://blog.vitalvas.com/post/2026/02/01/rendezvous-and-maglev-hashing/)), and Extranat requests go to the least busy one. A 429 or a confirmed 403 pauses that network alone. The pool exists to spread the load, and it is never used to get around an FFN refusal.
 
 ::diagram-fanout
 ---
