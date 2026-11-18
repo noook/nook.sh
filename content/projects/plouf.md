@@ -11,8 +11,8 @@ tags:
   - agents
   - homelab
 type: code
-# image: "/images/projects/plouf/cover-light.png"
-# imageDark: "/images/projects/plouf/cover-dark.png"
+image: "/images/projects/plouf/cover-light.png"
+imageDark: "/images/projects/plouf/cover-dark.png"
 draft: false
 ---
 

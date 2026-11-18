@@ -7,8 +7,8 @@ tags:
   - swimming
   - agents
   - side-project
-# image: "/images/posts/plouf-story/cover-light.png"
-# imageDark: "/images/posts/plouf-story/cover-dark.png"
+image: "/images/posts/plouf-story/cover-light.png"
+imageDark: "/images/posts/plouf-story/cover-dark.png"
 project: plouf
 draft: false
 ---
