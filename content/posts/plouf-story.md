@@ -10,7 +10,7 @@ tags:
 # image: "/images/posts/plouf-story/cover-light.png"
 # imageDark: "/images/posts/plouf-story/cover-dark.png"
 project: plouf
-draft: true
+draft: false
 ---
 
 At a swimming meet in France, you know your own time as soon as you touch the wall. The splits are another matter, and so are your teammates' results and the next heat. The public often has to wait, and when the timing is manual, someone types the times in one by one, so the delay can be long. Meanwhile everyone is on their phone. Each lookup is a few taps, a form, some zooming, and a page that takes a while to load on one bar of signal.

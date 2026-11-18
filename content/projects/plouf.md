@@ -13,7 +13,7 @@ tags:
 type: code
 # image: "/images/projects/plouf/cover-light.png"
 # imageDark: "/images/projects/plouf/cover-dark.png"
-draft: true
+draft: false
 ---
 
 Plouf is an unofficial web app for French competitive swimmers. The French federation (FFN) publishes everything on two sites: Extranat for results, Live FFN for meets in progress. Most of their views sit behind forms with no URL, the pages are dense, and none of it was made for a phone. Plouf reads the same data and gives every swimmer, club, meet and ranking its own link, with live results, follows and push notifications on top.
