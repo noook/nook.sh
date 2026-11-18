@@ -24,22 +24,17 @@ It's public at [plouf.nook.sh](https://plouf.nook.sh), in French, and unindexed 
 
 Swimmers first, then coaches, then family & friends. About 95% of them are on a phone, so every screen is designed at 360 px first, with touch targets of at least 44 px.
 
-::themed-image
+::themed-images
 ---
-light: /images/projects/plouf/profile-light.webp
-dark: /images/projects/plouf/profile-dark.webp
-alt: "My swimmer page in Plouf: personal bests in a 25 m pool, times aligned in monospace"
-phone: true
----
-::
-
-::themed-image
----
-light: /images/projects/plouf/live-board-light.webp
-dark: /images/projects/plouf/live-board-dark.webp
-alt: "The live board of a meet: an LCD-style board in light mode, LED digits in dark mode"
-caption: "The live board, on the simulated meet the screenshot tests use"
-phone: true
+images:
+  - light: /images/projects/plouf/profile-light.webp
+    dark: /images/projects/plouf/profile-dark.webp
+    alt: "My swimmer page in Plouf: personal bests in a 25 m pool, times aligned in monospace"
+    caption: "My swimmer page"
+  - light: /images/projects/plouf/live-board-light.webp
+    dark: /images/projects/plouf/live-board-dark.webp
+    alt: "The live board of a meet: an LCD-style board in light mode, LED digits in dark mode"
+    caption: "The live board, on the simulated meet the screenshot tests use"
 ---
 ::
 
