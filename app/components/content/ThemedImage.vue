@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { LightboxImage } from '~/components/ImageLightbox.vue'
+
 // A screenshot with a light and a dark version: the one matching the colour
 // mode is shown. Phone screenshots are capped so they don't fill the page.
 const props = withDefaults(defineProps<{
@@ -8,13 +10,24 @@ const props = withDefaults(defineProps<{
   caption?: string
   phone?: boolean
 }>(), { phone: false, caption: undefined })
+
+// Opens the version matching the colour mode full size: see ImageLightbox.vue.
+const colorMode = useColorMode()
+const enlarged = ref<LightboxImage | null>(null)
+function enlarge() {
+  const src = colorMode.value === 'dark' ? props.dark : props.light
+  enlarged.value = { src, alt: props.alt }
+}
 </script>
 
 <template>
   <figure class="not-prose my-8">
-    <div
-      class="mx-auto overflow-hidden rounded-xl ring ring-default"
+    <button
+      type="button"
+      class="mx-auto block w-full cursor-zoom-in overflow-hidden rounded-xl ring ring-default focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       :class="props.phone ? 'max-w-[300px]' : ''"
+      :aria-label="`Enlarge: ${props.alt}`"
+      @click="enlarge"
     >
       <NuxtImg
         :src="props.light"
@@ -28,7 +41,8 @@ const props = withDefaults(defineProps<{
         class="hidden w-full dark:block"
         loading="lazy"
       />
-    </div>
+    </button>
+    <ImageLightbox v-model="enlarged" />
     <figcaption
       v-if="props.caption"
       class="mt-3 text-center font-mono text-xs text-muted"

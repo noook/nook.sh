@@ -1,6 +1,7 @@
 <script setup lang="ts">
 // A picture opened full size: no chrome, no padding, just the image over a
-// dark overlay. Esc, a click outside or a click on the image closes it.
+// dark overlay. Esc, a click outside or a click on the image closes it
+// (not during or after a pinch-zoom, see below).
 // Bind it with v-model to the picture to show, or null.
 //
 // `preview` is the copy already shown on the page (so already loaded): it
@@ -27,6 +28,44 @@ watch(fullImg, (el) => {
   if (el?.complete && el.naturalWidth) loaded.value = true
 })
 
+// Pinch-zooming the picture on a phone must not close it: a second finger
+// can land outside the picture, and once zoomed in, a tap is meant to pan.
+// While a multi-touch gesture is going on (and shortly after), or while the
+// page is zoomed in, outside taps and taps on the picture don't close it.
+// Esc still does.
+const gesture = ref(false)
+let gestureEnd: ReturnType<typeof setTimeout> | undefined
+function onTouchStart(e: TouchEvent) {
+  if (e.touches.length > 1) {
+    clearTimeout(gestureEnd)
+    gesture.value = true
+  }
+}
+function onTouchEnd(e: TouchEvent) {
+  if (gesture.value && e.touches.length === 0) gestureEnd = setTimeout(() => (gesture.value = false), 400)
+}
+watch(open, (isOpen) => {
+  if (!import.meta.client) return
+  const method = isOpen ? 'addEventListener' : 'removeEventListener'
+  window[method]('touchstart', onTouchStart, { capture: true, passive: true })
+  window[method]('touchend', onTouchEnd, { capture: true, passive: true })
+  window[method]('touchcancel', onTouchEnd, { capture: true, passive: true })
+})
+onBeforeUnmount(() => {
+  if (!import.meta.client) return
+  window.removeEventListener('touchstart', onTouchStart, { capture: true })
+  window.removeEventListener('touchend', onTouchEnd, { capture: true })
+  window.removeEventListener('touchcancel', onTouchEnd, { capture: true })
+})
+const zoomedIn = () => import.meta.client && (window.visualViewport?.scale ?? 1) > 1.01
+const mayClose = () => !gesture.value && !zoomedIn()
+const keepOpenUnlessTap = (e: Event) => {
+  if (!mayClose()) e.preventDefault()
+}
+function closeOnTap() {
+  if (mayClose()) image.value = null
+}
+
 const box = 'block h-auto max-h-[calc(100dvh-2rem)] w-auto max-w-[calc(100vw-2rem)] object-contain sm:max-h-[calc(100dvh-4rem)]'
 </script>
 
@@ -36,6 +75,7 @@ const box = 'block h-auto max-h-[calc(100dvh-2rem)] w-auto max-w-[calc(100vw-2re
     :title="image?.title ?? image?.alt"
     :description="image?.alt"
     :close="false"
+    :content="{ onPointerDownOutside: keepOpenUnlessTap, onInteractOutside: keepOpenUnlessTap }"
     :ui="{
       overlay: 'bg-black/80',
       content: 'w-auto max-w-[calc(100vw-2rem)] max-h-[calc(100dvh-2rem)] sm:max-h-[calc(100dvh-4rem)] bg-transparent divide-y-0 rounded-md ring-0 shadow-2xl',
@@ -45,7 +85,7 @@ const box = 'block h-auto max-h-[calc(100dvh-2rem)] w-auto max-w-[calc(100vw-2re
       <div
         v-if="image"
         class="relative cursor-zoom-out"
-        @click="image = null"
+        @click="closeOnTap"
       >
         <img
           v-if="image.preview && image.preview !== image.src"
