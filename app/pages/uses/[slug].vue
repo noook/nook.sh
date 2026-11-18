@@ -152,6 +152,23 @@ const enlarged = ref<LightboxImage | null>(null)
 
     <ImageLightbox v-model="enlarged" />
 
+    <!-- Keycaps -->
+    <section
+      v-if="board.keycaps"
+      id="keycaps"
+      class="scroll-mt-24 space-y-4"
+    >
+      <h2 class="text-2xl font-bold text-highlighted">
+        {{ board.keycaps.title }}
+      </h2>
+      <p class="max-w-2xl text-muted">
+        {{ board.keycaps.text }} All {{ board.keycaps.legends.length }} of them, tap one.
+      </p>
+      <div class="rounded-lg bg-elevated p-4">
+        <UsesHangulLegends :legends="board.keycaps.legends" />
+      </div>
+    </section>
+
     <!-- More photos -->
     <section
       v-if="board.photos.length"
@@ -172,23 +189,6 @@ const enlarged = ref<LightboxImage | null>(null)
           loading="lazy"
         />
       </button>
-    </section>
-
-    <!-- Keycaps -->
-    <section
-      v-if="board.keycaps"
-      id="keycaps"
-      class="scroll-mt-24 space-y-4"
-    >
-      <h2 class="text-2xl font-bold text-highlighted">
-        {{ board.keycaps.title }}
-      </h2>
-      <p class="max-w-2xl text-muted">
-        {{ board.keycaps.text }} All {{ board.keycaps.legends.length }} of them, tap one.
-      </p>
-      <div class="rounded-lg bg-elevated p-4">
-        <UsesHangulLegends :legends="board.keycaps.legends" />
-      </div>
     </section>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
