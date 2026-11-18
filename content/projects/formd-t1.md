@@ -28,7 +28,7 @@ versions:
     imageAlt: "The Radeon card seen from the top, with the offset spacer and the white and brown cables running through the gap"
   - name: "V4, the travel kit and a USB-C port"
     at: "December 2025"
-    line: "FormD's GPU Travel Kit, five months of prototypes in the making, and a front USB-C port in the slot next to the power button."
+    line: "FormD's GPU Travel Kit, five months of prototypes in the making, and a front USB-C port in the free slot next to the power button."
     image: "/images/posts/sff-pc-build/travel-kit-io.jpg"
     imageAlt: "The back of the case, with the custom GPU Travel Kit plate by the I/O panel"
 ---

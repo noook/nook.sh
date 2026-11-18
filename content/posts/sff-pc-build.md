@@ -84,7 +84,7 @@ This is also where I started to enjoy cable routing. In a case this size every c
 
 Months later I picked up FormD's [GPU Travel Kit][3]. It's a CNC-machined, anodized bracket set that stops the GPU from sagging or flexing in transit, under its own weight plus the load from the cables and the offset. It also adds a second anchor point at the far end of the card, so the card is held on one more side than the stock mount gives you. There was an Asus Prime kit that was supposed to fit the 5070 and the 9070, but the measurements didn't match, and I was the one who reported it. I sent my measurements to FormD's shop directly. We went back and forth on a few prototypes that didn't work. They were unusable, and I threw them away. About five months after first contact, I had one that fit.
 
-While the case was open for the bracket, I also gave it a USB-C port on the front. Fun fact about the T1: the power button is the size of a USB-C port, and it can sit on either side of the front panel. The other slot stays empty, unless you add the port. Mine came from FormD's [T1 Essentials][4] pack, of which I only needed the side fan bracket and the USB Type-E to Type-C cable.
+While the case was open for the bracket, I also gave it a USB-C port on the front. That's a nice touch of the T1: the front panel has two slots the size of a USB-C port, and each one can stay empty, hold the power button or hold a USB-C port. So the button can sit on either side, and the other slot is free for the port. Mine is the USB Type-E to Type-C cable from FormD's [T1 Essentials][4] pack, the only part of it I needed.
 
 ![The back of the case, with the custom GPU Travel Kit plate by the I/O panel](/images/posts/sff-pc-build/travel-kit-io.jpg)
 
