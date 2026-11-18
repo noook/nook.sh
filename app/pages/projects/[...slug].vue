@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { LightboxImage } from '~/components/ImageLightbox.vue'
+
 const route = useRoute()
 
 const { data: project } = await useAsyncData(`project-${route.path}`, () => {
@@ -52,15 +54,8 @@ const { transitionStyle } = useViewTransitionName()
 const imageTransitionStyle = computed(() => transitionStyle('project-image', route.path))
 const titleTransitionStyle = computed(() => transitionStyle('project-title', route.path))
 
-// A version's picture opens full size in a modal: no chrome, no padding,
-// just the image. Esc, a click outside or a click on the image closes it.
-const enlarged = ref<{ src: string, alt: string, title: string } | null>(null)
-const enlargedOpen = computed({
-  get: () => enlarged.value !== null,
-  set: (open) => {
-    if (!open) enlarged.value = null
-  },
-})
+// A version's picture opens full size: see ImageLightbox.vue.
+const enlarged = ref<LightboxImage | null>(null)
 </script>
 
 <template>
@@ -175,26 +170,7 @@ const enlargedOpen = computed({
         </li>
       </ol>
 
-      <UModal
-        v-model:open="enlargedOpen"
-        :title="enlarged?.title"
-        :description="enlarged?.alt"
-        :close="false"
-        :ui="{
-          overlay: 'bg-black/80',
-          content: 'w-auto max-w-[calc(100vw-2rem)] max-h-[calc(100dvh-2rem)] sm:max-h-[calc(100dvh-4rem)] bg-transparent divide-y-0 rounded-md ring-0 shadow-2xl',
-        }"
-      >
-        <template #content>
-          <img
-            v-if="enlarged"
-            :src="enlarged.src"
-            :alt="enlarged.alt"
-            class="block h-auto max-h-[calc(100dvh-2rem)] w-auto max-w-[calc(100vw-2rem)] cursor-zoom-out object-contain sm:max-h-[calc(100dvh-4rem)]"
-            @click="enlarged = null"
-          >
-        </template>
-      </UModal>
+      <ImageLightbox v-model="enlarged" />
     </section>
 
     <!-- Project Content -->

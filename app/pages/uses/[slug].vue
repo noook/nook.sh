@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { LightboxImage } from '~/components/ImageLightbox.vue'
+
 // One keyboard from /uses: the board, its full keycap set, its parts and
 // which switches have been in it over time.
 const route = useRoute()
@@ -50,6 +52,9 @@ useHead({
 })
 useSeoMeta({ ogTitle: () => `${board.value?.name} — Neil Richter`, ogDescription: board.value?.line })
 defineOgImage('Default', { title: `${board.value?.name} — Neil Richter` })
+
+// The photos open full size: see ImageLightbox.vue.
+const enlarged = ref<LightboxImage | null>(null)
 </script>
 
 <template>
@@ -116,12 +121,19 @@ defineOgImage('Default', { title: `${board.value?.name} — Neil Richter` })
       class="relative flex items-center justify-center overflow-hidden rounded-lg bg-elevated/50 ring ring-default"
       :class="board.photo ? '' : 'px-6 pt-12 pb-10'"
     >
-      <NuxtImg
+      <button
         v-if="board.photo"
-        :src="board.photo.src"
-        :alt="board.photo.alt"
-        class="block h-auto w-full"
-      />
+        type="button"
+        class="block w-full cursor-zoom-in focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-primary"
+        :aria-label="`Enlarge: ${board.photo.alt}`"
+        @click="enlarged = { src: board.photo.full ?? board.photo.src, alt: board.photo.alt }"
+      >
+        <NuxtImg
+          :src="board.photo.src"
+          :alt="board.photo.alt"
+          class="block h-auto w-full"
+        />
+      </button>
       <template v-else-if="board.drawing">
         <UsesKeyboardPlate
           :layout="board.drawing.layout"
@@ -136,6 +148,30 @@ defineOgImage('Default', { title: `${board.value?.name} — Neil Richter` })
         <span class="absolute right-4 bottom-3 font-mono text-[11px] text-muted">drawn from its layout and colorway · photo to come</span>
       </template>
       <UsesNookCorners inset="16px" />
+    </section>
+
+    <ImageLightbox v-model="enlarged" />
+
+    <!-- More photos -->
+    <section
+      v-if="board.photos.length"
+      class="grid grid-cols-1 gap-4 sm:grid-cols-2"
+    >
+      <button
+        v-for="p in board.photos"
+        :key="p.src"
+        type="button"
+        class="group block cursor-zoom-in overflow-hidden rounded-lg ring ring-default focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        :aria-label="`Enlarge: ${p.alt}`"
+        @click="enlarged = { src: p.full ?? p.src, alt: p.alt }"
+      >
+        <NuxtImg
+          :src="p.src"
+          :alt="p.alt"
+          class="block aspect-[3/2] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+          loading="lazy"
+        />
+      </button>
     </section>
 
     <!-- Keycaps -->

@@ -5,7 +5,8 @@ import { defineSitemapSchema } from '@nuxtjs/sitemap/content'
 // the rest of the setup. Months are 'YYYY-MM' strings so they sort as text.
 const month = z.string().regex(/^\d{4}-\d{2}$/)
 const slug = z.string().regex(/^[a-z0-9-]+$/)
-const photo = z.object({ src: z.string(), alt: z.string(), credit: z.string().optional() })
+// `full`: a larger file for the full-size view, when `src` is a page-sized copy.
+const photo = z.object({ src: z.string(), alt: z.string(), credit: z.string().optional(), full: z.string().optional() })
 const labelled = z.object({ name: z.string(), note: z.string().default('') })
 
 export default defineContentConfig({
@@ -125,6 +126,8 @@ export default defineContentConfig({
         // A real photo wins. Without one, the card draws the board from
         // its KLE layout (app/utils/keyboardLayouts.ts) and this colorway.
         photo: photo.optional(),
+        // More photos of the board, shown under the main one on its page.
+        photos: z.array(photo).default([]),
         drawing: z.object({
           // File stem in app/assets/uses/layouts/ (<layout>.kle.json + <layout>.config.json).
           layout: z.string(),
