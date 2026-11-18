@@ -9,6 +9,11 @@ url: https://keybay.tech/products/tofu-tkl-year-of-the-horse-limited-edition
 photo:
   src: /images/uses/tofu-tkl.jpg
   alt: The Tofu TKL in red anodized aluminium with the custom Hangul keycaps, on a red Year of the Horse desk mat
+photos:
+  - src: /images/uses/tofu-tkl-bottom.jpg
+    alt: "The bottom of the Tofu TKL: a gold plate with a black horse among engraved clouds, in front of the red Year of the Horse box"
+  - src: /images/uses/tofu-tkl-back.jpg
+    alt: "The back of the Tofu TKL up close: a gold strip with engraved waves around the USB-C port, under the red and white keycaps"
 keycaps:
   title: Full-custom Hangul set
   text: A set I designed myself, made with Balaguères, who agreed to produce it. Every modifier is a word that reminds me of my life in Korea.

@@ -125,6 +125,8 @@ export default defineContentConfig({
         // A real photo wins. Without one, the card draws the board from
         // its KLE layout (app/utils/keyboardLayouts.ts) and this colorway.
         photo: photo.optional(),
+        // More photos of the board, shown under the main one on its page.
+        photos: z.array(photo).default([]),
         drawing: z.object({
           // File stem in app/assets/uses/layouts/ (<layout>.kle.json + <layout>.config.json).
           layout: z.string(),
