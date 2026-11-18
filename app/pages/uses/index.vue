@@ -139,12 +139,18 @@ defineOgImage('Default', { title: 'Uses — Neil Richter' })
           :ui="{ root: 'flex flex-col overflow-hidden', header: 'p-0 sm:p-0', body: 'p-4 sm:p-4 flex flex-1 flex-col gap-3' }"
         >
           <template #header>
-            <div class="relative aspect-video flex items-center justify-center overflow-hidden bg-elevated/50">
+            <!-- The whole picture leads to the board's page; the title link stays the keyboard stop. -->
+            <NuxtLink
+              :to="`/uses/${slugOf(k)}`"
+              tabindex="-1"
+              :aria-label="k.name"
+              class="group relative aspect-video flex items-center justify-center overflow-hidden bg-elevated/50"
+            >
               <NuxtImg
                 v-if="k.photo"
                 :src="k.photo.src"
                 :alt="k.photo.alt"
-                class="absolute inset-0 size-full object-cover"
+                class="absolute inset-0 size-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
               />
               <template v-else-if="k.drawing">
                 <UsesKeyboardPlate
@@ -160,7 +166,7 @@ defineOgImage('Default', { title: 'Uses — Neil Richter' })
                 <span class="absolute right-3 bottom-2.5 font-mono text-[11px] text-muted">drawing · photo to come</span>
               </template>
               <UsesNookCorners />
-            </div>
+            </NuxtLink>
           </template>
 
           <div class="flex items-start justify-between gap-3">
