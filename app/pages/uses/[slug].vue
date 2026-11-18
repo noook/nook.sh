@@ -55,6 +55,13 @@ defineOgImage('Default', { title: `${board.value?.name} — Neil Richter` })
 
 // The photos open full size: see ImageLightbox.vue.
 const enlarged = ref<LightboxImage | null>(null)
+// The full-size files are large: fetch them when the page is idle (on a
+// fast connection), and on hover, focus or touch of a photo otherwise.
+onMounted(() => {
+  watch(board, (b) => {
+    if (b) preloadImagesWhenIdle([b.photo?.full, ...b.photos.map(p => p.full)])
+  }, { immediate: true })
+})
 </script>
 
 <template>
@@ -126,7 +133,10 @@ const enlarged = ref<LightboxImage | null>(null)
         type="button"
         class="block w-full cursor-zoom-in focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-primary"
         :aria-label="`Enlarge: ${board.photo.alt}`"
-        @click="enlarged = { src: board.photo.full ?? board.photo.src, alt: board.photo.alt }"
+        @pointerenter="preloadImage(board.photo.full)"
+        @focus="preloadImage(board.photo.full)"
+        @touchstart.passive="preloadImage(board.photo.full)"
+        @click="enlarged = { src: board.photo.full ?? board.photo.src, alt: board.photo.alt, preview: board.photo.src }"
       >
         <NuxtImg
           :src="board.photo.src"
@@ -180,7 +190,10 @@ const enlarged = ref<LightboxImage | null>(null)
         type="button"
         class="group block cursor-zoom-in overflow-hidden rounded-lg ring ring-default focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         :aria-label="`Enlarge: ${p.alt}`"
-        @click="enlarged = { src: p.full ?? p.src, alt: p.alt }"
+        @pointerenter="preloadImage(p.full)"
+        @focus="preloadImage(p.full)"
+        @touchstart.passive="preloadImage(p.full)"
+        @click="enlarged = { src: p.full ?? p.src, alt: p.alt, preview: p.src }"
       >
         <NuxtImg
           :src="p.src"
