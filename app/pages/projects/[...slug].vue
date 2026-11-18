@@ -106,7 +106,7 @@ const titleTransitionStyle = computed(() => transitionStyle('project-title', rou
     </div>
 
     <!-- Tags -->
-    <div class="flex gap-2 mb-12">
+    <div class="flex flex-wrap gap-2 mb-12">
       <UBadge
         v-for="tag in project.tags"
         :key="tag"
