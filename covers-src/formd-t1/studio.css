@@ -1,0 +1,56 @@
+/*
+  A small photo studio for the T1 cut-outs: a soft sweep behind, a floor
+  with a faint reflection, and the case's pale indigo glow under it.
+  Used by the cover (index.html) and by the project page shots (shot.html).
+*/
+:root {
+  --accent: #b4b8ff;              /* the LED strip, pale indigo */
+  --sweep-hi: #fdfdfc;
+  --sweep-mid: #eceae6;
+  --sweep-lo: #d8d5cf;
+  --floor: rgba(70, 60, 50, 0.07);
+  --glow: rgba(150, 156, 255, 0.28);
+  --shadow: rgba(30, 25, 20, 0.38);
+  --reflect: 0.16;
+}
+:root[data-theme='dark'] {
+  --sweep-hi: #303442;
+  --sweep-mid: #1b1e26;
+  --sweep-lo: #0d0f13;
+  --floor: rgba(255, 255, 255, 0.025);
+  --glow: rgba(150, 156, 255, 0.22);
+  --shadow: rgba(0, 0, 0, 0.75);
+  --reflect: 0.22;
+}
+
+.studio {
+  position: absolute; top: 0; right: 0; bottom: 0; width: 1000px; overflow: hidden;
+  background:
+    radial-gradient(90% 60% at 50% 30%, var(--sweep-hi) 0%, var(--sweep-mid) 55%, var(--sweep-lo) 100%);
+}
+/* the floor: a horizon a third from the bottom, darker towards the viewer */
+.studio::before {
+  content: ''; position: absolute; left: 0; right: 0; top: 68%; bottom: 0;
+  background: linear-gradient(var(--floor), transparent 30%, var(--floor));
+}
+/* the glow of the LED strip, spilling on the floor under the case */
+.studio::after {
+  content: ''; position: absolute; left: 12%; right: 12%; top: 66%; height: 22%;
+  background: radial-gradient(50% 50% at 50% 50%, var(--glow), transparent 70%);
+  filter: blur(10px);
+}
+
+.piece {
+  position: absolute; z-index: 1;
+  left: 50%; top: 52%; transform: translate(-50%, -50%);
+  width: 78%; height: auto;
+  filter: drop-shadow(0 28px 24px var(--shadow));
+  -webkit-box-reflect: below -6px linear-gradient(transparent 82%, rgba(0, 0, 0, var(--reflect)));
+}
+
+.tag { color: var(--muted); }
+
+/* project page shots: the studio fills the frame, no text */
+body.shot { width: 1600px; height: 900px; }
+body.shot .studio { width: 100%; }
+body.shot .piece { width: auto; height: 74%; max-width: 82%; top: 50%; }

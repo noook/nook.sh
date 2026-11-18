@@ -8,6 +8,7 @@ tags:
   - pc-build
 image: "/images/posts/sff-pc-build/cover-light.png"
 imageDark: "/images/posts/sff-pc-build/cover-dark.png"
+project: formd-t1
 draft: false
 ---
 
@@ -27,7 +28,7 @@ Getting one was its own little ordeal. FormD restocks at random moments, a handf
 
 The other reason for going small was more mundane. I have a rising desk, and I wanted the computer to live on it or under it, not on the floor like every tower I'd owned before. That mostly worked out. Funnily enough, even at 9.95 liters it takes more desk space than I expected, so I've been thinking about mounting it under the desk to free up room. I haven't done it yet, since I don't have the gear I'd be making room for. I also still need to figure out what hanging it under there would do to the top exhaust.
 
-## V1: moving in
+## V1, March 2025: moving in
 
 The T1 replaced an NZXT S340 Elite in black and red, so the first version was really about rehoming an old PC. The PSU, motherboard, watercooling and case fans weren't compatible with the T1, so I sold them. The CPU, RAM, storage and GPU (an EVGA RTX 2070 at the time) all made the move.
 
@@ -39,7 +40,21 @@ That first build had no lights, stock-style cables and a Thermalright AXP90-X47 
 
 Cable routing in SFF is a different discipline from a mid-tower, with no slack to hide a mistake in. If a cable isn't exactly where it should be, the case won't close, and forcing it shut isn't an option.
 
-## V2: the GPU swap nobody could plan for
+## V2, April 2025: lights, for a practical reason
+
+A month after moving in, in a build meant to avoid anything gamer-coded, I added lights. I know how that sounds.
+
+The reason is dumber and more practical than it looks. When the machine was idle, there was zero sign it was even on. No LED, nothing. I'd stand in front of it, unsure whether to press the power button or not. So the lights are a status indicator, the one the case was missing. I wanted it minimal, dim and configurable.
+
+I went with two Corsair LS340 Aurora light strips wrapped around the two Noctua NF-A12x25 top exhaust fans. They run standalone, no iCUE link needed. I tried to get as close to Noctua's beige and brown as I could, but LEDs don't do beige convincingly. I landed on something in the same spirit and eventually settled on a very pale indigo for good.
+
+![The top panel opened, with the two Noctua NF-A12x25 exhaust fans](/images/posts/sff-pc-build/outside-top-fans.jpg)
+
+![The T1 in a dark room with the pale indigo strip lit](/images/posts/sff-pc-build/v4-lights-1.jpg)
+
+![The T1 in a dark room, a second angle of the indigo glow](/images/posts/sff-pc-build/v4-lights-2.jpg)
+
+## V3, May 2025: a new GPU, and the last "gamer" cable gone
 
 By the time I needed a new GPU, Nvidia cards were either absurdly expensive or not available at all. The RX 9070 XT had just launched as roughly AMD's answer to the 5070 and 5070 Ti at my budget, so the model was decided for me. What was left was picking the variant.
 
@@ -55,9 +70,7 @@ Then I tested a few slot and spacing configurations to find the best combination
 
 ![The same side from an angle, the CPU cooler's copper fins above the card](/images/posts/sff-pc-build/outside-gpu-open-angle.jpg)
 
-## V3: getting rid of the last "gamer" cable
-
-Once the GPU was sorted, I moved on to Noctua-themed PSU cables and a Noctua NF-A9x14 fan on the CPU cooler. The cables are custom, made by Ray from [DreamBigByRay][2] on Etsy, in White and Coffee, for my Corsair SF1000. Every internal cable (not the power cord) is cut to length and sleeved for this case, instead of whatever length happens to come in a kit.
+The new card went in together with Noctua-themed PSU cables and a Noctua NF-A9x14 fan on the CPU cooler, all in the same rebuild. The cables are custom, made by Ray from [DreamBigByRay][2] on Etsy, in White and Coffee, for my Corsair SF1000. Every internal cable (not the power cord) is cut to length and sleeved for this case, instead of whatever length happens to come in a kit.
 
 Noctua's beige and brown is about as anti-RGB as it gets, which made it the obvious pick for a build whose whole point was moving away from anything that screamed "gaming PC". The color follows from the decision I made at the start.
 
@@ -67,21 +80,11 @@ This is also where I started to enjoy cable routing. In a case this size every c
 
 ![The open case from the side, with the Noctua CPU fan and the white and brown cables](/images/posts/sff-pc-build/v3-open-side.jpg)
 
-## V4: lights, for a practical reason
+## V4, December 2025: the travel kit and a USB-C port
 
-After three versions spent avoiding anything gamer-coded, I added lights. I know how that sounds.
+Months later I picked up FormD's [GPU Travel Kit][3]. It's a CNC-machined, anodized bracket set that stops the GPU from sagging or flexing in transit, under its own weight plus the load from the cables and the offset. It also adds a second anchor point at the far end of the card, so the card is held on one more side than the stock mount gives you. There was an Asus Prime kit that was supposed to fit the 5070 and the 9070, but the measurements didn't match, and I was the one who reported it. I sent my measurements to FormD's shop directly. We went back and forth on a few prototypes that didn't work. They were unusable, and I threw them away. About five months after first contact, I had one that fit.
 
-The reason is dumber and more practical than it looks. When the machine was idle, there was zero sign it was even on. No LED, nothing. I'd stand in front of it, unsure whether to press the power button or not. So the lights are a status indicator, the one the case was missing. I wanted it minimal, dim and configurable.
-
-I went with two Corsair LS340 Aurora light strips wrapped around the two Noctua NF-A12x25 top exhaust fans. They run standalone, no iCUE link needed. I tried to get as close to Noctua's beige and brown as I could, but LEDs don't do beige convincingly. I landed on something in the same spirit and eventually settled on a very pale indigo for good.
-
-![The top panel opened, with the two Noctua NF-A12x25 exhaust fans](/images/posts/sff-pc-build/outside-top-fans.jpg)
-
-![The T1 in a dark room with the pale indigo strip lit](/images/posts/sff-pc-build/v4-lights-1.jpg)
-
-![The T1 in a dark room, a second angle of the indigo glow](/images/posts/sff-pc-build/v4-lights-2.jpg)
-
-Around the same time I picked up FormD's [GPU Travel Kit][3]. It's a CNC-machined, anodized bracket set that stops the GPU from sagging or flexing in transit, under its own weight plus the load from the cables and the offset. It also adds a second anchor point at the far end of the card, so the card is held on one more side than the stock mount gives you. There was an Asus Prime kit that was supposed to fit the 5070 and the 9070, but the measurements didn't match, and I was the one who reported it. I sent my measurements to FormD's shop directly. We went back and forth on a few prototypes that didn't work. They were unusable, and I threw them away. About five months after first contact, I had one that fit.
+While the case was open for the bracket, I also gave it a USB-C port on the front. That's a nice touch of the T1: the front panel has two slots the size of a USB-C port, and each one can stay empty, hold the power button or hold a USB-C port. So the button can sit on either side, and the other slot is free for the port. Mine is the USB Type-E to Type-C cable from FormD's [T1 Essentials][4] pack, the only part of it I needed.
 
 ![The back of the case, with the custom GPU Travel Kit plate by the I/O panel](/images/posts/sff-pc-build/travel-kit-io.jpg)
 
@@ -95,16 +98,15 @@ It's been further than the living room, too. I took it to my parents' place stra
 
 ## Current state
 
-It's done, in the sense that it does everything I need. The CPU, a 7700X, runs between 85 and 92°C under load. That's hot, but Ryzen 7000 chips are built to boost until they reach about 95°C, and nothing throttles. The fan curve below explains that range. A bigger cooler would bring it down, but I don't see a reason to spend money on something that already works. I don't know yet what would justify that upgrade, so for now it stays.
-
-The fan curves took some sorting out. Out of the box, before I'd configured anything, the T1 was impressively silent at idle, almost unsettling. Then it would ramp up loud the moment it hit any real load. In FanControl I set the two exhaust fans flat at 65%, which is roughly 1,300 RPM. The CPU and GPU fans keep a curve, and I set it so the burst comes late. The CPU fan stays at 40% until about 80°C, then climbs to 60% at 86°C and 90% at 91°C. The GPU fan stays at about 36% until 57°C, then reaches 60% at 79°C and 90% at 89°C. That's why the CPU sits between 85 and 92°C: the fan only really spins up once it gets there. I lose a bit of idle silence, but I'm no longer startled every time a game loads.
+It's done, in the sense that it does everything I need. Temperatures, fan curves and what might come next now live on [the project page](/projects/formd-t1), where I keep them up to date.
 
 ## What stuck with me
 
 My favorite part of this project is how meticulous the case forces me to be. Fighting the cable routing until it's both efficient and clean, working out exactly which parts fit in a volume this small: a mid-tower never asked for that kind of attention. I'd never have spent five months getting a GPU bracket made for one, either.
 
-The full parts list, kept up to date, lives on my [uses page](/uses).
+The full parts list, kept up to date, lives on [the project page](/projects/formd-t1).
 
 [1]: https://docs.google.com/spreadsheets/d/1AddRvGWJ_f4B6UC7_IftDiVudVc8CJ8sxLUqlxVsCz4/edit?gid=1824037046#gid=1824037046
 [2]: https://www.etsy.com/listing/1480956978
 [3]: https://formdt1.com/products/t1-gpu-travel-kit
+[4]: https://formdt1.com/products/t1-essentials

@@ -439,15 +439,25 @@ defineOgImage('Default', { title: 'Uses — Neil Richter' })
               <dd>{{ p.value }}</dd>
             </div>
           </dl>
-          <UButton
-            :to="setup.pc.post"
-            variant="ghost"
-            color="primary"
-            size="lg"
-            trailing-icon="i-lucide-arrow-right"
-            label="Read the build story"
-            class="-ml-2.5 self-start"
-          />
+          <div class="-ml-2.5 flex flex-wrap gap-1">
+            <UButton
+              v-if="setup.pc.project"
+              :to="setup.pc.project"
+              variant="ghost"
+              color="primary"
+              size="lg"
+              trailing-icon="i-lucide-arrow-right"
+              label="Every version"
+            />
+            <UButton
+              :to="setup.pc.post"
+              variant="ghost"
+              color="neutral"
+              size="lg"
+              trailing-icon="i-lucide-arrow-right"
+              label="Read the build story"
+            />
+          </div>
         </div>
       </article>
       <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">

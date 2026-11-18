@@ -57,6 +57,7 @@ pc:
     src: /images/uses/formd-t1.jpg
     alt: The FormD T1 on the desk, its pale indigo LED strip glowing through the mesh
   post: /posts/sff-pc-build
+  project: /projects/formd-t1
   parts:
   - label: CPU
     value: AMD Ryzen 7 7700X
@@ -79,7 +80,7 @@ pc:
   - label: Lighting
     value: 2 × Corsair LS340 Aurora, pale indigo
   - label: Extras
-    value: FormD GPU Travel Kit
+    value: FormD GPU Travel Kit + front USB-C port
 machines:
 - kind: Personal laptop
   name: MacBook Pro 14" · M4 Pro

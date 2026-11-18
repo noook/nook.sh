@@ -50,6 +50,12 @@ else {
   defineOgImage('Default', { title: post.value.title })
 }
 
+// The project this post is about, if any (frontmatter `project: <slug>`).
+const { data: postProject } = await useAsyncData(`post-project-${route.path}`, () =>
+  post.value?.project
+    ? queryCollection('projects').path(`/projects/${post.value.project}`).select('title', 'path').first()
+    : Promise.resolve(null))
+
 // Previous / next post, newest first like /blog. Hidden posts (drafts
 // outside preview deploys, mock posts outside dev) are never offered.
 const { data: surround } = await useAsyncData(`post-surround-${route.path}`, () => {
@@ -114,6 +120,13 @@ const titleTransitionStyle = computed(() => transitionStyle('post-title', route.
         <span class="text-sm text-dimmed">
           {{ new Date(post.date).toLocaleDateString() }}
         </span>
+        <template v-if="postProject">
+          <span class="mx-1.5 text-dimmed">ㆍ</span>
+          <NuxtLink
+            :to="postProject.path"
+            class="font-mono text-xs text-primary hover:underline underline-offset-4"
+          >project: {{ postProject.title }} →</NuxtLink>
+        </template>
       </div>
       <h1
         class="text-4xl font-bold mb-4"

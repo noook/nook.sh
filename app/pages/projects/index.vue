@@ -78,6 +78,14 @@ function titleTransitionName(path: string) {
                   :src="project.image"
                   :alt="project.title"
                   class="w-full h-full object-cover"
+                  :class="{ 'dark:hidden': project.imageDark }"
+                  :style="imageTransitionName(project.path)"
+                />
+                <NuxtImg
+                  v-if="project.imageDark"
+                  :src="project.imageDark"
+                  :alt="project.title"
+                  class="hidden w-full h-full object-cover dark:block"
                   :style="imageTransitionName(project.path)"
                 />
               </div>
@@ -107,6 +115,12 @@ function titleTransitionName(path: string) {
             >
               {{ project.title }}
             </h3>
+            <p
+              v-if="project.status"
+              class="mb-2 font-mono text-xs text-dimmed"
+            >
+              {{ project.status }}
+            </p>
             <p class="text-muted mb-4">
               {{ project.description }}
             </p>

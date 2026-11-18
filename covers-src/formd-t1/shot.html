@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>formd-t1 shot</title>
+<!-- One cut-out in the cover's studio, for the project page. ?img=closed|gpu|cpu&theme=light|dark -->
+<link rel="stylesheet" href="../_shared/cover.css">
+<link rel="stylesheet" href="studio.css">
+<script>
+  const q = new URLSearchParams(location.search)
+  document.documentElement.dataset.theme = q.get('theme') ?? 'light'
+  addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.piece').src = `t1-${{ closed: 'closed', gpu: 'open-gpu', cpu: 'open-cpu' }[q.get('img') ?? 'closed']}.webp`
+  })
+</script>
+</head>
+<body class="shot">
+  <div class="studio"><img class="piece" alt=""></div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>formd-t1 cover</title>
+<!--
+  Cover for content/projects/formd-t1.md.
+  Photos: cut-outs of PXL_20261113_150706139.jpg (open, GPU side),
+  PXL_20261113_150611386.jpg (open, CPU side) and PXL_20261113_150949801.jpg
+  (closed), background removed, sunset warmth toned down.
+  ?theme=light | ?theme=dark — render with ../render.mjs
+  ?shot=closed | gpu | cpu — the same studio, no text, for the project page
+  (1600 × 900, see the `shots` list in ../render.mjs).
+-->
+<meta name="cover-out" content="projects/formd-t1">
+<meta name="cover-shots" content="gpu,cpu">
+<link rel="stylesheet" href="../_shared/cover.css">
+<link rel="stylesheet" href="studio.css">
+<style>
+  .title { top: 248px; }
+  .lede  { top: 384px; }
+  .studio .piece { width: 70%; top: 47%; }
+</style>
+<script>
+  const q = new URLSearchParams(location.search)
+  document.documentElement.dataset.theme = q.get('theme')
+    ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+</script>
+</head>
+<body>
+  <div class="rule"></div>
+
+  <div class="left">
+    <div class="at kicker">HARDWARE · PROJECT</div>
+    <div class="at title">FormD T1</div>
+    <div class="at lede">
+      four versions of a<br>
+      <b>9.95 L</b> machine,<br>
+      kept up to date
+    </div>
+    <div class="at caption">v4 ㆍ in use</div>
+  </div>
+
+  <div class="studio">
+    <img class="piece" src="t1-open-gpu.webp" alt="">
+  </div>
+  <div class="tag">formd-t1</div>
+</body>
+</html>
