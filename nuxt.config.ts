@@ -1,3 +1,24 @@
+// Every preview build shares the one preview D1 database (see
+// scripts/generate-wrangler-config.mjs), and @nuxt/content always names its
+// tables `_content_<collection>`. Two live previews therefore fight over the
+// same tables: each Worker isolate checks the content checksum once, then
+// trusts the tables for its whole lifetime, so whichever branch synced last
+// silently serves its content on every other preview URL too.
+//
+// patches/@nuxt__content@3.15.2.patch makes the table prefix configurable;
+// here each preview build gets its own prefix derived from its branch, so
+// every branch owns its own set of tables in the shared preview database.
+// Production (and any build outside Workers Builds) keeps the stock
+// `_content_` prefix, so the production database is untouched.
+//
+// Set here, at the top of the config, because @nuxt/content reads it while
+// loading content.config.ts, in this same process.
+if (process.env.WORKERS_CI_DEFAULT_BRANCH === 'false') {
+  const branch = process.env.WORKERS_CI_BRANCH || process.env.WORKERS_CI_COMMIT_SHA || 'preview'
+  const slug = branch.toLowerCase().replace(/\W+/g, '_').replace(/^_+|_+$/g, '').slice(0, 40)
+  process.env.NUXT_CONTENT_TABLE_PREFIX = `_preview_${slug}_`
+}
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [

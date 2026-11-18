@@ -50,7 +50,8 @@
       "vue-demi"
     ],
     "patchedDependencies": {
-      "floating-vue@5.2.2": "patches/floating-vue@5.2.2.patch"
+      "floating-vue@5.2.2": "patches/floating-vue@5.2.2.patch",
+      "@nuxt/content@3.15.2": "patches/@nuxt__content@3.15.2.patch"
     }
   }
 }
