@@ -51,6 +51,16 @@ const startedAt = computed(() => {
 const { transitionStyle } = useViewTransitionName()
 const imageTransitionStyle = computed(() => transitionStyle('project-image', route.path))
 const titleTransitionStyle = computed(() => transitionStyle('project-title', route.path))
+
+// A version's picture opens full size in a modal: no chrome, no padding,
+// just the image. Esc, a click outside or a click on the image closes it.
+const enlarged = ref<{ src: string, alt: string, title: string } | null>(null)
+const enlargedOpen = computed({
+  get: () => enlarged.value !== null,
+  set: (open) => {
+    if (!open) enlarged.value = null
+  },
+})
 </script>
 
 <template>
@@ -148,15 +158,43 @@ const titleTransitionStyle = computed(() => transitionStyle('project-title', rou
               {{ v.line }}
             </p>
           </div>
-          <NuxtImg
+          <button
             v-if="v.image"
-            :src="v.image"
-            :alt="v.imageAlt ?? v.name"
-            class="aspect-[4/3] w-full rounded-md object-cover sm:w-36"
-            loading="lazy"
-          />
+            type="button"
+            class="group block w-full cursor-zoom-in overflow-hidden rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-36"
+            :aria-label="`Enlarge the picture of ${v.name}`"
+            @click="enlarged = { src: v.image, alt: v.imageAlt ?? v.name, title: v.name }"
+          >
+            <NuxtImg
+              :src="v.image"
+              :alt="v.imageAlt ?? v.name"
+              class="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+              loading="lazy"
+            />
+          </button>
         </li>
       </ol>
+
+      <UModal
+        v-model:open="enlargedOpen"
+        :title="enlarged?.title"
+        :description="enlarged?.alt"
+        :close="false"
+        :ui="{
+          overlay: 'bg-black/80',
+          content: 'w-auto max-w-[calc(100vw-2rem)] max-h-[calc(100dvh-2rem)] sm:max-h-[calc(100dvh-4rem)] bg-transparent divide-y-0 rounded-md ring-0 shadow-2xl',
+        }"
+      >
+        <template #content>
+          <img
+            v-if="enlarged"
+            :src="enlarged.src"
+            :alt="enlarged.alt"
+            class="block h-auto max-h-[calc(100dvh-2rem)] w-auto max-w-[calc(100vw-2rem)] cursor-zoom-out object-contain sm:max-h-[calc(100dvh-4rem)]"
+            @click="enlarged = null"
+          >
+        </template>
+      </UModal>
     </section>
 
     <!-- Project Content -->
