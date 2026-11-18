@@ -7,7 +7,8 @@ tags:
   - hardware
   - pc-build
 type: irl
-image: "/images/posts/sff-pc-build/desk-wide.jpg"
+image: "/images/projects/formd-t1/hero-light.webp"
+imageDark: "/images/projects/formd-t1/hero-dark.webp"
 status: "v4 ㆍ in use"
 draft: false
 versions:
@@ -36,6 +37,10 @@ versions:
 The T1 is my main PC, and the thing on my desk people keep asking about. How it got here, from a four-month wait for a restock to a GPU bracket made to measure, is in [the build story](/posts/sff-pc-build). This page keeps its current state.
 
 ## Current state
+
+![The open T1 from the GPU side: the Radeon's three fans, the Noctua exhaust fans on top, the rear I/O](/images/projects/formd-t1/open-gpu-side.webp)
+
+![The open T1 from the CPU side: the Noctua-fanned cooler, the white and brown cables, the Corsair SF1000](/images/projects/formd-t1/open-cpu-side.webp)
 
 It's done, in the sense that it does everything I need. The CPU, a 7700X, runs between 85 and 92°C under load. That's hot, but Ryzen 7000 chips are built to boost until they reach about 95°C, and nothing throttles. The fan curve below explains that range. A bigger cooler would bring it down, but I don't see a reason to spend money on something that already works. I don't know yet what would justify that upgrade, so for now it stays.
 

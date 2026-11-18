@@ -73,6 +73,14 @@ const titleTransitionStyle = computed(() => transitionStyle('project-title', rou
         :src="project.image"
         :alt="project.title"
         class="w-full h-full object-cover"
+        :class="{ 'dark:hidden': project.imageDark }"
+        :style="imageTransitionStyle"
+      />
+      <NuxtImg
+        v-if="project.imageDark"
+        :src="project.imageDark"
+        :alt="project.title"
+        class="hidden w-full h-full object-cover dark:block"
         :style="imageTransitionStyle"
       />
     </div>
