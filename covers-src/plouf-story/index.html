@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>plouf-story cover</title>
+<!--
+  Cover for content/posts/plouf-story.md. A poster for the app, on purpose
+  not the two-column house card: own stylesheet, no cover.css.
+  Mark: mark-bleu.svg / mark-marine.svg, copied as-is from the Plouf repo
+  (docs/brand). Screen: profile-{light,dark}.png, my own Plouf profile,
+  unedited (1280 × 2856).
+  ?theme=light | ?theme=dark — render with ../render.mjs
+-->
+<style>
+  @font-face {
+    font-family: 'Inter';
+    src: url('../_shared/fonts/inter-latin-500-normal.woff') format('woff');
+    font-weight: 500; font-style: normal;
+  }
+  @font-face {
+    font-family: 'Inter';
+    src: url('../_shared/fonts/inter-latin-800-italic.woff') format('woff');
+    font-weight: 800; font-style: italic;
+  }
+
+  :root {
+    --bg: #1d6fd6;          /* Bleu Plouf */
+    --wall: #e23c2e;
+    --yellow: #f5c518;
+    --frame: #10151c;
+    --shadow: rgba(4, 22, 52, 0.5);
+  }
+  :root[data-theme='dark'] {
+    --bg: #0e2238;          /* Marine */
+    --wall: #ef5a4c;
+    --frame: #1c2638;          /* lifted so the frame reads on Marine */
+    --shadow: rgba(0, 0, 0, 0.6);
+  }
+  :root .only-dark { display: none; }
+  :root[data-theme='dark'] .only-dark { display: block; }
+  :root[data-theme='dark'] .only-light { display: none; }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; }
+  body {
+    position: relative;
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* brand block: mark + wordmark, tagline under */
+  .brand {
+    position: absolute; left: 120px; top: 50%; transform: translateY(-50%);
+    margin-top: -20px;                     /* optical: the rope eats the bottom */
+  }
+  .lockup { display: flex; align-items: center; gap: 0.3em; font-size: 220px; }
+  .lockup img { display: block; width: calc(0.727em * 1.2); height: auto; }  /* 1.2 × cap height */
+  .word {
+    font-weight: 800; font-style: italic;
+    letter-spacing: -0.035em; line-height: 1;
+  }
+  .tagline {
+    margin-top: 64px;
+    font-size: 56px; font-weight: 500; line-height: 1.22; letter-spacing: -0.01em;
+  }
+
+  /* a generic phone, drawn in CSS */
+  .phone {
+    position: absolute; left: 985px; top: 104px;
+    width: 510px; padding: 16px;
+    background: var(--frame);
+    border-radius: 78px;
+    transform: rotate(-6deg); transform-origin: 50% 0;
+    box-shadow:
+      0 0 0 2px rgba(255, 255, 255, 0.08) inset,
+      0 50px 110px -20px var(--shadow),
+      0 18px 40px -10px var(--shadow);
+  }
+  .screen { border-radius: 62px; overflow: hidden; background: #fff; }
+  .screen img { display: block; width: 100%; height: auto; }
+
+  /* lane rope along the bottom edge */
+  .rope {
+    position: absolute; left: 0; right: 0; bottom: 22px; height: 14px;
+    display: flex; justify-content: space-between; padding: 0 10px;
+  }
+  .rope::before {               /* the rope itself, behind the floats */
+    content: ''; position: absolute; left: 0; right: 0; top: 6px; height: 2px;
+    background: rgba(255, 255, 255, 0.35);
+  }
+  .rope i {
+    position: relative; width: 34px; height: 14px; border-radius: 7px; background: #fff;
+    box-shadow: 0 0 0 3px var(--bg);      /* keeps the floats legible where they cross the phone */
+  }
+  .rope i.y { background: var(--yellow); }
+  .rope i.r { background: var(--wall); }
+
+  .url {
+    position: absolute; right: 96px; bottom: 66px;
+    font-size: 30px; font-weight: 500; letter-spacing: 0.005em;
+    color: rgba(255, 255, 255, 0.8);
+  }
+</style>
+<script>
+  const t = new URLSearchParams(location.search).get('theme')
+    ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+  document.documentElement.dataset.theme = t
+</script>
+</head>
+<body>
+  <div class="phone">
+    <div class="screen">
+      <img class="only-light" src="profile-light.png" alt="">
+      <img class="only-dark" src="profile-dark.png" alt="">
+    </div>
+  </div>
+
+  <div class="brand">
+    <div class="lockup">
+      <img class="only-light" src="mark-bleu.svg" alt="">
+      <img class="only-dark" src="mark-marine.svg" alt="">
+      <span class="word">Plouf</span>
+    </div>
+    <p class="tagline">Swimming results,<br>made for a phone.</p>
+  </div>
+
+  <div class="rope" id="rope"></div>
+  <div class="url">plouf.nook.sh</div>
+
+  <script>
+    // 3 red floats at each wall, white and yellow alternating in between
+    const n = 44, rope = document.getElementById('rope')
+    for (let i = 0; i < n; i++) {
+      const el = document.createElement('i')
+      if (i < 3 || i >= n - 3) el.className = 'r'
+      else if (i % 2 === 0) el.className = 'y'
+      rope.append(el)
+    }
+  </script>
+</body>
+</html>
