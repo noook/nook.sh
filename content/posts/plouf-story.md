@@ -30,9 +30,9 @@ phone: true
 
 ## The first try, in 2019
 
-This isn't my first attempt. In 2019 I started the same idea with [Symfony](https://symfony.com), which was my favourite framework at the time. There was no AI to lean on back then, and most of the work went into parsing.
+This isn't my first attempt. In 2019 I started the same idea with Symfony, which was my favourite framework at the time. There was no AI to lean on back then, and most of the work went into parsing.
 
-The [FFN](https://www.ffnatation.fr) publishes its data as pages made for a browser, with nothing a program can read directly. Finding the right strategy to pull clean results out of those pages took me ages. I only ever worked on the back end, and it ate so much time that I never got to a single screen. Eventually I just dropped it.
+The FFN publishes its data as pages made for a browser, with nothing a program can read directly. Finding the right strategy to pull clean results out of those pages took me ages. I only ever worked on the back end, and it ate so much time that I never got to a single screen. Eventually I just dropped it.
 
 ## Seven years later, nothing had changed
 
@@ -96,7 +96,7 @@ caption: "How a feature went from an idea to main"
 
 That's also why I trusted the agents early. The planning and the docs were detailed enough that the first pull requests were already good. Autonomous runs pick a ticket, work on it, open a PR, and the next one starts. I did have to steer, sometimes hard. Once an agent built a team ranking for every meet, when teams only exist at the Interclubs. But each correction ended up as a new or amended ADR, so the next run started from the fixed rule instead of my memory of a chat. Today there are 43 ADRs, about 25,600 words of decisions, and that pile is what kept the quality from sliding.
 
-I'm on the [Claude Pro](https://claude.com/pricing) plan, and during the build I hit the weekly limit once and almost hit it a second time.
+I'm on the Claude Pro plan, and during the build I hit the weekly limit once and almost hit it a second time.
 
 The parsing that beat me in 2019 is still hard, by the way, but I'm no longer alone with it. The FFN's maintenance page answers HTTP 200 on every URL, so a page can say "everything went fine" while returning nothing. One parser expected a day number and met "Dimanche 1er Novembre", so every race on the first of a month vanished. When Plouf meets a weird value now, it stores it as published, flags it and keeps going.
 
@@ -121,7 +121,7 @@ Navigation was the other problem. Pages felt stuck for a moment after every tap.
 
 > All the navigation on Plouf feels delayed, lagging. It seems navigation is blocked while data fetches. It feels unnatural and unresponsive for the user. Can you check why, and improve this?
 
-At 15:40 the pull request was ready to merge, tests included. Some pages fetched their data with a plain `await` at the top, and [Nuxt](https://nuxt.com) keeps the previous page on screen until that request returns. The meets page was the worst: three requests one after another, each waiting on a phone's round trip. Today a test fails the build if a page makes navigation wait for its data.
+At 15:40 the pull request was ready to merge, tests included. Some pages fetched their data with a plain `await` at the top, and Nuxt keeps the previous page on screen until that request returns. The meets page was the worst: three requests one after another, each waiting on a phone's round trip. Today a test fails the build if a page makes navigation wait for its data.
 
 ## Sharing it, and the Google mistake
 
@@ -135,7 +135,7 @@ The FFN hasn't contacted me. If they ever ask me to stop, I'll honour it, no har
 
 During the Interclubs, dozens of meets run all over France on the same weekend. If several networks share the requests, each one makes only a fraction of them, and a block is less likely. It was also a learning challenge I wanted to take on. So the worker can send its requests through small proxies on other people's networks. I call them Egresses. There are 4 to date: mine, my family's and two friends'.
 
-It sounded like a big favour to ask, and it took one message. My friends like self-hosting as much as I do, and both run [Coolify](https://coolify.io) and talk to their own AI agent on Telegram. So I sent them my `docker run` command, and they wrote to their agent from their phone, more or less: "my friend gave me this command, can you add that project to Coolify". A new network then showed up in Plouf's pool on its own.
+It sounded like a big favour to ask, and it took one message. My friends like self-hosting as much as I do, and both run Coolify and talk to their own AI agent on Telegram. So I sent them my `docker run` command, and they wrote to their agent from their phone, more or less: "my friend gave me this command, can you add that project to Coolify". A new network then showed up in Plouf's pool on its own.
 
 I like this part a lot. The proxy only lets traffic through to the FFN's two sites, it holds no secret, and the traffic stays encrypted end to end, so whoever lends a network can't see anything in it.
 
@@ -167,7 +167,7 @@ The Interclubs were the date I had built everything around. On 7 and 8 November 
 
 Over those two days the worker made about 136,000 requests to the FFN's two sites. The 4 Egresses shared them almost evenly, between 21% and 28% each. About 1.3% of the requests (1,781) were refused with a 403, and none with a 429. Nearly half of the traffic was programme sheets, since every meet had its whole programme read in advance. I had hoped the FFN's CDN would answer a good share of the live requests from its cache, and it didn't: only 4.4% of the Live FFN requests were cache hits.
 
-[Umami](https://umami.is) counted 103 visitors, 39 on Saturday and 65 on Sunday, and 98 of them were on a phone, which is exactly who Plouf is built for. During the meets they came for the programme and the live board, about 9 pages per visit. For an app I barely advertised, that's a lot, and I hope it's still up next year with way more traffic. Only 2 notifications went out that weekend, because only 4 devices had turned them on.
+Umami counted 103 visitors, 39 on Saturday and 65 on Sunday, and 98 of them were on a phone, which is exactly who Plouf is built for. During the meets they came for the programme and the live board, about 9 pages per visit. For an app I barely advertised, that's a lot, and I hope it's still up next year with way more traffic. Only 2 notifications went out that weekend, because only 4 devices had turned them on.
 
 ::diagram-bars
 ---
@@ -204,7 +204,7 @@ People told me a few things. A birth year next to each swimmer always helps, so 
 
 ## The morning ClaudeBot came by
 
-On 11 November my Telegram filled up with Plouf alerts saying the FFN had answered 403 to one of the Egresses. Cloudflare's analytics showed what was going on. From 07:30 UTC, plouf.nook.sh went from about 300 requests per 15 minutes to between 6,000 and 10,000, and it stayed there. Between 05:00 and 13:00 UTC, [ClaudeBot](https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler) made 161,247 of the 170,588 requests, [Amazonbot](https://developer.amazon.com/docs/amazonbot/amazonbot) 8,065 and Reflectionbot 925. Real browsers made about 290. It's a bit funny that most of Plouf was built with Claude's help and ClaudeBot was the one hitting it hardest.
+On 11 November my Telegram filled up with Plouf alerts saying the FFN had answered 403 to one of the Egresses. Cloudflare's analytics showed what was going on. From 07:30 UTC, plouf.nook.sh went from about 300 requests per 15 minutes to between 6,000 and 10,000, and it stayed there. Between 05:00 and 13:00 UTC, [ClaudeBot](https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler) made 161,247 of the 170,588 requests, Amazonbot 8,065 and Reflectionbot 925. Real browsers made about 290. It's a bit funny that most of Plouf was built with Claude's help and ClaudeBot was the one hitting it hardest.
 
 ::diagram-bars
 ---
@@ -311,8 +311,8 @@ The problem was what each request triggered. Every swimmer or meet page a crawle
 
 I can't prove that my own volume caused those 403s, because the FFN answers them for other reasons too. But that load had no value, so I cut it on three fronts:
 
-- A Cloudflare rule blocks the AI crawlers (ClaudeBot, Amazonbot, Reflectionbot, [GPTBot](https://developers.openai.com/api/docs/bots), [CCBot](https://commoncrawl.org/ccbot), [PerplexityBot](https://docs.perplexity.ai/docs/resources/perplexity-crawlers), Bytespider and Meta's) at the edge, so their requests never reach my homelab. Only `robots.txt` stays readable for them.
-- `robots.txt` names the same crawlers and asks them to stay away, and a [Nitro](https://nitro.build) middleware answers their user agents with a 403 before anything is rendered or queued, in case one slips past Cloudflare. Search engines aren't in that list. A blocked crawler can't read the `noindex` header, so I never add a `Disallow` for them.
+- A Cloudflare rule blocks the AI crawlers (ClaudeBot, Amazonbot, Reflectionbot, GPTBot, CCBot, PerplexityBot, Bytespider and Meta's) at the edge, so their requests never reach my homelab. Only `robots.txt` stays readable for them.
+- `robots.txt` names the same crawlers and asks them to stay away, and a Nitro middleware answers their user agents with a 403 before anything is rendered or queued, in case one slips past Cloudflare. Search engines aren't in that list. A blocked crawler can't read the `noindex` header, so I never add a `Disallow` for them.
 - A visit no longer refreshes old data. A meet that ended over a month ago is refreshed from a visit after a month, and a swimmer whose last swim is over a year old after a week. It used to be 6 hours.
 
 First visits to an unknown swimmer or meet are unchanged.

@@ -22,7 +22,7 @@ The [FormD T1](https://formdt1.com) does exactly that. Most people who see it do
 
 I found the small form factor (SFF) world almost by accident. A [Louqe Ghost S1](https://caseend.com/data/abee/louqe-ghost-s1) ad showed up in my instagram feed, and the idea of a tiny, minimalist PC case was funny enough that I went looking. That led me to the SFF Discord community and to [a massive spreadsheet][1] that half the SFF world seems to use when comparing cases and other parts. Out of everything on it, the T1 was the one that stood out.
 
-Getting one was its own little ordeal. FormD restocks at random moments, a handful of units at a time, and they're gone almost immediately. I watched their Discord for about four months, and several times I couldn't complete the purchase before the stock was gone. When I finally got one, I was in the middle of a class when the [Shop app](https://shop.app) notified me of the restock. I was the teacher, so I asked my students to wait while I completed my T1 purchase.
+Getting one was its own little ordeal. FormD restocks at random moments, a handful of units at a time, and they're gone almost immediately. I watched their Discord for about four months, and several times I couldn't complete the purchase before the stock was gone. When I finally got one, I was in the middle of a class when the Shop app notified me of the restock. I was the teacher, so I asked my students to wait while I completed my T1 purchase.
 
 ## Constraints I didn't expect: the desk
 
@@ -32,7 +32,7 @@ The other reason for going small was more mundane. I have a rising desk, and I w
 
 The T1 replaced an NZXT S340 Elite in black and red, so the first version was really about rehoming an old PC. The PSU, motherboard, watercooling and case fans weren't compatible with the T1, so I sold them. The CPU, RAM, storage and GPU (an EVGA RTX 2070 at the time) all made the move.
 
-That first build had no lights, stock-style cables and a [Thermalright AXP90-X47](https://www.thermalright.com/product/axp90-x47/) copper cooler on the CPU. Nothing was dressed up yet, I only wanted to prove it could go together at all.
+That first build had no lights, stock-style cables and a Thermalright AXP90-X47 copper cooler on the CPU. Nothing was dressed up yet, I only wanted to prove it could go together at all.
 
 ![The first build with the RTX 2070, seen from the front](/images/posts/sff-pc-build/v1-inside-1.jpg)
 
@@ -46,7 +46,7 @@ A month after moving in, in a build meant to avoid anything gamer-coded, I added
 
 The reason is dumber and more practical than it looks. When the machine was idle, there was zero sign it was even on. No LED, nothing. I'd stand in front of it, unsure whether to press the power button or not. So the lights are a status indicator, the one the case was missing. I wanted it minimal, dim and configurable.
 
-I went with two Corsair LS340 Aurora light strips wrapped around the two [Noctua NF-A12x25](https://www.noctua.at/en/products/nf-a12x25-pwm) top exhaust fans. They run standalone, no iCUE link needed. I tried to get as close to Noctua's beige and brown as I could, but LEDs don't do beige convincingly. I landed on something in the same spirit and eventually settled on a very pale indigo for good.
+I went with two Corsair LS340 Aurora light strips wrapped around the two Noctua NF-A12x25 top exhaust fans. They run standalone, no iCUE link needed. I tried to get as close to Noctua's beige and brown as I could, but LEDs don't do beige convincingly. I landed on something in the same spirit and eventually settled on a very pale indigo for good.
 
 ![The top panel opened, with the two Noctua NF-A12x25 exhaust fans](/images/posts/sff-pc-build/outside-top-fans.jpg)
 
@@ -56,7 +56,7 @@ I went with two Corsair LS340 Aurora light strips wrapped around the two [Noctua
 
 ## V3, May 2025: a new GPU, and the last "gamer" cable gone
 
-By the time I needed a new GPU, Nvidia cards were either absurdly expensive or not available at all. The [RX 9070 XT](https://www.amd.com/en/products/graphics/desktops/radeon/9000-series/amd-radeon-rx-9070xt.html) had just launched as roughly AMD's answer to the 5070 and 5070 Ti at my budget, so the model was decided for me. What was left was picking the variant.
+By the time I needed a new GPU, Nvidia cards were either absurdly expensive or not available at all. The RX 9070 XT had just launched as roughly AMD's answer to the 5070 and 5070 Ti at my budget, so the model was decided for me. What was left was picking the variant.
 
 Inside a case this small, that question gets narrow fast. Of all the 9070 XT variants on the market, I could realistically fit four or five. What mattered was slot width (2.75 slots or less) and length. FormD rates GPU clearance at 140 × 325 × 65 mm, and in this case that number is a hard limit. I went with the [Asus Prime Radeon RX 9070 XT OC](https://www.asus.com/motherboards-components/graphics-cards/prime/prime-rx9070xt-o16g/), a 2.5-slot card.
 
@@ -70,7 +70,7 @@ Then I tested a few slot and spacing configurations to find the best combination
 
 ![The same side from an angle, the CPU cooler's copper fins above the card](/images/posts/sff-pc-build/outside-gpu-open-angle.jpg)
 
-The new card went in together with Noctua-themed PSU cables and a [Noctua NF-A9x14](https://www.noctua.at/en/products/nf-a9x14-pwm) fan on the CPU cooler, all in the same rebuild. The cables are custom, made by Ray from [DreamBigByRay][2] on Etsy, in White and Coffee, for my [Corsair SF1000](https://www.corsair.com/us/en/p/psu/cp-9020257-na/sf-series-sf1000-fully-modular-80-plus-platinum-sfx-power-supply-cp-9020257-na). Every internal cable (not the power cord) is cut to length and sleeved for this case, instead of whatever length happens to come in a kit.
+The new card went in together with Noctua-themed PSU cables and a Noctua NF-A9x14 fan on the CPU cooler, all in the same rebuild. The cables are custom, made by Ray from [DreamBigByRay][2] on Etsy, in White and Coffee, for my Corsair SF1000. Every internal cable (not the power cord) is cut to length and sleeved for this case, instead of whatever length happens to come in a kit.
 
 Noctua's beige and brown is about as anti-RGB as it gets, which made it the obvious pick for a build whose whole point was moving away from anything that screamed "gaming PC". The color follows from the decision I made at the start.
 
@@ -90,7 +90,7 @@ While the case was open for the bracket, I also gave it a USB-C port on the fron
 
 ## Where it lives now
 
-For something called a desktop, the T1 moves around a lot. Going from the desk to the living room TV is easy. I unplug five cables at the desk (power, USB dock, Ethernet and two video cables) and plug two in at the TV (power and HDMI). The cables themselves never move. Each spot keeps its own set. On the TV it's an [Xbox Elite controller](https://www.xbox.com/en-US/accessories/controllers/elite-wireless-controller-series-2) and [Steam Big Picture](https://store.steampowered.com/bigpicture), nothing fancier.
+For something called a desktop, the T1 moves around a lot. Going from the desk to the living room TV is easy. I unplug five cables at the desk (power, USB dock, Ethernet and two video cables) and plug two in at the TV (power and HDMI). The cables themselves never move. Each spot keeps its own set. On the TV it's an Xbox Elite controller and Steam Big Picture, nothing fancier.
 
 ![The living room TV, with the T1 on a stool to the right of the cabinet](/images/posts/sff-pc-build/tv-setup.jpg)
 

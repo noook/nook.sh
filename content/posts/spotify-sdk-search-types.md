@@ -11,7 +11,7 @@ imageDark: "/images/posts/spotify-sdk-search-types/cover-dark.png"
 draft: false
 ---
 
-For a while I was writing my own [Spotify API](https://developer.spotify.com/documentation/web-api) client in TypeScript, around the same time
+For a while I was writing my own Spotify API client in TypeScript, around the same time
 Spotify's own team was building their official one. The two ended up fairly close in shape
 (which made sense, we were both wrapping the same API), but there's only one outcome when an
 official SDK exists: people use the official one. Mine quietly stopped mattering the day
@@ -184,7 +184,7 @@ way.
 The actual [PR to the SDK][4] was almost a direct transcription of that answer into the
 codebase's real types: `SearchResults` became generic over the requested tuple, the endpoint's
 `execute` signature got the `const T extends readonly ItemTypes[]` treatment, and I added two
-type-level tests with [`expectTypeOf`](https://vitest.dev/api/expect-typeof) to lock the behavior in for both cases, one asserting
+type-level tests with `expectTypeOf` to lock the behavior in for both cases, one asserting
 optional properties for a non-literal array, one asserting required properties for a literal
 tuple.
 
