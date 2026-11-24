@@ -595,24 +595,30 @@ defineOgImage('Default', { title: 'Uses — Neil Richter' })
         </li>
       </ol>
       <!-- Older history exists but isn't published: the line runs on into
-           two redacted rows that fade out, no button. -->
+           two placeholder rows that fade out, no button. They use the same
+           row and columns as the real entries, with bars instead of text. -->
       <template v-if="olderLog">
         <ol
           aria-hidden="true"
-          class="ml-2 border-l-2 border-dashed border-accented [mask-image:linear-gradient(to_bottom,black_10%,transparent)]"
+          class="ml-2 border-l-2 border-accented [mask-image:linear-gradient(to_bottom,black,transparent)]"
         >
           <li
-            v-for="w in [[16, 36, 20], [16, 28, 24]]"
-            :key="w.join()"
-            class="relative flex items-center gap-x-4 py-2.5 pl-7"
+            v-for="row in [[14, 28, 20], [14, 24, 16]]"
+            :key="row.join()"
+            class="relative flex flex-wrap items-baseline gap-x-4 gap-y-1 py-2.5 pl-7 font-mono text-[13px]"
           >
-            <span class="absolute -left-0.5 top-1.5 size-4 border-b-2 border-l-2 border-accented" />
-            <span
-              v-for="(width, j) in w"
-              :key="j"
-              class="h-3 rounded-none bg-accented"
-              :style="{ width: `${width * 0.25}rem` }"
-            />
+            <span class="w-16"><span
+              class="inline-block h-2.5 bg-accented align-middle"
+              :style="{ width: `${row[0] * 0.25}rem` }"
+            /></span>
+            <span class="min-w-40"><span
+              class="inline-block h-2.5 bg-accented align-middle"
+              :style="{ width: `${row[1] * 0.25}rem` }"
+            /></span>
+            <span><span
+              class="inline-block h-2.5 bg-accented align-middle"
+              :style="{ width: `${row[2] * 0.25}rem` }"
+            /></span>
           </li>
         </ol>
         <p class="sr-only">

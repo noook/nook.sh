@@ -18,8 +18,10 @@ const items = computed(() => (data.value?.items ?? []).map(e => ({
     size="3xs"
     class="text-base"
     :ui="{
-      wrapper: 'pb-9',
-      indicator: 'bg-default ring-2 ring-inset ring-accented group-data-[state=active]:ring-primary',
+      // The dot's center sits on the company line (text-lg, 28px line):
+      // no wrapper offset, a 6px drop on the 16px dot.
+      wrapper: 'mt-0 pb-9',
+      indicator: 'mt-1.5 bg-default ring-2 ring-inset ring-accented group-data-[state=active]:ring-primary',
       separator: 'bg-accented',
     }"
   >
