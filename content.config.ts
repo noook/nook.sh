@@ -108,6 +108,9 @@ export default defineContentConfig({
           description: z.string(),
           // Set when the company or product no longer exists ("shut down").
           ended: z.string().optional(),
+          // Names in `company` or `description` to link (first mention).
+          // A list, not a map: YAML keys with dots ("Golem.ai") get split.
+          links: z.array(z.object({ text: z.string(), url: z.string().url() })).default([]),
         })),
       }),
     }),

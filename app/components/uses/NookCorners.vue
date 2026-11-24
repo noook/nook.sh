@@ -1,7 +1,13 @@
 <script setup lang="ts">
 // The logo's two corners on a frame: ㄴ (primary) bottom-left, ㄱ (the same
 // corner turned 180°) top-right. Place inside a `relative` parent.
-withDefaults(defineProps<{ size?: 'sm' | 'md', inset?: string }>(), { size: 'md', inset: '12px' })
+// `sm` draws only the ㄴ unless `opposite` is set (the home avatar).
+const props = withDefaults(defineProps<{ size?: 'sm' | 'md', inset?: string, opposite?: boolean }>(), {
+  size: 'md',
+  inset: '12px',
+  opposite: undefined,
+})
+const showOpposite = computed(() => props.opposite ?? props.size === 'md')
 </script>
 
 <template>
@@ -12,9 +18,10 @@ withDefaults(defineProps<{ size?: 'sm' | 'md', inset?: string }>(), { size: 'md'
     :style="{ left: inset, bottom: inset }"
   />
   <span
-    v-if="size === 'md'"
+    v-if="showOpposite"
     aria-hidden="true"
-    class="pointer-events-none absolute size-4 border-r-[3px] border-t-[3px] border-(--ui-text-highlighted) opacity-85"
+    class="pointer-events-none absolute border-(--ui-text-highlighted) opacity-85"
+    :class="size === 'sm' ? 'size-2.5 border-r-2 border-t-2' : 'size-4 border-r-[3px] border-t-[3px]'"
     :style="{ right: inset, top: inset }"
   />
 </template>

@@ -45,6 +45,7 @@ defineOgImage('Default', { title: 'Neil Richter' })
         <UsesNookCorners
           size="sm"
           inset="0px"
+          opposite
         />
       </div>
       <div>
