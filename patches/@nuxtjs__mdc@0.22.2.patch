@@ -1,0 +1,22 @@
+diff --git a/dist/runtime/highlighter/shiki.js b/dist/runtime/highlighter/shiki.js
+index 9741ff191e459a5db9822f206f573b01f0771f6f..340c1c66ca46064a4782bcf1fab066df2a57687b 100644
+--- a/dist/runtime/highlighter/shiki.js
++++ b/dist/runtime/highlighter/shiki.js
+@@ -128,12 +128,12 @@ export function createShikiHighlighter({
+                 }];
+                 return;
+               }
++              // Patched: the newline goes after the line's last token, not
++              // inside it. Appending it to the token's text broke twoslash
++              // hovers on a line's last word ("Cannot find tokens for node").
+               const last = node.children.at(-1);
+-              if (last?.type === "element" && last.tagName === "span") {
+-                const text = last.children.at(-1);
+-                if (text?.type === "text")
+-                  text.value += "\n";
+-              }
++              if (last?.type === "element" && last.tagName === "span")
++                node.children.push({ type: "text", value: "\n" });
+             }
+           }
+         }

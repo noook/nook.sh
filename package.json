@@ -51,7 +51,8 @@
     ],
     "patchedDependencies": {
       "floating-vue@5.2.2": "patches/floating-vue@5.2.2.patch",
-      "@nuxt/content@3.15.2": "patches/@nuxt__content@3.15.2.patch"
+      "@nuxt/content@3.15.2": "patches/@nuxt__content@3.15.2.patch",
+      "@nuxtjs/mdc@0.22.2": "patches/@nuxtjs__mdc@0.22.2.patch"
     }
   }
 }
