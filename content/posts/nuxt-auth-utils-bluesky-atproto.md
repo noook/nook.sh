@@ -14,10 +14,10 @@ draft: false
 ---
 
 Most OAuth providers you add to an auth library are the same fifty lines with a different set of
-URLs swapped in: an authorize endpoint, a token endpoint, a client ID, a client secret. Bluesky
+URLs swapped in: an authorize endpoint, a token endpoint, a client ID, a client secret. [Bluesky](https://bsky.app)
 wasn't that. Getting [this PR][1] right took a real back-and-forth with the maintainer, one honest
 "I'm not satisfied with this" course-correction in the middle, a maintainer catching me almost
-shipping a memory leak, and enough digging into the AT Proto spec to understand why a normal
+shipping a memory leak, and enough digging into the [AT Proto](https://atproto.com) spec to understand why a normal
 OAuth integration just doesn't work here.
 
 This is the writeup of that PR, and I wanted the actual discussion in it, not just the diff.
@@ -75,7 +75,7 @@ one, and that's the thread the rest of this post pulls on.
 
 ## The problem OAuth doesn't have an answer for
 
-Every OAuth provider `nuxt-auth-utils` already supported - GitHub, GitLab, Spotify, Google - has
+Every OAuth provider [`nuxt-auth-utils`][0] already supported - GitHub, GitLab, Spotify, Google - has
 one fixed issuer. You know the authorize URL and the token URL before the user has told you
 anything about themselves, because there's exactly one GitHub.
 
@@ -86,7 +86,7 @@ user's **handle**, figure out which server actually hosts their account, and onl
 start something OAuth-shaped against that specific server.
 
 Handling that resolution and verification by hand is enough work that I opted to lean on
-`@atproto/oauth-client-node` and `@atproto/api` rather than reimplement it myself:
+[`@atproto/oauth-client-node`](https://www.npmjs.com/package/@atproto/oauth-client-node) and [`@atproto/api`](https://www.npmjs.com/package/@atproto/api) rather than reimplement it myself:
 
 ::pr-quote{author="Neil Richter" handle="noook" avatar="https://github.com/noook.png" role="Author" date="Nov 14, 2024" href="https://github.com/atinux/nuxt-auth-utils/pull/281" mine}
 This PR adds Bluesky as a provider.
@@ -117,7 +117,7 @@ So the configuration would be split into two parts:
 ::
 
 That's the moment the PR stopped being "add a login button" and became "model a provider family
-that doesn't exist yet in this codebase." atinux's reply was immediate buy-in:
+that doesn't exist yet in this codebase." [atinux](https://github.com/atinux)'s reply was immediate buy-in:
 
 ::pr-quote{author="Sébastien Chopin" handle="atinux" avatar="https://github.com/atinux.png" role="Maintainer" date="Nov 14, 2024" href="https://github.com/atinux/nuxt-auth-utils/pull/281#issuecomment-2476073379"}
 I love this approach!
@@ -134,12 +134,12 @@ publishes a small JSON file about itself somewhere public, and that file's URL b
 client ID. Every login, the server fetches it and checks the contents match. Think of it as a
 name tag the bouncer rereads on the way in each time, rather than a membership card issued once.
 
-Access tokens get tied to a key your app holds onto, using a mechanism called DPoP. A regular
+Access tokens get tied to a key your app holds onto, using a mechanism called [DPoP](https://datatracker.ietf.org/doc/html/rfc9449). A regular
 bearer token works a bit like a hotel key card: whoever has a copy can use it. Here, copying the
 token alone doesn't get you anywhere, you'd need the private key it was issued against too.
 
 Then there's the handle itself. `@you.bsky.social` can change any time, so it can't be the real
-identifier underneath. Before login even starts, the app resolves it to a DID, a stable ID that
+identifier underneath. Before login even starts, the app resolves it to a [DID](https://atproto.com/specs/did), a stable ID that
 survives a handle change or a server move, and the DID points at wherever the account actually
 lives. That's the part carrying the real weight: only that server gets to vouch for the account,
 so a compromised or malicious server elsewhere on the network can't just claim it.
@@ -201,16 +201,16 @@ a dashboard once and forgot about.
 
 ## A production lesson from the maintainer: don't assume memory sticks around
 
-The first working version stored OAuth state and session data with `unstorage`, the same
+The first working version stored OAuth state and session data with [`unstorage`](https://unstorage.unjs.io), the same
 key-value abstraction `nuxt-auth-utils` already used elsewhere. It worked fine locally. atinux
 caught the problem before it shipped, and the point underneath his comment is one worth
-stating plainly: Nuxt can run in a lot of different places, a regular Node server, Cloudflare
-Workers, and plenty of other serverless environments, and the code has to work the same way
+stating plainly: [Nuxt](https://nuxt.com) can run in a lot of different places, a regular Node server, [Cloudflare
+Workers](https://workers.cloudflare.com), and plenty of other serverless environments, and the code has to work the same way
 regardless of where it ends up. That means leaning on things that are available everywhere
 (cookies, the request itself) instead of patterns that quietly assume there's one long-running
 process holding state in memory between requests.
 
-`useStorage` defaults to in-memory storage on a lot of targets unless you configure something
+[`useStorage`](https://nitro.build/docs/storage) defaults to in-memory storage on a lot of targets unless you configure something
 else, which is fine for a long-lived server but breaks on serverless, where a fresh instance can
 handle the very next request with nothing remembered from the last one. An OAuth flow that
 redirects out to Bluesky and back needs that in-between state to survive no matter where the app
@@ -256,7 +256,7 @@ will add the configured scope to the list of scopes. I should configure the merg
 `defu` instead
 ::
 
-The actual fix was to stop mutating shared config altogether, and instead teach `defu` (the
+The actual fix was to stop mutating shared config altogether, and instead teach [`defu`](https://github.com/unjs/defu) (the
 deep-merge utility the module already uses to combine user config with defaults) to dedupe scopes
 as part of the merge itself. That way every request gets a freshly computed result instead of a
 shared value slowly accumulating state across requests.

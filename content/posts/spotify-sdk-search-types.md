@@ -11,7 +11,7 @@ imageDark: "/images/posts/spotify-sdk-search-types/cover-dark.png"
 draft: false
 ---
 
-For a while I was writing my own Spotify API client in TypeScript, around the same time
+For a while I was writing my own [Spotify API](https://developer.spotify.com/documentation/web-api) client in TypeScript, around the same time
 Spotify's own team was building their official one. The two ended up fairly close in shape
 (which made sense, we were both wrapping the same API), but there's only one outcome when an
 official SDK exists: people use the official one. Mine quietly stopped mattering the day
@@ -25,7 +25,7 @@ endpoint's types that was just wrong.
 ## The bug: the types promised more than the API delivers
 
 Spotify's search endpoint takes a list of resource types to search across (`track`, `artist`,
-`album`, and so on), and its own documentation is explicit about what comes back: only the
+`album`, and so on), and its own [documentation](https://developer.spotify.com/documentation/web-api/reference/search) is explicit about what comes back: only the
 keys you asked for are present in the response. Search for tracks and artists, and you get
 `tracks` and `artists` back. You do not get `albums: undefined` sitting in the payload for every
 type you didn't ask for.
@@ -106,7 +106,7 @@ the mutable array.)
 ### Step 2: make the search function generic over the exact input
 
 Next, the function signature needs to capture the *specific* array that was passed in, not just
-widen it to `ItemTypes[]`. That means a generic `const` type parameter (TypeScript 5.0+, though a
+widen it to `ItemTypes[]`. That means a generic `const` type parameter ([TypeScript 5.0+](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-0.html#const-type-parameters), though a
 `const` assertion at the call site achieves the same thing on older versions):
 
 ```ts twoslash
@@ -184,7 +184,7 @@ way.
 The actual [PR to the SDK][4] was almost a direct transcription of that answer into the
 codebase's real types: `SearchResults` became generic over the requested tuple, the endpoint's
 `execute` signature got the `const T extends readonly ItemTypes[]` treatment, and I added two
-type-level tests with `expectTypeOf` to lock the behavior in for both cases, one asserting
+type-level tests with [`expectTypeOf`](https://vitest.dev/api/expect-typeof) to lock the behavior in for both cases, one asserting
 optional properties for a non-literal array, one asserting required properties for a literal
 tuple.
 
