@@ -35,31 +35,33 @@ defineOgImage('Default', { title: 'Neil Richter' })
 
 <template>
   <div class="max-w-2xl mx-auto pb-12">
-    <header class="flex items-center gap-5 pt-4">
-      <div class="relative shrink-0 p-2">
+    <!-- The logo's two corners frame the whole header: ㄴ bottom-left
+         (by the avatar), ㄱ top-right (past the heading). -->
+    <div class="pt-4">
+      <header class="relative flex w-fit items-center gap-5 p-2 pr-4">
         <NuxtImg
           src="https://github.com/noook.png"
           alt=""
-          class="size-16 rounded-full object-cover"
+          class="size-16 shrink-0 rounded-full object-cover"
         />
+        <div>
+          <h1 class="text-3xl font-bold text-highlighted">
+            {{ heading }}
+          </h1>
+          <p
+            v-if="tagline"
+            class="font-mono text-sm text-dimmed"
+          >
+            {{ tagline }}
+          </p>
+        </div>
         <UsesNookCorners
           size="sm"
           inset="0px"
           opposite
         />
-      </div>
-      <div>
-        <h1 class="text-3xl font-bold text-highlighted">
-          {{ heading }}
-        </h1>
-        <p
-          v-if="tagline"
-          class="font-mono text-sm text-dimmed"
-        >
-          {{ tagline }}
-        </p>
-      </div>
-    </header>
+      </header>
+    </div>
 
     <!-- Text styles only reach the markdown paragraphs (no class), so the MDC blocks
          (experience, stack, socials) keep their own. -->
