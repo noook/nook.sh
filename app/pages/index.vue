@@ -35,10 +35,11 @@ defineOgImage('Default', { title: 'Neil Richter' })
 
 <template>
   <div class="max-w-2xl mx-auto pb-12">
-    <!-- The logo's two corners frame the whole header: ㄴ bottom-left
-         (by the avatar), ㄱ top-right (past the heading). -->
+    <!-- The logo's two corners frame the header across the full text
+         width: ㄴ bottom-left by the avatar, ㄱ top-right over the column's
+         right edge. -->
     <div class="pt-4">
-      <header class="relative flex w-fit items-center gap-5 p-2 pr-4">
+      <header class="relative flex items-center gap-5 p-2">
         <NuxtImg
           src="https://github.com/noook.png"
           alt=""
