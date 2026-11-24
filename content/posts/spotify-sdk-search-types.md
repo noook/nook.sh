@@ -25,7 +25,7 @@ endpoint's types that was just wrong.
 ## The bug: the types promised more than the API delivers
 
 Spotify's search endpoint takes a list of resource types to search across (`track`, `artist`,
-`album`, and so on), and its own documentation is explicit about what comes back: only the
+`album`, and so on), and its own [documentation](https://developer.spotify.com/documentation/web-api/reference/search) is explicit about what comes back: only the
 keys you asked for are present in the response. Search for tracks and artists, and you get
 `tracks` and `artists` back. You do not get `albums: undefined` sitting in the payload for every
 type you didn't ask for.
@@ -106,7 +106,7 @@ the mutable array.)
 ### Step 2: make the search function generic over the exact input
 
 Next, the function signature needs to capture the *specific* array that was passed in, not just
-widen it to `ItemTypes[]`. That means a generic `const` type parameter (TypeScript 5.0+, though a
+widen it to `ItemTypes[]`. That means a generic `const` type parameter ([TypeScript 5.0+](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-0.html#const-type-parameters), though a
 `const` assertion at the call site achieves the same thing on older versions):
 
 ```ts twoslash

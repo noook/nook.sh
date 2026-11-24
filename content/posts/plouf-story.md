@@ -40,7 +40,7 @@ This year I started competing again, and the tools were exactly where I'd left t
 
 At my first meet back, I struggled with the network. What bugged me even more was the repetition. We all check results on our phones, and every action means moving around the UI: navigating somewhere, finding someone, reading the right line in a dense table. We even had to pinch-zoom just to tap on something.
 
-Extranat, the results site, got a slightly more modern interface since. Live FFN, the one you use at the pool, still works like this:
+[Extranat](https://ffn.extranat.fr), the results site, got a slightly more modern interface since. [Live FFN](https://www.liveffn.com), the one you use at the pool, still works like this:
 
 ::diagram-compare
 ---
@@ -127,7 +127,7 @@ At 15:40 the pull request was ready to merge, tests included. Some pages fetched
 
 Once it worked, I sent it to my club, then to my previous club, and asked them to show it around. That's still the whole plan. Plouf is public, but for now it's deliberately not on Google. It's a tool for people who already know whom they're looking for, and shared links work fine without a search engine.
 
-At first, adults' pages could be indexed. I hadn't thought about people's names showing up in search results. Then a swimmer found their own results page through Google and asked to be removed. That was my first opt-out request, it surprised me, and fair enough. I turned indexing off for every page, adults included, and used Search Console's removal tool. Google took 3 to 4 hours to handle the request. Every response now carries `noindex`, so Google drops the pages it still has the next time it comes by. That's a temporary default, because it's the safe one. Later I may index the pages that say nothing about a person, like the homepage and the meets.
+At first, adults' pages could be indexed. I hadn't thought about people's names showing up in search results. Then a swimmer found their own results page through Google and asked to be removed. That was my first opt-out request, it surprised me, and fair enough. I turned indexing off for every page, adults included, and used [Search Console's removal tool](https://support.google.com/webmasters/answer/9689846). Google took 3 to 4 hours to handle the request. Every response now carries `noindex`, so Google drops the pages it still has the next time it comes by. That's a temporary default, because it's the safe one. Later I may index the pages that say nothing about a person, like the homepage and the meets.
 
 The FFN hasn't contacted me. If they ever ask me to stop, I'll honour it, no hard feelings. To me this is an experiment in agentic development and a way to make other swimmers' days a bit easier. It's also why the repo is private for now.
 
@@ -204,7 +204,7 @@ People told me a few things. A birth year next to each swimmer always helps, so 
 
 ## The morning ClaudeBot came by
 
-On 11 November my Telegram filled up with Plouf alerts saying the FFN had answered 403 to one of the Egresses. Cloudflare's analytics showed what was going on. From 07:30 UTC, plouf.nook.sh went from about 300 requests per 15 minutes to between 6,000 and 10,000, and it stayed there. Between 05:00 and 13:00 UTC, ClaudeBot made 161,247 of the 170,588 requests, Amazonbot 8,065 and Reflectionbot 925. Real browsers made about 290. It's a bit funny that most of Plouf was built with Claude's help and ClaudeBot was the one hitting it hardest.
+On 11 November my Telegram filled up with Plouf alerts saying the FFN had answered 403 to one of the Egresses. Cloudflare's analytics showed what was going on. From 07:30 UTC, plouf.nook.sh went from about 300 requests per 15 minutes to between 6,000 and 10,000, and it stayed there. Between 05:00 and 13:00 UTC, [ClaudeBot](https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler) made 161,247 of the 170,588 requests, Amazonbot 8,065 and Reflectionbot 925. Real browsers made about 290. It's a bit funny that most of Plouf was built with Claude's help and ClaudeBot was the one hitting it hardest.
 
 ::diagram-bars
 ---

@@ -16,7 +16,7 @@ imageDark: "/images/projects/plouf/cover-dark.png"
 draft: false
 ---
 
-Plouf is an unofficial web app for French competitive swimmers. The French federation (FFN) publishes everything on two sites: Extranat for results, Live FFN for meets in progress. Most of their views sit behind forms with no URL, the pages are dense, and none of it was made for a phone. Plouf reads the same data and gives every swimmer, club, meet and ranking its own link, with live results, follows and push notifications on top.
+Plouf is an unofficial web app for French competitive swimmers. The French federation (FFN) publishes everything on two sites: [Extranat](https://ffn.extranat.fr) for results, [Live FFN](https://www.liveffn.com) for meets in progress. Most of their views sit behind forms with no URL, the pages are dense, and none of it was made for a phone. Plouf reads the same data and gives every swimmer, club, meet and ranking its own link, with live results, follows and push notifications on top.
 
 It's public at [plouf.nook.sh](https://plouf.nook.sh), in French, and unindexed for now, on purpose. The repo is private for now, because the FFN never really authorised the scraping. If they ever ask me to stop, I'll honour it. The story behind it is in [the blog post](/posts/plouf-story). This page is about the build.
 
@@ -167,7 +167,7 @@ steps:
 
 ## Built by agents, planned by me
 
-Each feature started as a grilling session: the agent asks, I answer, and each settled answer becomes an architecture decision record (ADR) or a glossary entry. The first commit has no code in it, only a glossary, 13 ADRs and some sketches. Decisions became spec issues with user stories, then tickets with blocking links between them. The v1 spec reached 100 sub-issues, GitHub's cap, so live work got its own spec.
+Each feature started as a grilling session: the agent asks, I answer, and each settled answer becomes an architecture decision record (ADR) or a glossary entry. The first commit has no code in it, only a glossary, 13 ADRs and some sketches. Decisions became spec issues with user stories, then tickets with blocking links between them. The v1 spec reached 100 sub-issues, [GitHub's cap](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/adding-sub-issues), so live work got its own spec.
 
 A [Hermes](https://hermes-agent.nousresearch.com) cron job starts an autonomous run every 5 hours. A parent agent picks the next unblocked ticket and hands it to a fresh subagent, which works on a branch until it opens a pull request. The parent merges green PRs and fixes red ones first. When an agent can't decide something (an ADR change, a URL, a cost), it asks on the ticket and waits for me.
 
@@ -175,7 +175,7 @@ Agents ignored the rules that only lived in a doc, so I moved them into tooling.
 
 ## The CI bill
 
-At first CI ran on every push, and again on a long-lived draft PR, so twice per commit. Three Docker images were built per push too. After four days, GitHub showed 1,801 of my 2,000 free monthly minutes used.
+At first CI ran on every push, and again on a long-lived draft PR, so twice per commit. Three Docker images were built per push too. After four days, GitHub showed 1,801 of my [2,000 free monthly minutes](https://docs.github.com/en/billing/concepts/product-billing/github-actions) used.
 
 Two fixes followed. CI now runs on pull requests and releases only, images are built per release, and `main` is a trunk of squashed commits. And I set up a self-hosted runner on my homelab: a VM rather than an LXC container, because a job with the Docker socket is root in its guest, and an LXC shares the host kernel. It has a lower CPU weight, so production always wins. Its first run took 6.5 minutes and cost zero Actions minutes.
 
@@ -184,7 +184,7 @@ The runner shares a 4-core machine with production, and that is its main limit.
 
 ## The day a crawler arrived
 
-On 11 November, ClaudeBot made 161,247 of the 170,588 requests Plouf received between 05:00 and 13:00 UTC. From 07:30, traffic went from about 300 requests per 15 minutes to between 6,000 and 10,000. Each Swimmer or Meet page it opened queued a refresh from the FFN, about 35,000 workflows in two hours, and 8% of the FFN requests started to answer 403 on every network. Over the whole day, Extranat ran at the cap on all four networks, 1,971 requests were refused, the networks spent 5 to 9 hours paused, and about 21,600 meet imports failed. The fix has four parts. `robots.txt` names the AI crawlers and nothing else, since search engines must keep reading the `noindex` header (ADR 0038). A Cloudflare rule blocks them at the edge, and a Nitro middleware answers the same user agents with a 403 before anything is rendered or queued, as a second line. A test keeps `robots.txt` and the middleware list equal. And a visit no longer refreshes old data: a Meet that ended over a month ago waits a month, a Swimmer whose last swim is over a year old waits a week. The story is in [the blog post](/posts/plouf-story).
+On 11 November, [ClaudeBot](https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler) made 161,247 of the 170,588 requests Plouf received between 05:00 and 13:00 UTC. From 07:30, traffic went from about 300 requests per 15 minutes to between 6,000 and 10,000. Each Swimmer or Meet page it opened queued a refresh from the FFN, about 35,000 workflows in two hours, and 8% of the FFN requests started to answer 403 on every network. Over the whole day, Extranat ran at the cap on all four networks, 1,971 requests were refused, the networks spent 5 to 9 hours paused, and about 21,600 meet imports failed. The fix has four parts. `robots.txt` names the AI crawlers and nothing else, since search engines must keep reading the `noindex` header (ADR 0038). A Cloudflare rule blocks them at the edge, and a Nitro middleware answers the same user agents with a 403 before anything is rendered or queued, as a second line. A test keeps `robots.txt` and the middleware list equal. And a visit no longer refreshes old data: a Meet that ended over a month ago waits a month, a Swimmer whose last swim is over a year old waits a week. The story is in [the blog post](/posts/plouf-story).
 
 ## What changed after the Interclubs
 
@@ -205,7 +205,7 @@ On 11 November, after the Interclubs, I had agents review a snapshot of the code
 
 The last row comes from the one structural change that was also a speed gain. Domain events are now written to an outbox in the same transaction as the change, and the worker wakes on them instead of waiting for its 10 second tick.
 
-Since then, every route went on a contract handler (27 of 35 weren't), an API reference is generated from the contracts for local dev, the code moved into workspace packages with one module per FFN page kind, and there's a free `/admin/workflows` page, because DBOS Conductor needs a paid licence for what I'd use. Grafana Faro for browser errors is ready and waits for me to switch it on. What's left is moving the rest of Swimmer and Rankings into their modules.
+Since then, every route went on a contract handler (27 of 35 weren't), an API reference is generated from the contracts for local dev, the code moved into workspace packages with one module per FFN page kind, and there's a free `/admin/workflows` page, because [DBOS Conductor](https://docs.dbos.dev/conductor/overview) needs a paid licence for what I'd use. Grafana Faro for browser errors is ready and waits for me to switch it on. What's left is moving the rest of Swimmer and Rankings into their modules.
 
 The tests were the other half. There were almost as many lines of tests as lines of code, because agents follow test-driven development to the letter and write a test for every decision, config files included. One test pinned every value of the Renovate config, which a validator already checks in CI. The rule is now written in the agent docs and in the cron prompt: a test must guard something that breaks for a user, for the FFN or for stored data. The first pass cut 132 cases.
 

@@ -16,7 +16,7 @@ I built my current PC at 26, and the whole project was more about identity than 
 
 ![The T1 at the left of my desk with its pale indigo light strip on](/images/posts/sff-pc-build/desk-wide.jpg)
 
-The FormD T1 does exactly that. Most people who see it don't clock it as a computer at all. My favorite reaction is when I tell someone it's right there on the desk and they keep looking around for "the actual computer". It's 9.95 liters of CNC-machined aluminium, 13.5 × 22 × 33.5 cm, with roughly the footprint of an A4 sheet of paper.
+The [FormD T1](https://formdt1.com) does exactly that. Most people who see it don't clock it as a computer at all. My favorite reaction is when I tell someone it's right there on the desk and they keep looking around for "the actual computer". It's 9.95 liters of CNC-machined aluminium, 13.5 × 22 × 33.5 cm, with roughly the footprint of an A4 sheet of paper.
 
 ![The T1 with its panels on, in the evening sun on the balcony](/images/posts/sff-pc-build/outside-panels-on.jpg)
 
@@ -58,7 +58,7 @@ I went with two Corsair LS340 Aurora light strips wrapped around the two Noctua 
 
 By the time I needed a new GPU, Nvidia cards were either absurdly expensive or not available at all. The RX 9070 XT had just launched as roughly AMD's answer to the 5070 and 5070 Ti at my budget, so the model was decided for me. What was left was picking the variant.
 
-Inside a case this small, that question gets narrow fast. Of all the 9070 XT variants on the market, I could realistically fit four or five. What mattered was slot width (2.75 slots or less) and length. FormD rates GPU clearance at 140 × 325 × 65 mm, and in this case that number is a hard limit. I went with the Asus Prime Radeon RX 9070 XT OC, a 2.5-slot card.
+Inside a case this small, that question gets narrow fast. Of all the 9070 XT variants on the market, I could realistically fit four or five. What mattered was slot width (2.75 slots or less) and length. FormD rates GPU clearance at 140 × 325 × 65 mm, and in this case that number is a hard limit. I went with the [Asus Prime Radeon RX 9070 XT OC](https://www.asus.com/motherboards-components/graphics-cards/prime/prime-rx9070xt-o16g/), a 2.5-slot card.
 
 Then I tested a few slot and spacing configurations to find the best combination, with an offset spacer between the motherboard and the GPU. The spacer decides how much room the card has to breathe. It also turned out to leave just enough space between the motherboard and the GPU to route cables through that gap instead of around it.
 

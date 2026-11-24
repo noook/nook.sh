@@ -9,6 +9,11 @@ export default defineAppConfig({
       neutral: 'slate',
     },
     prose: {
+      // Prose links draw their hover underline as a border-bottom, and the
+      // default `rounded-xs` curls its ends. Square ends, like the logo.
+      a: {
+        base: 'rounded-none',
+      },
       // Inline `code` in @nuxt/ui's default theme uses a real 1px border,
       // which adds to the element's box height (20px text-sm line-height +
       // 4px py-0.5 padding + 2px border = 26px) and makes any prose line

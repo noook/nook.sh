@@ -14,10 +14,10 @@ draft: false
 ---
 
 Most OAuth providers you add to an auth library are the same fifty lines with a different set of
-URLs swapped in: an authorize endpoint, a token endpoint, a client ID, a client secret. Bluesky
+URLs swapped in: an authorize endpoint, a token endpoint, a client ID, a client secret. [Bluesky](https://bsky.app)
 wasn't that. Getting [this PR][1] right took a real back-and-forth with the maintainer, one honest
 "I'm not satisfied with this" course-correction in the middle, a maintainer catching me almost
-shipping a memory leak, and enough digging into the AT Proto spec to understand why a normal
+shipping a memory leak, and enough digging into the [AT Proto](https://atproto.com) spec to understand why a normal
 OAuth integration just doesn't work here.
 
 This is the writeup of that PR, and I wanted the actual discussion in it, not just the diff.
@@ -75,7 +75,7 @@ one, and that's the thread the rest of this post pulls on.
 
 ## The problem OAuth doesn't have an answer for
 
-Every OAuth provider `nuxt-auth-utils` already supported - GitHub, GitLab, Spotify, Google - has
+Every OAuth provider [`nuxt-auth-utils`][0] already supported - GitHub, GitLab, Spotify, Google - has
 one fixed issuer. You know the authorize URL and the token URL before the user has told you
 anything about themselves, because there's exactly one GitHub.
 
@@ -86,7 +86,7 @@ user's **handle**, figure out which server actually hosts their account, and onl
 start something OAuth-shaped against that specific server.
 
 Handling that resolution and verification by hand is enough work that I opted to lean on
-`@atproto/oauth-client-node` and `@atproto/api` rather than reimplement it myself:
+[`@atproto/oauth-client-node`](https://www.npmjs.com/package/@atproto/oauth-client-node) and [`@atproto/api`](https://www.npmjs.com/package/@atproto/api) rather than reimplement it myself:
 
 ::pr-quote{author="Neil Richter" handle="noook" avatar="https://github.com/noook.png" role="Author" date="Nov 14, 2024" href="https://github.com/atinux/nuxt-auth-utils/pull/281" mine}
 This PR adds Bluesky as a provider.
@@ -210,7 +210,7 @@ regardless of where it ends up. That means leaning on things that are available 
 (cookies, the request itself) instead of patterns that quietly assume there's one long-running
 process holding state in memory between requests.
 
-`useStorage` defaults to in-memory storage on a lot of targets unless you configure something
+[`useStorage`](https://nitro.build/docs/storage) defaults to in-memory storage on a lot of targets unless you configure something
 else, which is fine for a long-lived server but breaks on serverless, where a fresh instance can
 handle the very next request with nothing remembered from the last one. An OAuth flow that
 redirects out to Bluesky and back needs that in-between state to survive no matter where the app
